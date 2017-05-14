@@ -3,7 +3,14 @@
 	<head>
 		<title>Test</title>
 		<script src="Scripts/Test.js"></script>
+		<script src="Scripts/tipped.js"></script>
+		<link rel="stylesheet" type="text/css" href="Content/style.css">
 		<link rel="stylesheet" type="text/css" href="Content/Test.css">
+		<link rel="stylesheet" type="text/css" href="Content/tipped.css">
+
+		<script type='text/javascript'>
+			$(document).ready(function() {Tipped.create('.boxes .box');});
+		</script>
 	</head>
 	<body>
 		<div class="tab">
@@ -21,8 +28,15 @@
 		</div>
 		<div id="How to" class="tabcontent">
 			<h4>How to</h4>
-			<p>I'm not even sure how to play the game yet</p>
+			<button class="howto" onclick="incrementbutton(event)" data-tipped-options="position: bottom">Clicked Never
+				<span></span>
+            	<div class='position bottom'><i></i></div>
+            	<div class='overlay'></div>
+            </button>
 		</div>
-		<script type="text/javascript">document.getElementById("defaultOpen").click()</script>
+		<script type="text/javascript">
+			document.getElementById("defaultOpen").click()
+			var button=0;
+		</script>
 	</body>
 </html>

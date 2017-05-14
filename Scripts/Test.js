@@ -14,3 +14,12 @@ function tabChange(evt, tabName) {
 	document.getElementById(tabName).style.display = "block";
 	evt.currentTarget.className += " active";
 }
+
+function incrementbutton(evt) {
+	button++
+	if (button==1) {
+		evt.currentTarget.innerHTML = "Clicked "+button+" time";
+	}else{
+		evt.currentTarget.innerHTML = "Clicked "+button+" times";
+	}
+}
