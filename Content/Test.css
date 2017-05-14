@@ -36,3 +36,24 @@ button.howto {
 	padding: 14px 16px;
 	transition: 0.3s;
 }
+#box{
+ width: 700px;
+ padding: 0px 10px;
+ float: left;
+}
+#prog {
+	width: 100%;
+	background-color: grey;
+}
+#bar {
+	width: 0%;
+	height: 43px;
+	
+	background-color: powderblue;
+}
+#BarNumber {
+	background-color: green;
+	float: left;
+	border: none;
+	padding: 13px 16px;
+}

@@ -3,14 +3,8 @@
 	<head>
 		<title>Test</title>
 		<script src="Scripts/Test.js"></script>
-		<script src="Scripts/tipped.js"></script>
-		<link rel="stylesheet" type="text/css" href="Content/style.css">
 		<link rel="stylesheet" type="text/css" href="Content/Test.css">
-		<link rel="stylesheet" type="text/css" href="Content/tipped.css">
 
-		<script type='text/javascript'>
-			$(document).ready(function() {Tipped.create('.boxes .box');});
-		</script>
 	</head>
 	<body>
 		<div class="tab">
@@ -28,15 +22,19 @@
 		</div>
 		<div id="How to" class="tabcontent">
 			<h4>How to</h4>
-			<button class="howto" onclick="incrementbutton(event)" data-tipped-options="position: bottom">Clicked Never
-				<span></span>
-            	<div class='position bottom'><i></i></div>
-            	<div class='overlay'></div>
+			<button class="howto" onclick="StartProg(event)">Click Me
             </button>
+            <div id="box">
+            <div id="prog">
+            <div id="bar"></div>
+
+            </div>
+            </div>
+             <div id="BarNumber">0</div>
 		</div>
 		<script type="text/javascript">
 			document.getElementById("defaultOpen").click()
-			var button=0;
+			var numberValue=0;
 		</script>
 	</body>
 </html>

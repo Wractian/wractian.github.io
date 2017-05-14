@@ -15,11 +15,19 @@ function tabChange(evt, tabName) {
 	evt.currentTarget.className += " active";
 }
 
-function incrementbutton(evt) {
-	button++
-	if (button==1) {
-		evt.currentTarget.innerHTML = "Clicked "+button+" time";
-	}else{
-		evt.currentTarget.innerHTML = "Clicked "+button+" times";
+function StartProg(evt) {
+	var elem = document.getElementById("bar");
+	var width =0;
+	var id = setInterval(frame,10)
+	function frame() {
+		if (width >=100){
+			clearInterval(id);
+			elem.style.width = '0%';
+			numberValue++
+			document.getElementById('BarNumber').innerHTML=numberValue;
+		}else{
+			width++;
+			elem.style.width = width+'%';
+		}
 	}
 }
