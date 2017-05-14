@@ -2,9 +2,27 @@
 <html>
 	<head>
 		<title>Test</title>
+		<script src="Scripts/Test.js"></script>
 		<link rel="stylesheet" type="text/css" href="Content/Test.css">
 	</head>
 	<body>
-		<p>Chicken</p>
+		<div class="tab">
+			<button class="tablinks" onclick="tabChange(event, 'House')" id="defaultOpen">House</button>
+			<button class="tablinks" onclick="tabChange(event, 'Garden')">Garden</button>
+			<button class="tablinks" onclick="tabChange(event, 'How to')">How to</button>
+		</div>
+		<div id="House" class="tabcontent">
+			<h4>House</h4>
+			<p>This is the house</p>
+		</div>
+		<div id="Garden" class="tabcontent"> 
+			<h4>Garden</h4>
+			<p>This is the garden</p>	
+		</div>
+		<div id="How to" class="tabcontent">
+			<h4>How to</h4>
+			<p>I'm not even sure how to play the game yet</p>
+		</div>
+		<script type="text/javascript">document.getElementById("defaultOpen").click()</script>
 	</body>
 </html>
