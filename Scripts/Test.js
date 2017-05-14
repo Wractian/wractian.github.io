@@ -18,16 +18,19 @@ function tabChange(evt, tabName) {
 function StartProg(evt) {
 	var elem = document.getElementById("bar");
 	var width =0;
-	var id = setInterval(frame,10)
-	function frame() {
-		if (width >=100){
-			clearInterval(id);
-			elem.style.width = '0%';
-			numberValue++
-			document.getElementById('BarNumber').innerHTML=numberValue;
-		}else{
-			width++;
-			elem.style.width = width+'%';
+	if (id==false){
+		id = setInterval(frame,10)
+		function frame() {
+			if (width >=100){
+				clearInterval(id);
+				elem.style.width = '0%';
+				numberValue++;
+				document.getElementById('BarNumber').innerHTML=numberValue;
+				id=false;
+			}else{
+				width+=.5;
+				elem.style.width = width+'%';
+			}
 		}
 	}
 }

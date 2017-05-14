@@ -8,9 +8,9 @@
 	</head>
 	<body>
 		<div class="tab">
-			<button class="tablinks" onclick="tabChange(event, 'House')" id="defaultOpen">House</button>
+			<button class="tablinks" onclick="tabChange(event, 'House')">House</button>
 			<button class="tablinks" onclick="tabChange(event, 'Garden')">Garden</button>
-			<button class="tablinks" onclick="tabChange(event, 'How to')">How to</button>
+			<button class="tablinks" onclick="tabChange(event, 'How to')" id="defaultOpen">How to</button>
 		</div>
 		<div id="House" class="tabcontent">
 			<h4>House</h4>
@@ -35,6 +35,7 @@
 		<script type="text/javascript">
 			document.getElementById("defaultOpen").click()
 			var numberValue=0;
+			id=false;
 		</script>
 	</body>
 </html>
