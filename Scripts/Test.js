@@ -12,25 +12,22 @@ function tabChange(evt, tabName) {
 	 tablinks[i].className = tablinks[i].className.replace("active", "");
 	}
 	document.getElementById(tabName).style.display = "block";
-	evt.currentTarget.className += " active";
-}
-
+	evt.currentTarget.className += " active";}
 function StartProg(evt) {
 	var elem = document.getElementById("bar");
 	var width =0;
-	if (id==false){
-		id = setInterval(frame,10)
+	if (game.id==false){
+		game.id = setInterval(frame,)
 		function frame() {
 			if (width >=100){
-				clearInterval(id);
+				clearInterval(game.id);
 				elem.style.width = '0%';
-				numberValue++;
-				document.getElementById('BarNumber').innerHTML=numberValue;
-				id=false;
+				game.numberValue++;
+				document.getElementById('barNumber').innerHTML="Points:"+game.numberValue;
+				game.id=false;
 			}else{
-				width+=.5;
+				width+=game.barSpeed;
 				elem.style.width = width+'%';
 			}
 		}
-	}
-}
+	}}
