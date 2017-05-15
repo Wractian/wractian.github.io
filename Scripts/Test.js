@@ -2,23 +2,6 @@ function Game() {
 	var tick=0
 	Game.Game=setInterval(ticks,10)
 	function ticks() {
-		if ((game.numberValue>=100*(game.barSpeed))){
-			if (!(document.getElementById("barSpeed").classList.contains("active"))) {
-				document.getElementById("barSpeed").className +="active";
-			}
-		}else{
-			document.getElementById("barSpeed").className=document.getElementById("barSpeed").className.replace("active", "")
-		}
-		if ((game.numberValue>=10*(game.incrementSpeed))){
-			if (!(document.getElementById("incrementSpeed").classList.contains("active"))) {
-				document.getElementById("incrementSpeed").className +="active";
-			}
-		}else{
-			document.getElementById("incrementSpeed").className=document.getElementById("incrementSpeed").className.replace("active", "")
-		}
-		document.getElementById("incrementSpeed").innerHTML="Increment Speed<br/>Points:"+10*game.incrementSpeed;
-		document.getElementById("barSpeed").innerHTML="Bar Speed<br/>Points:"+100*game.barSpeed;
-		document.getElementById('barNumber').innerHTML="Points:"+game.numberValue;
 		tick++
 		document.getElementById("ticks").innerHTML=tick;
 	}
