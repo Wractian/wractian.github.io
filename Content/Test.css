@@ -1,4 +1,5 @@
 body {background-color: powderblue;}
+
 div.tab {
 	overflow: hidden;
 	border: 1px solid #ccc;
@@ -26,9 +27,7 @@ div.Upgrades button#barSpeed {
 	border: none;
 	cursor: pointer;
 	padding: 14px 16px;
-	transition: 0.3s;}}
-
-
+	transition: 0.3s;}
 button.barButton {
 	background-color: orange;
 	float: left;
