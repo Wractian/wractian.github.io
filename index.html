@@ -5,31 +5,34 @@
 		<script src="Scripts/Test.js"></script>
 		<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
 	<body>
+
 		<div class="tab">
 			<button class="tablinks" onclick="tabChange(event, 'House')">House</button>
 			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
 			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button></div>
+		<div id="barNumber">Points:0</div>
 		<div id="House" class="tabcontent">
 			<h4>House</h4>
 			<p>This is the house</p></div>
-		<div id="Upgrades" class="tabcontent"> 
-			<h4>Upgrades</h4>
-			<p>Buy some upgrades</p>	</div>
-		<div id="game" class="tabcontent">
-			<h4>Game</h4>
-			<button class="barButton" onclick="StartProg(event)">Click Me
-            </button>
-            <div id="box">
-            	<div id="prog">
-           		 	<div id="bar"></div>
-            	</div>
+		<div id="Upgrades" class="tabcontent Upgrades"> 
+			<p>Buy some upgrades</p>
+			<button id= "barSpeed" onclick="Upgrade(event, 'Bar Speed')">Bar Speed<br/>Points:1</button>	</div>
+			<div id="game" class="tabcontent">
+				<button class="barButton" onclick="StartProg(event)">Click Me</button>
+            	<div id="box">
+            		<div id="prog">
+           			 	<div id="bar"></div>
+            		</div>
+           		</div>
             </div>
-            <div id="barNumber">Points:0</div></div>
 		<script type="text/javascript">
 			document.getElementById("defaultOpen").click()
 			var game = {}
 			game.id=false
 			game.numberValue=0
 			game.barSpeed=.05
+
+			Game();
 		</script></body>
+		<div id=ticks></div>
 </html>
