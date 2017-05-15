@@ -18,7 +18,6 @@ function tabChange(evt, tabName) {
 	}
 	document.getElementById(tabName).style.display = "block";
 	evt.currentTarget.className += " active";}
-
 function beeBox(evt, increment) {
 	var Boxes, Clone, Parent
 	var Parent = document.getElementById("Main Box");
