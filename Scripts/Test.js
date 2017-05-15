@@ -19,8 +19,8 @@ function Game() {
 		document.getElementById("incrementSpeed").innerHTML="Increment Speed<br/>Points:"+10*game.incrementSpeed;
 		document.getElementById("barSpeed").innerHTML="Bar Speed<br/>Points:"+100*game.barSpeed;
 		document.getElementById('barNumber').innerHTML="Points:"+game.numberValue;
-		/*tick++
-		document.getElementById("ticks").innerHTML=tick;*/
+		tick++
+		document.getElementById("ticks").innerHTML=tick;
 	}
 }
 function tabChange(evt, tabName) {
