@@ -29,3 +29,14 @@ function beeBox(evt, increment) {
 		Parent.removeChild(Boxes[Boxes.length-1])
 	}
 }
+function beeDrawer(evt) {
+	var Boxes = document.getElementById("beeCollapse");
+	
+	if (Boxes.style.maxWidth){
+      Boxes.style.maxWidth = null;
+      evt.currentTarget.innerHTML = "&laquo;"
+    } else {
+      Boxes.style.maxWidth = 100 + "%"
+      evt.currentTarget.innerHTML = "&raquo;"
+    } 
+}
