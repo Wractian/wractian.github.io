@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Bees?</title>
-		<script src="Scripts/Test.js"></script>
-		<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
+<head>
+	<title>Bees?</title>
+	<script src="Scripts/Test.js"></script>
+	<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
 	<body>
 		<div class="tab">
 			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
-			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button></div>
-		<div id="Upgrades" class="tabcontent Upgrades"> 
-			<p>Buy some upgrades</p>
-		</div>
-		<div id="game" class="tabcontent Game">
-			<p>Game Place</p>
-			<table>
-				<tr>
-					<th>Queen</th><th>Princess</th><th>Prince</th>
-				</tr>
-				<tr>
-					<td>Bzz</td><td>Buzz</td><td>BZZZ</td>
-				</tr>
-			</table>
-		</div>
-		<div id="bugDrawer">
-			<table>
-				<tbody>
-					<td class="beeCell">
-						Buzz
-					</td>
-					<td class="beeCell">
-						Buzz
-					</td>
-					<td class="beeCell">
-						Buzz
-					</td>
-					<td class="beeCell">
-						Buzz
-					</td>
-					<td class="beeCell">
-						Buzz
-					</td>
-				</tbody>
-			</table>
-		</div>
-		<script type="text/javascript">
-			document.getElementById("defaultOpen").click()
-			var game = {}
-			Game();
-		</script></body>
-</html>
+			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
+			<button class="tablinks" onclick="tabChange(event, 'Developer')">Developer</button></div>
+			<div id="Upgrades" class="tabcontent Upgrades"> 
+				<p>Buy some upgrades</p>
+			</div>
+			<div id="game" class="tabcontent Game">
+				<p>Game Place</p>
+				<table>
+					<tr>
+						<th>Queen</th><th>Princess</th><th>Prince</th>
+					</tr>
+					<tr>
+						<td>Bzz</td><td>Buzz</td><td>BZZZ</td>
+					</tr>
+				</table>
+			</div>
+			<div id="Developer" class="tabcontent Developer">
+				<button onclick="beeBox(event, '-1')">-1</button>
+				<button onclick="beeBox(event, '1')">1</button>
+			</div>
+			<div id="bugDrawer">
+				<table>
+					<tbody>
+						<tr id="Main Box">
+						<td class="beeCell">
+							Buzz
+						</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<script type="text/javascript">
+				document.getElementById("defaultOpen").click()
+				var game = {}
+				Game();
+			</script></body>
+			</html>
