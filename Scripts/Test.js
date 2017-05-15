@@ -53,7 +53,7 @@ function StartProg(evt) {
 function Upgrade(evt, upgrade) {
 	if ((evt.currentTarget.id=="barSpeed")&&(evt.currentTarget.classList.contains("active"))){
 		game.numberValue-=100*game.barSpeed
-		game.barSpeed=game.barSpeed+.04
+		game.barSpeed=game.barSpeed+.1
 		game.numberValue=Math.floor(game.numberValue)
 	}
 	
