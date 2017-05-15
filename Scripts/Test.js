@@ -9,6 +9,7 @@ function Game() {
 		}else{
 			document.getElementById("barSpeed").className=document.getElementById("barSpeed").className.replace("active", "")
 		}
+		document.getElementById("barSpeed").innerHTML="Bar Speed<br/>Points:"+100*game.barSpeed;
 		document.getElementById('barNumber').innerHTML="Points:"+game.numberValue;
 		tick++
 		document.getElementById("ticks").innerHTML=tick;

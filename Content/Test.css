@@ -19,14 +19,15 @@ div.tab button.active {background-color: #ccc;}
 	border: 1px solid #ccc;
 	border-top: none;
 	min-height: 640px;}
-div.Upgrades button {
+div.Upgrades button#barSpeed.active {background-color: #6fc1b6;}
+div.Upgrades button#barSpeed {
 	background-color: #f1f1f1;
 	float: left;
 	border: none;
 	cursor: pointer;
 	padding: 14px 16px;
 	transition: 0.3s;}}
-div.Upgrades button.active {background-color: #ccc;}
+
 
 button.barButton {
 	background-color: orange;
