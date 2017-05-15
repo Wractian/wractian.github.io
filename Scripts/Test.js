@@ -9,10 +9,18 @@ function Game() {
 		}else{
 			document.getElementById("barSpeed").className=document.getElementById("barSpeed").className.replace("active", "")
 		}
+		if ((game.numberValue>=10*(game.incrementSpeed))){
+			if (!(document.getElementById("incrementSpeed").classList.contains("active"))) {
+				document.getElementById("incrementSpeed").className +="active";
+			}
+		}else{
+			document.getElementById("incrementSpeed").className=document.getElementById("incrementSpeed").className.replace("active", "")
+		}
+		document.getElementById("incrementSpeed").innerHTML="Increment Speed<br/>Points:"+10*game.incrementSpeed;
 		document.getElementById("barSpeed").innerHTML="Bar Speed<br/>Points:"+100*game.barSpeed;
 		document.getElementById('barNumber').innerHTML="Points:"+game.numberValue;
-		tick++
-		document.getElementById("ticks").innerHTML=tick;
+		/*tick++
+		document.getElementById("ticks").innerHTML=tick;*/
 	}
 }
 function tabChange(evt, tabName) {
@@ -40,7 +48,7 @@ function StartProg(evt) {
 			if (width >=100){
 				clearInterval(game.id);
 				elem.style.width = '0%';
-				game.numberValue++;
+				game.numberValue+=game.incrementSpeed;
 				
 				game.id=false;
 			}else{
@@ -57,5 +65,10 @@ function Upgrade(evt, upgrade) {
 		game.barSpeed=Math.round(game.barSpeed*1000)/1000
 		game.numberValue=Math.floor(game.numberValue)
 	}
-	
+	if ((evt.currentTarget.id=="incrementSpeed")&&(evt.currentTarget.classList.contains("active"))){
+		game.numberValue-=10*game.incrementSpeed
+		game.incrementSpeed=game.incrementSpeed+1
+		game.incrementSpeed=Math.round(game.incrementSpeed*1000)/1000
+		game.numberValue=Math.floor(game.numberValue)
+	}
 }
