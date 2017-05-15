@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Test</title>
-		<script src="Scripts/Test.js"></script>
-		<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
+<head>
+	<title>Bees?</title>
+	<script src="Scripts/Test.js"></script>
+	<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
 	<body>
-
 		<div class="tab">
 			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
-			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button></div>
-		<div id="barNumber">Points:0</div>
-		<div id="Upgrades" class="tabcontent Upgrades"> 
-			<p>Buy some upgrades</p>
-			<button id= "barSpeed" onclick="Upgrade(event, 'Bar Speed')">Bar Speed<br/>Points:1</button>
-			<button id= "incrementSpeed" onclick="Upgrade(event, 'increment Speed')">Increment Speed<br/>Points:1</button>	</div>
-		<div id="game" class="tabcontent Game">
-			<button class="barButton" onclick="StartProg(event)">Click Me</button>
-            	<div id="box">
-            		<div id="prog">
-           			 	<div id="bar"></div>
-            		</div>
-           		</div>
-            </div>
-		<script type="text/javascript">
-			document.getElementById("defaultOpen").click()
-			var game = {}
-			game.id=false
-			game.numberValue=0
-			game.barSpeed=.05
-			game.incrementSpeed=1
-			Game();
-		</script></body>
-		<!--<div id=ticks></div>-->
-</html>
+			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
+			<button class="tablinks" onclick="tabChange(event, 'Developer')">Developer</button></div>
+			<div id="Upgrades" class="tabcontent Upgrades"> 
+				<p>Buy some upgrades</p>
+			</div>
+			<div id="game" class="tabcontent Game">
+				<p>Game Place</p>
+				<table>
+					<tr>
+						<th>Queen</th><th>Princess</th><th>Prince</th>
+					</tr>
+					<tr>
+						<td>Bzz</td><td>Buzz</td><td>BZZZ</td>
+					</tr>
+				</table>
+			</div>
+			<div id="Developer" class="tabcontent Developer">
+				<button onclick="beeBox(event, '-1')">-1</button>
+				<button onclick="beeBox(event, '1')">1</button>
+			</div>
+			<div id="bugDrawer">
+				<table>
+					<tbody>
+						<tr id="Main Box">
+						<td class="beeCell">
+							Buzz
+						</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<script type="text/javascript">
+				document.getElementById("defaultOpen").click()
+				var game = {}
+				Game();
+			</script></body>
+			</html>
