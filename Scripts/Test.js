@@ -2,7 +2,7 @@ function Game() {
 	var tick=0
 	Game.Game=setInterval(ticks,10)
 	function ticks() {
-		if ((game.numberValue>=100*game.barSpeed)){
+		if ((game.numberValue>=100*(game.barSpeed))){
 			if (!(document.getElementById("barSpeed").classList.contains("active"))) {
 				document.getElementById("barSpeed").className +="active";
 			}
@@ -54,6 +54,7 @@ function Upgrade(evt, upgrade) {
 	if ((evt.currentTarget.id=="barSpeed")&&(evt.currentTarget.classList.contains("active"))){
 		game.numberValue-=100*game.barSpeed
 		game.barSpeed=game.barSpeed+.1
+		game.barSpeed=Math.round(game.barSpeed*1000)/1000
 		game.numberValue=Math.floor(game.numberValue)
 	}
 	
