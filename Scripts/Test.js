@@ -1,4 +1,5 @@
 function Game() {
+	beeDrawer()
 	var tick=0
 	Game.Game=setInterval(ticks,10)
 	function ticks() {}
@@ -22,21 +23,25 @@ function beeBox(evt, increment) {
 	var Boxes, Clone, Parent
 	var Parent = document.getElementById("Main Box");
 	if (increment==1){
+		if (!(document.getElementsByClassName("beeCell").length==26)){
 		var Clone = Parent.firstElementChild.cloneNode(true);
 		Parent.appendChild(Clone);
+		}
 	}else{
-		var Boxes = document.getElementsByClassName("beeCell")
-		Parent.removeChild(Boxes[Boxes.length-1])
+		if (!(document.getElementsByClassName("beeCell").length==1)){
+			var Boxes = document.getElementsByClassName("beeCell")
+			Parent.removeChild(Boxes[Boxes.length-1])
+		}
 	}
 }
 function beeDrawer(evt) {
 	var Boxes = document.getElementById("beeCollapse");
-	
+
 	if (Boxes.style.maxWidth){
-      Boxes.style.maxWidth = null;
-      evt.currentTarget.innerHTML = "&laquo;"
-    } else {
-      Boxes.style.maxWidth = 100 + "%"
-      evt.currentTarget.innerHTML = "&raquo;"
-    } 
+		Boxes.style.maxWidth = null;
+		evt.currentTarget.innerHTML = "&laquo;"
+	} else {
+		Boxes.style.maxWidth = 100 + "%"
+		evt.currentTarget.innerHTML = "&raquo;"
+	} 
 }
