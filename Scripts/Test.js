@@ -1,7 +1,8 @@
 function Game() {
 	beeDrawer()
 	var tick=0
-	Game.Game=setInterval(ticks,10)
+	game.drawerCounter=1;
+	game.Game=setInterval(ticks,10)
 	function ticks() {}
 }
 function tabChange(evt, tabName) {
@@ -19,29 +20,49 @@ function tabChange(evt, tabName) {
 	}
 	document.getElementById(tabName).style.display = "block";
 	evt.currentTarget.className += " active";}
+
 function beeBox(evt, increment) {
 	var Boxes, Clone, Parent
 	var Parent = document.getElementById("Main Box");
+	var Template = document.getElementsByClassName("template")[0]
 	if (increment==1){
 		if (!(document.getElementsByClassName("beeCell").length==26)){
-		var Clone = Parent.firstElementChild.cloneNode(true);
+		game.drawerCounter++
+		var Clone = Template.firstElementChild.cloneNode(true);
+		Clone.className += " beeCell"
+		Clone.childNodes[1].id="beeCell"+game.drawerCounter;
 		Parent.appendChild(Clone);
 		}
 	}else{
 		if (!(document.getElementsByClassName("beeCell").length==1)){
 			var Boxes = document.getElementsByClassName("beeCell")
 			Parent.removeChild(Boxes[Boxes.length-1])
+			game.drawerCounter--
 		}
 	}
 }
 function beeDrawer(evt) {
 	var Boxes = document.getElementById("beeCollapse");
-
+	var Button = document.getElementById("beeButton");
 	if (Boxes.style.maxWidth){
 		Boxes.style.maxWidth = null;
-		evt.currentTarget.innerHTML = "&laquo;"
+		Button.innerHTML = "&laquo;"
 	} else {
 		Boxes.style.maxWidth = 100 + "%"
-		evt.currentTarget.innerHTML = "&raquo;"
+		Button.innerHTML = "&raquo;"
 	} 
+}
+function allowDrop(evt) {
+	evt.preventDefault();
+}
+function drag(evt) {
+	evt.dataTransfer.setData("dragid", evt.target.id)
+}
+function drop(evt) {
+	evt.preventDefault();
+	var data = evt.dataTransfer.getData("dragid");
+	evt.target.appendChild(document.getElementById(data))
+}
+function addBee(evt) {
+	alert("bees")
 }

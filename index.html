@@ -15,35 +15,63 @@
 			</div>
 			<div id="game" class="tabcontent Game">
 				<p>Game Place</p>
-				<table>
+				<table id="gameTable">
 					<tr>
-						<th>Queen</th><th>Princess</th><th>Prince</th>
+						<th>Queen</th><th>Princess</th><th>Drone</th>
 					</tr>
 					<tr>
-						<td>Bzz</td><td>Buzz</td><td>BZZZ</td>
+						<td>
+							<div id="queenCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+						</td>
+						<td>
+							<div id="princessCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+						</td>
+						<td>
+							<div id="droneCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="Developer" class="tabcontent Developer">
 				<button onclick="beeBox(event, '-1')">-1</button>
-				add bee box
 				<button onclick="beeBox(event, '1')">+1</button>
+				<button onclick="addBee(event)">Add Bee</button>
+
+					<table id="gameTable">
+					<tr>
+					<td>
+						<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					</td>
+					</tr>
+					</table>
 			</div>
 			<div id="bugDrawer">
 				<button id="beeButton" onclick="beeDrawer(event)">&raquo;</button>
 				<table>
-					<tbody id="beeCollapse">
+					<tbody id="beeCollapse"> 
 						<tr id="Main Box">
 							<td class="beeCell">
-								<img src="Content/Bee.png">
+							<div id="beeCell1" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)">
+								<img id="bee1" src="Content/Bee.png" draggable="true"
+ondragstart="drag(event)">
+							</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<table>
+			<tr class="hidden, template">
+				<td>
+							<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				</td>
+			</tr>
+			</table>
 			<script type="text/javascript">
 				document.getElementById("defaultOpen").click()
 				var game = {}
 				Game();
-			</script></body>
+			</script>
+
+			</body>
 			</html>
