@@ -58,17 +58,20 @@ function allowDrop(evt) {
 }
 function drag(evt) {
 	evt.dataTransfer.setData("dragid", evt.target.id)
+	evt.dataTransfer.effectAllowed = "copyMove"
 }
 function drop(evt) {
 	evt.preventDefault();
+	if ((evt.target.className=="bugHolderDiv")) {
 	var data = evt.dataTransfer.getData("dragid");
 	evt.target.appendChild(document.getElementById(data))
+	}
 }
 function addBee(evt) {
 	var Template = document.getElementsByClassName("template")[1]
 	var Clone = Template.cloneNode(false);
 	Clone.className = Clone.className.replace("template", "");
 	game.beeCounter++
-	Clone.id="bee"+game.beeCounter
+	Clone.id="bee"+game.beeCounter	
 	document.getElementById("devCell").appendChild(Clone)
 }
