@@ -2,6 +2,7 @@ function Game() {
 	beeDrawer()
 	var tick=0
 	game.drawerCounter=1;
+	game.beeCounter=1;
 	game.Game=setInterval(ticks,10)
 	function ticks() {}
 }
@@ -64,5 +65,10 @@ function drop(evt) {
 	evt.target.appendChild(document.getElementById(data))
 }
 function addBee(evt) {
-	alert("bees")
+	var Template = document.getElementsByClassName("template")[1]
+	var Clone = Template.cloneNode(false);
+	Clone.className = Clone.className.replace("template", "");
+	game.beeCounter++
+	Clone.id="bee"+game.beeCounter
+	document.getElementById("devCell").appendChild(Clone)
 }

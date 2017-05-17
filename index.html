@@ -37,7 +37,7 @@
 				<button onclick="beeBox(event, '1')">+1</button>
 				<button onclick="addBee(event)">Add Bee</button>
 
-					<table id="gameTable">
+					<table id="beeMaker">
 					<tr>
 					<td>
 						<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
@@ -67,6 +67,11 @@ ondragstart="drag(event)">
 				</td>
 			</tr>
 			</table>
+			<div class="hidden">
+				<img class="template" id="beesTemp" src="Content/Bee.png" draggable="true"
+ondragstart="drag(event)">
+			</div>
+
 			<script type="text/javascript">
 				document.getElementById("defaultOpen").click()
 				var game = {}
