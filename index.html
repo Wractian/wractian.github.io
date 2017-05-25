@@ -45,38 +45,36 @@
 					</tr>
 					</table>
 			</div>
-			<div id="bugDrawer">
-				<button id="beeButton" onclick="beeDrawer(event)">&raquo;</button>
-				<table>
-					<tbody id="beeCollapse"> 
-						<tr id="Main Box">
-							<td class="beeCell">
-							<div id="beeCell1" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)">
-								<img id="bee1" src="Content/Bee.png" draggable="true"
-ondragstart="drag(event)">
+			<div id="bugDrawer" class="flex">
+				
+				<div>
+					<div id="beeCollapse"> 
+						<div id="MainBox" class="flex">
+							<div class=" beeCell">
+								<div id="beeCell1" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)">
+								<img id="bee1" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
 							</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<table>
-			<tr class="hidden, template">
-				<td>
-							<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				</td>
-			</tr>
-			</table>
-			<div class="hidden">
-				<img class="template" id="beesTemp" src="Content/Bee.png" draggable="true"
-ondragstart="drag(event)">
-			</div>
 
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<button id="beeButton" onclick="beeDrawer(event)">&raquo;</button>
+			</div>
+			<div class="hidden, template">
+				<div>
+					<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				</div>
+			</div>
+			<div class="hidden">
+				<img class="template" id="beesTemp" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
+			</div>
 			<script type="text/javascript">
-				document.getElementById("defaultOpen").click()
-				var game = {}
+				document.getElementById("defaultOpen").click();
+				var game = {};
 				Game();
 			</script>
-
-			</body>
-			</html>
+	</body>
+</html>

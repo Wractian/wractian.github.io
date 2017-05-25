@@ -23,9 +23,10 @@ function tabChange(evt, tabName) {
 	evt.currentTarget.className += " active";}
 
 function beeBox(evt, increment) {
-	var Boxes, Clone, Parent
-	var Parent = document.getElementById("Main Box");
+	var Boxes, Clone, Button
+	var Parent = document.getElementById("MainBox");
 	var Template = document.getElementsByClassName("template")[0]
+	var Button = document.getElementById("beeButton");
 	if (increment==1){
 		if (!(document.getElementsByClassName("beeCell").length==26)){
 		game.drawerCounter++
@@ -33,13 +34,18 @@ function beeBox(evt, increment) {
 		Clone.className += " beeCell"
 		Clone.childNodes[1].id="beeCell"+game.drawerCounter;
 		Parent.appendChild(Clone);
+		Button.className = Button.className.replace(" hidden","");
 		}
 	}else{
-		if (!(document.getElementsByClassName("beeCell").length==1)){
-			var Boxes = document.getElementsByClassName("beeCell")
-			Parent.removeChild(Boxes[Boxes.length-1])
+		if (!(document.getElementsByClassName("beeCell").length==0)){
+			var Boxes = document.getElementsByClassName("beeCell");
+			Parent.removeChild(Boxes[Boxes.length-1]);
 			game.drawerCounter--
+			if (document.getElementsByClassName("beeCell").length==0){
+					Button.className+= " hidden"
+			}
 		}
+		
 	}
 }
 function beeDrawer(evt) {
