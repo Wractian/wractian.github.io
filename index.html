@@ -3,9 +3,10 @@
 <head>
 	<title>The Bee Box</title>
 	<link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon">
+	<script src="Scripts/jquery.js"></script>
 	<script src="Scripts/Test.js"></script>
 	<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
-	<body>
+	<body id="body">
 		<div class="tab">
 			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
 			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
@@ -33,38 +34,24 @@
 				</table>
 			</div>
 			<div id="Developer" class="tabcontent Developer">
-				<button onclick="beeBox(event, '-1')">-1</button>
-				<button onclick="beeBox(event, '1')">+1</button>
-				<button onclick="addBee(event)">Add Bee</button>
-
-					<table id="beeMaker">
-					<tr>
-					<td>
-						<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-					</td>
-					</tr>
-					</table>
+				<div class="flex">
+					<button onclick="beeBox(event, '-1')">-1</button>
+					<button onclick="beeBox(event, '1')">+1</button>
+					<button onclick="addBee(event)">Add Bee</button>
+					<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				</div>
 			</div>
 			<div id="bugDrawer" class="flex">
-				
 				<div>
 					<div id="beeCollapse"> 
 						<div id="MainBox" class="flex">
-							<div class=" beeCell">
-								<div id="beeCell1" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)">
-								<img id="bee1" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
-							</div>
-
-							</div>
-
 						</div>
 					</div>
-
 				</div>
-				<button id="beeButton" onclick="beeDrawer(event)">&raquo;</button>
+				<div id="beeButton" onclick="beeDrawer(event)">&raquo;</div>
 			</div>
 			<div class="hidden, template">
-				<div>
+				<div onclick="beeSelect(event)" style="border-color:black">
 					<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 				</div>
 			</div>
@@ -74,6 +61,7 @@
 			<script type="text/javascript">
 				document.getElementById("defaultOpen").click();
 				var game = {};
+				game.bees={};
 				Game();
 			</script>
 	</body>

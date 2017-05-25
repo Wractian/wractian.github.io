@@ -1,10 +1,13 @@
 function Game() {
-	beeDrawer()
-	var tick=0
-	game.drawerCounter=1;
-	game.beeCounter=1;
-	game.Game=setInterval(ticks,10)
-	function ticks() {}
+	game.bees.maxBees=100;
+	beeDrawer();
+	var tick=0;
+	game.drawerCounter=0;
+	game.beeCounter=0;
+	beeBox(null,1)
+	game.Game=setInterval(ticks,10);
+	function ticks() {
+	}
 }
 function tabChange(evt, tabName) {
 
@@ -28,7 +31,7 @@ function beeBox(evt, increment) {
 	var Template = document.getElementsByClassName("template")[0]
 	var Button = document.getElementById("beeButton");
 	if (increment==1){
-		if (!(document.getElementsByClassName("beeCell").length==26)){
+		if (!(document.getElementsByClassName("beeCell").length==27)){
 		game.drawerCounter++
 		var Clone = Template.firstElementChild.cloneNode(true);
 		Clone.className += " beeCell"
@@ -74,10 +77,26 @@ function drop(evt) {
 	}
 }
 function addBee(evt) {
+	for (var i = 0; i < 10; i++) {
+		
+	
 	var Template = document.getElementsByClassName("template")[1]
 	var Clone = Template.cloneNode(false);
 	Clone.className = Clone.className.replace("template", "");
 	game.beeCounter++
 	Clone.id="bee"+game.beeCounter	
 	document.getElementById("devCell").appendChild(Clone)
+}
+}
+function beeSelect(evt) {
+	if (evt.currentTarget.firstElementChild.childNodes.length){
+		if (true) {
+			if (evt.currentTarget.style.borderColor=="black")
+			{
+				evt.currentTarget.style.borderColor="#08ca08"
+			}else{
+				evt.currentTarget.style.borderColor="black"
+			}
+		}
+	}
 }

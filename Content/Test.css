@@ -40,7 +40,8 @@ div.bugHolderDiv{
 	height: 100%;
 	text-align: center;
 }
-div#bugDrawer button#beeButton{
+div#bugDrawer div#beeButton{
+	user-select:none;
 	bottom:0;
 	right: 0;
 	content: "\00ab";
@@ -51,7 +52,7 @@ div#bugDrawer button#beeButton{
 	font-size: 20px;
 	border:3px solid black;
 	border-radius: 3px;
-	padding: 13.5px 3px;
+	padding: 12.5px 3px 14.5px 3px;
 	margin: 4px 4px 4px 0px;
 	outline: none;}
 .hidden{
@@ -59,18 +60,18 @@ div#bugDrawer button#beeButton{
 }
 .flex
 {
+	flex-direction: rtl;
 	display: flex;
-
 }
 div.beeCell{
 	overflow: hidden;
 	display: inline-block;
 	min-width:50px; 
 	height: 50px;
-	border: 3px solid black;
+	border: 3px solid;
 	border-radius: 3px;
 	background-color: #f1f1f1;
-	margin:4px 2px;}
+	margin:4px 1px;}
 div#Developer button{
 	background-color: #f1f1f1;
 	border: 1px solid #ccc;
@@ -79,7 +80,7 @@ div#Developer button{
 	cursor: pointer;
 	padding: 14px 16px;
 	transition: 0.3s;
-	margin: 0px 1px 0px 1px;
+	margin: 0px 2px 0px 0px;
 	width:43px;
 	height:43px;}
 div#Developer td{
