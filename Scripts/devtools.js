@@ -9,13 +9,11 @@ function deleteBees(evt) {
         if (game.drawer.cells[i].firstElementChild.hasChildNodes()) {
             $(game.drawer.cells[i].firstElementChild.firstElementChild).fadeOut(300, "linear")
             var id = setTimeout(removeBee, 300, game.drawer.cells[i].firstElementChild);
-
             function removeBee(target) {
                 target.removeChild(target.firstElementChild)
             }
         }
     }
 }
-function false(evt){
- alert("help")
-}
+function idktest(argument) {
+    // body...
