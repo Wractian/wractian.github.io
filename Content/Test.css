@@ -52,16 +52,29 @@ div#bugDrawer div#beeButton{
 	font-size: 20px;
 	border:3px solid black;
 	border-radius: 3px;
-	padding: 12.5px 3px 14.5px 3px;
-	margin: 4px 4px 4px 0px;
+	padding: 12.5px 4px 14.5px 3px;
+	margin: 0px 4px 0px 0px;
 	outline: none;}
 .hidden{
 	display: none !important;
 }
-.flex
+.flex-row
 {
-	flex-direction: rtl;
 	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.flex-column
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.flex-end { 
+	justify-content: flex-end;
+}
+.nowrap{
+	flex-wrap: nowrap;
 }
 div.beeCell{
 	overflow: hidden;
@@ -71,7 +84,7 @@ div.beeCell{
 	border: 3px solid;
 	border-radius: 3px;
 	background-color: #f1f1f1;
-	margin:4px 1px;}
+	margin:0px 1px;}
 div#Developer button{
 	background-color: #f1f1f1;
 	border: 1px solid #ccc;
@@ -81,8 +94,8 @@ div#Developer button{
 	padding: 14px 16px;
 	transition: 0.3s;
 	margin: 0px 2px 0px 0px;
-	width:43px;
-	height:43px;}
+	width:100px;
+	height:100px;}
 div#Developer td{
 	border: 3px solid black;
 	border-radius: 3px;
@@ -92,6 +105,16 @@ div#Developer td{
 div#game table#gameTable td{
 	border: 3px solid black;
 	border-radius: 3px;
-
 	width:50px; height: 50px;
 	background-color: #f1f1f1}
+div#drawerTrash{
+	user-select:none;
+	background-color: #f1f1f1;
+	border: 3px solid black;
+	border-radius: 3px;
+	width: 15px;
+	height: 15px;
+	padding: 1px 1px 1px 1px;
+	margin: 0px;
+}
+

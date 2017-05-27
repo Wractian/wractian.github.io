@@ -34,24 +34,34 @@
 				</table>
 			</div>
 			<div id="Developer" class="tabcontent Developer">
-				<div class="flex">
+				<div class="flex-row">
 					<button onclick="beeBox(event, '-1')">-1</button>
 					<button onclick="beeBox(event, '1')">+1</button>
-					<button onclick="addBee(event)">Add Bee</button>
+					<button onclick="addBee(event, 'devCell')">Add Bee</button>
 					<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 				</div>
 			</div>
-			<div id="bugDrawer" class="flex">
-				<div>
-					<div id="beeCollapse"> 
-						<div id="MainBox" class="flex">
+			<div id="bugDrawer" class="flex-column">
+				<div class="flex-row flex-end">
+					
+					<div id="drawerTrash" onclick="beeTrash(event)">
+						<img src="Content/trash.png">
+					</div>
+					<div style="width:4px"></div>
+				</div>
+				<div style="height: 2px"></div>
+				<div class="flex-row">
+					<div>
+						<div id="beeCollapse"> 
+							<div id="MainBox" class="flex-row nowrap"></div>
 						</div>
 					</div>
+					<div id="beeButton" onclick="beeDrawer(event)">&raquo;</div>
 				</div>
-				<div id="beeButton" onclick="beeDrawer(event)">&raquo;</div>
+				<div style="height: 4px"></div>
 			</div>
 			<div class="hidden, template">
-				<div onclick="beeSelect(event)" style="border-color:black">
+				<div onclick="beeSelect(event)" style="background-color:rgb(241, 241, 241)">
 					<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 				</div>
 			</div>
@@ -60,8 +70,6 @@
 			</div>
 			<script type="text/javascript">
 				document.getElementById("defaultOpen").click();
-				var game = {};
-				game.bees={};
 				Game();
 			</script>
 	</body>
