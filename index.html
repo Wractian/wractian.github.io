@@ -4,8 +4,9 @@
 	<title>The Bee Box</title>
 	<link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon">
 	<script src="Scripts/jquery.js"></script>
-	<script src="Scripts/Test.js"></script>
-	<link rel="stylesheet" type="text/css" href="Content/Test.css"></head>
+	<script src="Scripts/script.js"></script>
+	<script src="Scripts/devtools.js"></script>
+	<link rel="stylesheet" type="text/css" href="Content/style.css"></head>
 	<body id="body">
 		<div class="tab">
 			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
@@ -38,13 +39,14 @@
 					<button onclick="beeBox(event, '-1')">-1</button>
 					<button onclick="beeBox(event, '1')">+1</button>
 					<button onclick="addBee(event, 'devCell')">Add Bee</button>
+					<button onclick="fillBees(event)">Fill Bees</button>
+					<button onclick="deleteBees(event)">Delete Bees</button>
 					<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 				</div>
 			</div>
 			<div id="bugDrawer" class="flex-column">
 				<div class="flex-row flex-end">
-					
-					<div id="drawerTrash" onclick="beeTrash(event)">
+					<div id="drawerTrash" style="display:none;" onclick="beeTrash(event)">
 						<img src="Content/trash.png">
 					</div>
 					<div style="width:4px"></div>
@@ -56,7 +58,7 @@
 							<div id="MainBox" class="flex-row nowrap"></div>
 						</div>
 					</div>
-					<div id="beeButton" onclick="beeDrawer(event)">&raquo;</div>
+					<div id="beeButton" style="display:none;" onclick="beeDrawer(event)">&raquo;</div>
 				</div>
 				<div style="height: 4px"></div>
 			</div>

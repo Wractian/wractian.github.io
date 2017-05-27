@@ -77,6 +77,7 @@ div#bugDrawer div#beeButton{
 	flex-wrap: nowrap;
 }
 div.beeCell{
+	user-select:none;
 	overflow: hidden;
 	display: inline-block;
 	min-width:50px; 
