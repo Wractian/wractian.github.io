@@ -6,7 +6,6 @@ div.tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
-    background
 }
 
 div.tab button {
@@ -28,27 +27,27 @@ div.tab button.active {
 
 .tabcontent {
     background-color: white;
-    display: none;
-    padding: 12px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    display: none;
     min-height: 300px;
+    padding: 12px 12px;
 }
 
-div#game table,
-div#game th {
+#game table,
+#game th {
     border: 3px solid black;
     border-radius: 3px;
     border-collapse: collapse;
 }
 
-div#bugDrawer {
+#bugDrawer {
     position: absolute;
     bottom: 0;
     right: 0;
 }
 
-div#beeCollapse {
+#beeCollapse {
     float: right;
     text-align: center;
     max-width: 0;
@@ -56,13 +55,13 @@ div#beeCollapse {
     transition: linear .2s;
 }
 
-div.bugHolderDiv {
-    width: 100%;
+.bugHolderDiv {
     height: 100%;
     text-align: center;
+    width: 100%;
 }
 
-div#bugDrawer div#beeButton {
+#beeButton {
     user-select: none;
     bottom: 0;
     right: 0;
@@ -80,7 +79,7 @@ div#bugDrawer div#beeButton {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 .flex-row {
@@ -115,11 +114,10 @@ div.beeCell {
     margin: 0px 1px;
 }
 
-div#Developer button {
+#Developer button {
     background-color: #f1f1f1;
     border: 1px solid #ccc;
     float: left;
-    border: none;
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
@@ -128,7 +126,7 @@ div#Developer button {
     height: 100px;
 }
 
-div#Developer td {
+#Developer td {
     border: 3px solid black;
     border-radius: 3px;
     background-color: #f1f1f1;
@@ -136,7 +134,7 @@ div#Developer td {
     height: 50px;
 }
 
-div#game table#gameTable td {
+#gameTable td {
     border: 3px solid black;
     border-radius: 3px;
     width: 50px;
@@ -144,7 +142,7 @@ div#game table#gameTable td {
     background-color: #f1f1f1
 }
 
-div#drawerTrash {
+#drawerTrash {
     user-select: none;
     background-color: #f1f1f1;
     border: 3px solid black;

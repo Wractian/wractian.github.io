@@ -1,5 +1,5 @@
+"use strict";
 function Game() {
-    game = {};
     game.bees = {};
     game.trash = {};
     game.drawer = {};
@@ -15,21 +15,19 @@ function Game() {
     beeBox(null, 1);
     //DeveloperStuff }
     game.Game = setInterval(ticks, 10);
-
     function ticks() {}
 }
 
 function tabChange(evt, tabName) {
 
-    var i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (var i = 0; i < tabcontent.length; i++) {
+    var i;
+    var tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
-    tablinks = document.getElementsByClassName("tablinks");
-    for (var i = 0; i < tablinks.length; i++) {
+    var tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace("active", "");
     }
     document.getElementById(tabName).style.display = "block";
@@ -143,7 +141,7 @@ function beeTrash(evt) {
     if (game.trash.trashon) {
         game.trash.trashon = false
         evt.currentTarget.style.backgroundColor = "#f1f1f1"
-        for (var i = 0; i < game.trash.trashList.length; i++) {
+        for (vari = 0; i < game.trash.trashList.length; i++) {
             var element = game.trash.trashList[i]
             element.style.backgroundColor = "#f1f1f1";
             $(element.firstElementChild.firstElementChild).fadeOut(300, "linear")
