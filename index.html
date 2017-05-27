@@ -1,78 +1,85 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>The Bee Box</title>
-	<link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon">
-	<script src="Scripts/jquery.js"></script>
-	<script src="Scripts/script.js"></script>
-	<script src="Scripts/devtools.js"></script>
-	<link rel="stylesheet" type="text/css" href="Content/style.css"></head>
-	<body id="body">
-		<div class="tab">
-			<button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
-			<button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
-			<button class="tablinks" onclick="tabChange(event, 'Developer')">Developer</button></div>
-			<div id="Upgrades" class="tabcontent Upgrades"> 
-				<p>Buy some upgrades</p>
-			</div>
-			<div id="game" class="tabcontent Game">
-				<p>Game Place</p>
-				<table id="gameTable">
-					<tr>
-						<th>Queen</th><th>Princess</th><th>Drone</th>
-					</tr>
-					<tr>
-						<td>
-							<div id="queenCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-						</td>
-						<td>
-							<div id="princessCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-						</td>
-						<td>
-							<div id="droneCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div id="Developer" class="tabcontent Developer">
-				<div class="flex-row">
-					<button onclick="beeBox(event, '-1')">-1</button>
-					<button onclick="beeBox(event, '1')">+1</button>
-					<button onclick="addBee(event, 'devCell')">Add Bee</button>
-					<button onclick="fillBees(event)">Fill Bees</button>
-					<button onclick="deleteBees(event)">Delete Bees</button>
-					<div id="devCell" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				</div>
-			</div>
-			<div id="bugDrawer" class="flex-column">
-				<div class="flex-row flex-end">
-					<div id="drawerTrash" style="display:none;" onclick="beeTrash(event)">
-						<img src="Content/trash.png">
-					</div>
-					<div style="width:4px"></div>
-				</div>
-				<div style="height: 2px"></div>
-				<div class="flex-row">
-					<div>
-						<div id="beeCollapse"> 
-							<div id="MainBox" class="flex-row nowrap"></div>
-						</div>
-					</div>
-					<div id="beeButton" style="display:none;" onclick="beeDrawer(event)">&raquo;</div>
-				</div>
-				<div style="height: 4px"></div>
-			</div>
-			<div class="hidden, template">
-				<div onclick="beeSelect(event)" style="background-color:rgb(241, 241, 241)">
-					<div id="beeTemplate" class="bugHolderDiv"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				</div>
-			</div>
-			<div class="hidden">
-				<img class="template" id="beesTemp" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
-			</div>
-			<script type="text/javascript">
-				document.getElementById("defaultOpen").click();
-				Game();
-			</script>
-	</body>
+    <title>The Bee Box</title>
+    <link rel="shortcut icon" href="Content/favicon.ico" type="image/x-icon">
+    <script src="Scripts/jquery.js"></script>
+    <script src="Scripts/script.js"></script>
+    <script src="Scripts/devtools.js"></script>
+    <link rel="stylesheet" type="text/css" href="Content/style.css">
+</head>
+
+<body id="body">
+    <div class="tab">
+        <button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
+        <button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
+        <button class="tablinks" onclick="tabChange(event, 'Developer')">Developer</button>
+    </div>
+    <div id="Upgrades" class="tabcontent Upgrades">
+        <p>Buy some upgrades</p>
+    </div>
+    <div id="game" class="tabcontent Game">
+        <p>Game Place</p>
+        <table id="gameTable">
+            <tr>
+                <th>Queen</th>
+                <th>Princess</th>
+                <th>Drone</th>
+            </tr>
+            <tr>
+                <td>
+                    <div id="queenCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </td>
+                <td>
+                    <div id="princessCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </td>
+                <td>
+                    <div id="droneCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="Developer" class="tabcontent Developer">
+        <div class="flex-row">
+            <button onclick="beeBox(event, '-1')">-1</button>
+            <button onclick="beeBox(event, '1')">+1</button>
+            <button onclick="addBee(event, 'devCell')">Add Bee</button>
+            <button onclick="fillBees(event)">Fill Bees</button>
+            <button onclick="deleteBees(event)">Delete Bees</button>
+            <div id="devCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </div>
+    <div id="bugDrawer" class="flex-column">
+        <div class="flex-row flex-end">
+            <div id="drawerTrash" style="display:none;" onclick="beeTrash(event)">
+                <img src="Content/trash.png">
+            </div>
+            <div style="width:4px"></div>
+        </div>
+        <div style="height: 2px"></div>
+        <div class="flex-row">
+            <div>
+                <div id="beeCollapse">
+                    <div id="MainBox" class="flex-row nowrap"></div>
+                </div>
+            </div>
+            <div id="beeButton" style="display:none;" onclick="beeDrawer(event)">&raquo;</div>
+        </div>
+        <div style="height: 4px"></div>
+    </div>
+    <div class="hidden, template">
+        <div onclick="beeSelect(event)" style="background-color:rgb(241, 241, 241)">
+            <div id="beeTemplate" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </div>
+    <div class="hidden">
+        <img class="template" id="beesTemp" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
+    </div>
+    <script type="text/javascript">
+    document.getElementById("defaultOpen").click();
+    Game();
+    </script>
+</body>
+
 </html>
