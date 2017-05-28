@@ -5,9 +5,10 @@ function Game() {
     game.drawer = {};
     game.drawer.cells = [];
     game.drawer.drawerCounter = 0;
-    game.bees.maxBees = 100;
-    game.bees.beeStats = [];
     game.bees.bees = [];
+    game.bees.beeStats = [];
+    game.bees.maxBees = 100;
+    game.bees.tempbees = [];
     game.tick = 0;
     game.bees.beeCounter = 0;
     game.trash.trashon = false;
@@ -130,6 +131,7 @@ function addBee(evt, elementid) {
                 game.bees.beeCounter += 1;
                 game.bees.bees.push(Clone);
                 game.bees.beeStats.push([1,2,3,game.bees.beeCounter]);
+                game.bees.tempbees.push(new Bee(Clone));
                 $(Clone).hide();
                 document.getElementById(elementid).appendChild(Clone);
                 $(Clone).fadeIn(300, "linear");
@@ -167,6 +169,7 @@ function removeBee(target) {
     var index;
     index = game.bees.bees.indexOf(target.firstElementChild);
     game.bees.bees.splice(index, 1);
+    game.bees.beeStats.splice(index, 1);
     target.removeChild(target.firstElementChild);
     relistBees();
     game.bees.beeCounter = game.bees.bees.length;
@@ -202,15 +205,19 @@ function beeTrash(evt) {
 }
 
 function relistBees() {
-    var alphaBees, i, numA, numB;
-    alphaBees = game.bees.bees;
-    alphaBees.sort(function(a, b) {
+    var numBees, i, numA, numB;
+    numBees = game.bees.bees;
+    numBees.sort(function(a, b) {
         numA = a.id.replace("bee", "");
         numB = b.id.replace("bee", "");
         return numA - numB;
     });
-    for (i = 0; i < alphaBees.length; i += 1) {
-        alphaBees[i].id = "bee" + i;
+    for (i = 0; i < numBees.length; i += 1) {
+        numBees[i].id = "bee" + i;
     }
-    game.bees.bees = alphaBees;
+    game.bees.bees = numBees;
+}
+
+function Bee(element) {
+    this.element=element;
 }
