@@ -6,8 +6,10 @@ function Game() {
     game.drawer.cells = [];
     game.drawer.drawerCounter = 0;
     game.bees.maxBees = 100;
+    game.bees.beeStats = [];
+    game.bees.bees = [];
     game.tick = 0;
-    game.beeCounter = 0;
+    game.bees.beeCounter = 0;
     game.trash.trashon = false;
     game.trash.trashList = [];
     //DeveloperStuff {
@@ -45,7 +47,7 @@ function beeBox(evt, increment) {
     Template = document.getElementsByClassName("template")[0];
     Button = document.getElementById("beeButton");
     Trash = document.getElementById("drawerTrash");
-    if (increment === 1) {
+    if (increment == 1) {
         condition = (game.drawer.cells.length === 27);
         if (!condition) {
             game.drawer.drawerCounter += 1;
@@ -63,6 +65,10 @@ function beeBox(evt, increment) {
         length = game.drawer.cells.length;
         condition = game.drawer.cells.length === 0;
         if (!condition) {
+            condition = game.drawer.cells[length - 1].firstElementChild.hasChildNodes();
+            if (condition) {
+                removeBee(game.drawer.cells[length - 1].firstElementChild);
+            }
             Parent.removeChild(game.drawer.cells[length - 1]);
             game.drawer.cells.splice(game.drawer.cells.length - 1);
             game.drawer.drawerCounter += -1;
@@ -70,6 +76,7 @@ function beeBox(evt, increment) {
                 $(Button).fadeOut(300, "linear");
                 $(Trash).fadeOut(300, "linear");
             }
+
         }
 
     }
@@ -119,8 +126,10 @@ function addBee(evt, elementid) {
                 Template = document.getElementsByClassName("template")[1];
                 Clone = Template.cloneNode(false);
                 Clone.className = Clone.className.replace("template", " bee");
-                game.beeCounter += 1;
-                Clone.id = "bee" + game.beeCounter;
+                Clone.id = "bee" + game.bees.beeCounter;
+                game.bees.beeCounter += 1;
+                game.bees.bees.push(Clone);
+                game.bees.beeStats.push([1,2,3,game.bees.beeCounter]);
                 $(Clone).hide();
                 document.getElementById(elementid).appendChild(Clone);
                 $(Clone).fadeIn(300, "linear");
@@ -153,14 +162,21 @@ function beeSelect(evt) {
     }
 }
 
+function removeBee(target) {
+    "use strict";
+    var index;
+    index = game.bees.bees.indexOf(target.firstElementChild);
+    game.bees.bees.splice(index, 1);
+    target.removeChild(target.firstElementChild);
+    relistBees();
+    game.bees.beeCounter = game.bees.bees.length;
+}
+
 function beeTrash(evt) {
     "use strict";
     var element, i, bees;
 
-    function removeBee(target) {
-        target.removeChild(target.firstElementChild);
-        console.log("test");
-    }
+
     if (game.trash.trashon) {
         game.trash.trashon = false;
         evt.currentTarget.style.backgroundColor = "#f1f1f1";
@@ -183,4 +199,18 @@ function beeTrash(evt) {
             bees[i].setAttribute('draggable', 'false');
         }
     }
+}
+
+function relistBees() {
+    var alphaBees, i, numA, numB;
+    alphaBees = game.bees.bees;
+    alphaBees.sort(function(a, b) {
+        numA = a.id.replace("bee", "");
+        numB = b.id.replace("bee", "");
+        return numA - numB;
+    });
+    for (i = 0; i < alphaBees.length; i += 1) {
+        alphaBees[i].id = "bee" + i;
+    }
+    game.bees.bees = alphaBees;
 }

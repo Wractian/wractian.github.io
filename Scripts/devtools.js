@@ -8,13 +8,7 @@ function fillBees() {
 
 function deleteBees() {
     "use strict";
-    var i, id;
-
-    function removeBee(target) {
-        "use strict";
-        target.removeChild(target.firstElementChild);
-    }
-
+    var i, id, bees;
     for (i = 0; i < game.drawer.cells.length; i += 1) {
         if (game.drawer.cells[i].firstElementChild.hasChildNodes()) {
             $(game.drawer.cells[i].firstElementChild.firstElementChild).fadeOut(300, "linear");
