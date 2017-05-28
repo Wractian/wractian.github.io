@@ -8,7 +8,6 @@ function Game() {
     game.bees.bees = [];
     game.bees.beeStats = [];
     game.bees.maxBees = 100;
-    game.bees.tempbees = [];
     game.tick = 0;
     game.bees.beeCounter = 0;
     game.trash.trashon = false;
@@ -67,6 +66,7 @@ function beeBox(evt, increment) {
         condition = game.drawer.cells.length === 0;
         if (!condition) {
             condition = game.drawer.cells[length - 1].firstElementChild.hasChildNodes();
+
             if (condition) {
                 removeBee(game.drawer.cells[length - 1].firstElementChild);
             }
@@ -121,6 +121,14 @@ function drop(evt) {
 function addBee(evt, elementid) {
     "use strict";
     var i, Template, Clone;
+
+    function randomGender() {
+        if (Math.random() >= 0.5) {
+            return "Female";
+        } else {
+            return "Male";
+        }
+    }
     for (i = 0; i < 1; i += 1) {
         if ($("#" + elementid).hasClass("bugHolderDiv")) {
             if (($("#" + elementid).children().length === 0) || (elementid === "devCell")) {
@@ -129,9 +137,7 @@ function addBee(evt, elementid) {
                 Clone.className = Clone.className.replace("template", " bee");
                 Clone.id = "bee" + game.bees.beeCounter;
                 game.bees.beeCounter += 1;
-                game.bees.bees.push(Clone);
-                game.bees.beeStats.push([1,2,3,game.bees.beeCounter]);
-                game.bees.tempbees.push(new Bee(Clone));
+                game.bees.bees.push(new Bee(Clone, randomGender(), Math.floor(Math.random() * 10)));
                 $(Clone).hide();
                 document.getElementById(elementid).appendChild(Clone);
                 $(Clone).fadeIn(300, "linear");
@@ -142,35 +148,34 @@ function addBee(evt, elementid) {
 
 function beeSelect(evt) {
     "use strict";
-    var index;
+    var i, trashIndex, object, index;
+    object = searchBees(evt.currentTarget.firstElementChild.firstElementChild);
     if (game.trash.trashon) {
         if (evt.currentTarget.firstElementChild.childNodes.length) {
-            if (true) {
-                if (evt.currentTarget.style.backgroundColor === "rgb(241, 241, 241)") {
-                    evt.currentTarget.style.backgroundColor = "#ef0202";
-                    if (!(game.trash.trashList.includes(evt.currentTarget))) {
-                        game.trash.trashList.push(evt.currentTarget);
-                    }
-                } else {
-                    if (game.trash.trashList.includes(evt.currentTarget)) {
-                        index = game.trash.trashList.indexOf(evt.currentTarget);
-                        game.trash.trashList.splice(index, 1);
+            if (evt.currentTarget.style.backgroundColor === "rgb(241, 241, 241)") {
+                evt.currentTarget.style.backgroundColor = "#ef0202";
+                if (!(game.trash.trashList.includes(object))) {
+                    game.trash.trashList.push(object);
 
-                    }
-                    evt.currentTarget.style.backgroundColor = "#f1f1f1";
                 }
+            } else {
+                if (game.trash.trashList.includes(object)) {
+                    trashIndex = game.trash.trashList.indexOf(object);
+                    game.trash.trashList.splice(index, 1);
+
+                }
+                evt.currentTarget.style.backgroundColor = "#f1f1f1";
             }
         }
     }
 }
-
-function removeBee(target) {
+//Remove Bee object
+function removeBee(object) {
     "use strict";
     var index;
-    index = game.bees.bees.indexOf(target.firstElementChild);
+    index = game.bees.bees.indexOf(object);
+    object.element.parentNode.removeChild(object.element);
     game.bees.bees.splice(index, 1);
-    game.bees.beeStats.splice(index, 1);
-    target.removeChild(target.firstElementChild);
     relistBees();
     game.bees.beeCounter = game.bees.bees.length;
 }
@@ -178,16 +183,14 @@ function removeBee(target) {
 function beeTrash(evt) {
     "use strict";
     var element, i, bees;
-
-
     if (game.trash.trashon) {
         game.trash.trashon = false;
         evt.currentTarget.style.backgroundColor = "#f1f1f1";
         for (i = 0; i < game.trash.trashList.length; i += 1) {
-            element = game.trash.trashList[i];
-            element.style.backgroundColor = "#f1f1f1";
-            $(element.firstElementChild.firstElementChild).fadeOut(300, "linear");
-            setTimeout(removeBee, 300, element.firstElementChild);
+            element = game.trash.trashList[i].element;
+            element.parentNode.parentNode.style.backgroundColor = "#f1f1f1";
+            $(element).fadeOut(300, "linear");
+            setTimeout(removeBee, 300, game.trash.trashList[i]);
         }
         bees = document.getElementsByClassName("bee");
         for (i = 0; i < bees.length; i += 1) {
@@ -205,19 +208,42 @@ function beeTrash(evt) {
 }
 
 function relistBees() {
+    "use strict";
     var numBees, i, numA, numB;
     numBees = game.bees.bees;
     numBees.sort(function(a, b) {
-        numA = a.id.replace("bee", "");
-        numB = b.id.replace("bee", "");
+        numA = a.element.id.replace("bee", "");
+        numB = b.element.id.replace("bee", "");
         return numA - numB;
     });
     for (i = 0; i < numBees.length; i += 1) {
-        numBees[i].id = "bee" + i;
+        numBees[i].element.id = "bee" + i;
     }
     game.bees.bees = numBees;
 }
 
-function Bee(element) {
-    this.element=element;
+function Bee(a, b, c) {
+    "use strict";
+    this.element = a;
+    this.sex = b;
+    this.random = c;
+    this.delete = function() {
+        removeBee(this);
+    };
+}
+
+function searchBees(element) {
+    "use strict";
+    var array, i, index, condition;
+    array = [];
+    for (i = 0; i < game.bees.bees.length; i += 1) {
+        array.push(game.bees.bees[i].element);
+    }
+    index = array.indexOf(element);
+    condition = index == -1;
+    if (!condition) {
+        return game.bees.bees[index];
+    } else {
+        return null;
+    }
 }
