@@ -20,26 +20,34 @@
         <p>Buy some upgrades</p>
     </div>
     <div id="game" class="tabcontent game">
-        <div class="flex-row align-center">
-            <div class="gameText">Queen</div>
-            <div class="flex-column ">
-                <div id="gameCell1">
-                    <div id="queenCell" class="bugHolderDiv queenCell"></div>
-                </div>
-            </div>
+        <div class=flex-row>
+            <div style="width:100%;"></div>
             <div class="flex-column">
-                <div class="flex-column">
-                    <div class="gameText">Princess</div>
-                    <div id="gameCell2">
-                        <div id="princessCell" class="bugHolderDiv princessCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="flex-row align-center">
+                    <div class="gameText">Queen</div>
+                    <div class="flex-column ">
+                        <div id="gameCell1" class="beeCell">
+                            <div id="queenCell" class="bugHolderDiv queenCell"></div>
+                        </div>
+                    </div>
+                    <div class="flex-column">
+                        <div class="flex-column">
+                            <div class="gameText">Princess</div>
+                            <div id="gameCell2" class="beeCell">
+                                <div id="princessCell" class="bugHolderDiv princessCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            </div>
+                        </div>
+                        <div style="height:10px;"></div>
+                        <div class="flex-column">
+                            <div id="gameCell3" class="beeCell">
+                                <div id="droneCell" class="bugHolderDiv droneCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            </div>
+                            <div class="gameText">Drone</div>
+                        </div>
                     </div>
                 </div>
-                <div style="height:10px;"></div>
-                <div class="flex-column">
-                    <div id="gameCell3">
-                        <div id="droneCell" class="bugHolderDiv droneCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                    </div>
-                    <div class="gameText">Drone</div>
+                <div id="progBar">
+                    <div id="progressBar"></div>
                 </div>
             </div>
         </div>

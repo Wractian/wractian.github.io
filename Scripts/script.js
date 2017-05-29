@@ -14,7 +14,8 @@ function Game() {
     game.trash.trashList = [];
     //DeveloperStuff {
     beeDrawer();
-    beeBox(null, 1);
+    beeBox(null, 10);
+    fillBees();
     //DeveloperStuff }
     game.Game = setInterval(ticks, 10);
 
@@ -42,24 +43,26 @@ function tabChange(evt, tabName) {
 
 function beeBox(evt, increment) {
     "use strict";
-    var Boxes, Clone, Button, Parent, Template, Trash, length, condition, object;
+    var Boxes, Clone, Button, Parent, Template, Trash, length, condition, object, i;
     Parent = document.getElementById("MainBox");
     Template = document.getElementsByClassName("template")[0];
     Button = document.getElementById("beeButton");
     Trash = document.getElementById("drawerTrash");
-    if (increment == 1) {
-        condition = (game.drawer.cells.length === 27);
-        if (!condition) {
-            game.drawer.drawerCounter += 1;
-            Clone = Template.firstElementChild.cloneNode(true);
-            Clone.className += " beeCell";
-            Clone.childNodes[1].id = "beeCell" + game.drawer.drawerCounter;
-            $(Clone).hide();
-            Parent.insertBefore(Clone, Parent.firstChild);
-            game.drawer.cells.push(Clone);
-            $(Clone).fadeIn(300, "linear");
-            $(Button).fadeIn(300, "linear");
-            $(Trash).fadeIn(300, "linear");
+    if (increment > 0) {
+        for (i = 0; i < increment; i += 1) {
+            condition = (game.drawer.cells.length === 27);
+            if (!condition) {
+                game.drawer.drawerCounter += 1;
+                Clone = Template.firstElementChild.cloneNode(true);
+                Clone.className += " beeCell";
+                Clone.childNodes[1].id = "beeCell" + game.drawer.drawerCounter;
+                $(Clone).hide();
+                Parent.insertBefore(Clone, Parent.firstChild);
+                game.drawer.cells.push(Clone);
+                $(Clone).fadeIn(300, "linear");
+                $(Button).fadeIn(300, "linear");
+                $(Trash).fadeIn(300, "linear");
+            }
         }
     } else {
         length = game.drawer.cells.length;
@@ -100,14 +103,17 @@ function beeDrawer(evt) {
 function allowDrop(evt) {
     "use strict";
     var condition;
-    condition = ($(evt.target).hasClass("princessCell") || ($(evt.target).hasClass("droneCell")));
+    condition = ($(evt.target).hasClass("bugHolderDiv"));
     if (condition) {
-        condition = (($(evt.target).hasClass("princessCell") && (searchBees(game.dragObj).sex == "Female")) || ($(evt.target).hasClass("droneCell") && (searchBees(game.dragObj).sex == "Male")));
+        condition = ($(evt.target).hasClass("princessCell") || ($(evt.target).hasClass("droneCell")));
         if (condition) {
+            condition = (($(evt.target).hasClass("princessCell") && (searchBees(game.dragObj).isMale() === false)) || ($(evt.target).hasClass("droneCell") && (searchBees(game.dragObj).isMale() === true)));
+            if (condition) {
+                evt.preventDefault();
+            }
+        } else {
             evt.preventDefault();
         }
-    } else {
-        evt.preventDefault();
     }
 }
 
@@ -242,15 +248,27 @@ function relistBees() {
     }
     game.bees.bees = numBees;
 }
-
+//Main Bee Object
 function Bee(a, b, c) {
     "use strict";
+    //Statistics
     this.element = a;
     this.sex = b;
     this.random = c;
+    //functions
     this.delete = function() {
         removeBee(this);
     };
+    this.isMale = function () {
+        return(this.sex == ("Male") ? true:false);
+    };
+}
+
+function Apiary(a,b,c,d) {
+    this.type = a;
+    this.queen = b;
+    this.pricess = c;
+    this.drone = d;
 }
 
 function searchBees(element) {
