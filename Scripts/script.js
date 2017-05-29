@@ -3,6 +3,7 @@ function Game() {
     game.bees = {};
     game.trash = {};
     game.drawer = {};
+    game.dragObj = null;
     game.drawer.cells = [];
     game.drawer.drawerCounter = 0;
     game.bees.bees = [];
@@ -66,7 +67,7 @@ function beeBox(evt, increment) {
         if (!condition) {
             condition = game.drawer.cells[length - 1].firstElementChild.hasChildNodes();
             if (condition) {
-                object = searchBees(game.drawer.cells[length - 1].firstElementChild.firstElementChild)
+                object = searchBees(game.drawer.cells[length - 1].firstElementChild.firstElementChild);
                 removeBee(object);
             }
             Parent.removeChild(game.drawer.cells[length - 1]);
@@ -98,11 +99,21 @@ function beeDrawer(evt) {
 
 function allowDrop(evt) {
     "use strict";
-    evt.preventDefault();
+    var condition;
+    condition = ($(evt.target).hasClass("princessCell") || ($(evt.target).hasClass("droneCell")));
+    if (condition) {
+        condition = (($(evt.target).hasClass("princessCell") && (searchBees(game.dragObj).sex == "Female")) || ($(evt.target).hasClass("droneCell") && (searchBees(game.dragObj).sex == "Male")));
+        if (condition) {
+            evt.preventDefault();
+        }
+    } else {
+        evt.preventDefault();
+    }
 }
 
 function drag(evt) {
     "use strict";
+    game.dragObj = evt.target;
     evt.dataTransfer.setData("dragid", evt.target.id);
     evt.dataTransfer.effectAllowed = "copyMove";
 }
@@ -111,9 +122,11 @@ function drop(evt) {
     "use strict";
     var data;
     evt.preventDefault();
-    if (evt.target.className === "bugHolderDiv") {
-        data = evt.dataTransfer.getData("dragid");
-        evt.target.appendChild(document.getElementById(data));
+    if ($(evt.target).hasClass('bugHolderDiv')) {
+        if ($(evt.target).children().length === 0) {
+            data = evt.dataTransfer.getData("dragid");
+            evt.target.appendChild(document.getElementById(data));
+        }
     }
 }
 
@@ -136,7 +149,7 @@ function addBee(evt, elementid) {
                 html.className = html.className.replace("template", " bee");
                 html.id = "bee" + (game.bees.bees.length);
                 game.bees.bees.push(new Bee(html, randomGender(), Math.floor(Math.random() * 10)));
-                if (game.bees.bees[game.bees.bees.length-1].sex == "Female") {
+                if (game.bees.bees[game.bees.bees.length - 1].sex == "Female") {
                     html.src = "Content/beeFemale.png";
                 } else {
                     html.src = "Content/beeMale.png";
@@ -184,15 +197,21 @@ function removeBee(object) {
 
 function beeTrash(evt) {
     "use strict";
-    var element, i, bees;
+    var element, i, bees, condition;
     if (game.trash.trashon) {
         game.trash.trashon = false;
         evt.currentTarget.style.backgroundColor = "#f1f1f1";
         for (i = 0; i < game.trash.trashList.length; i += 1) {
             element = game.trash.trashList[i].element;
             element.parentNode.parentNode.style.backgroundColor = "#f1f1f1";
-            $(element).fadeOut(300, "linear");
-            setTimeout(removeBee, 300, game.trash.trashList[i]);
+            condition = $(element).hasClass('deleting');
+            if (!condition) {
+                $(element).fadeOut(300, "linear");
+                $(element).addClass('deleting');
+                setTimeout(removeBee, 300, game.trash.trashList[i]);
+            }
+
+
         }
         bees = document.getElementsByClassName("bee");
         for (i = 0; i < bees.length; i += 1) {

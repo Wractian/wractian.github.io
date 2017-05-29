@@ -8,12 +8,16 @@ function fillBees() {
 
 function deleteBees() {
     "use strict";
-    var i, id, bees, object;
+    var i, id, bees, object, condition;
     for (i = 0; i < game.drawer.cells.length; i += 1) {
         if (game.drawer.cells[i].firstElementChild.hasChildNodes()) {
             object = searchBees(game.drawer.cells[i].firstElementChild.firstElementChild);
-            $(object.element).fadeOut(300, "linear");
-            setTimeout(dbees, 300, object);
+            condition = $(object.element).hasClass('deleting');
+            if (!condition) {
+                $(object.element).fadeOut(300, "linear");
+                $(object.element).addClass('deleting');
+                setTimeout(dbees, 300, object);
+            }
         }
     }
 }
