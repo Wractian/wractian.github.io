@@ -20,23 +20,26 @@
         <p>Buy some upgrades</p>
     </div>
     <div id="game" class="tabcontent game">
-        <div class="flex-row">
+        <div class="flex-row align-center">
+            <div class="gameText">Queen</div>
             <div class="flex-column ">
-                <div class="gameText">Queen</div>
                 <div id="gameCell1">
-                    <div id="queenCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div id="queenCell" class="bugHolderDiv"></div>
                 </div>
             </div>
             <div class="flex-column">
-                <div class="gameText">Princess</div>
-                <div id="gameCell2">
-                    <div id="princessCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="flex-column">
+                    <div class="gameText">Princess</div>
+                    <div id="gameCell2">
+                        <div id="princessCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="flex-column">
-                <div class="gameText">Drone</div>
-                <div id="gameCell3">
-                    <div id="droneCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div style="height:10px;"></div>
+                <div class="flex-column">
+                    <div id="gameCell3">
+                        <div id="droneCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="gameText">Drone</div>
                 </div>
             </div>
         </div>
@@ -73,9 +76,6 @@
         <div onclick="beeSelect(event)" style="background-color:rgb(241, 241, 241)">
             <div id="beeTemplate" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
-    </div>
-    <div class="hidden">
-        <img class="template" id="beesTemp" src="Content/Bee.png" draggable="true" ondragstart="drag(event)">
     </div>
     <script type="text/javascript">
     document.getElementById("defaultOpen").click();

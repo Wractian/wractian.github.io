@@ -17,6 +17,7 @@ function deleteBees() {
         }
     }
 }
-function dbees(object){
+
+function dbees(object) {
     object.delete();
 }
