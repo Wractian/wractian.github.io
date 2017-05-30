@@ -1,4 +1,3 @@
-
 function Game() {
     "use strict";
     game.bees = {};
@@ -243,18 +242,18 @@ function removeBee(object) {
  */
 function beeTrash(evt) {
     "use strict";
-    var element, i, bees, condition;
+    var object, i, bees, condition;
     if (game.trash.trashon) {
         game.trash.trashon = false;
         evt.currentTarget.style.backgroundColor = "#f1f1f1";
         for (i = 0; i < game.trash.trashList.length; i += 1) {
-            element = game.trash.trashList[i].element;
-            element.parentNode.parentNode.style.backgroundColor = "#f1f1f1";
-            condition = $(element).hasClass('deleting');
+            object = game.trash.trashList[i];
+            object.element.parentNode.parentNode.style.backgroundColor = "#f1f1f1";
+            condition = $(object.element).hasClass('deleting');
             if (!condition) {
                 $(element).fadeOut(300, "linear");
                 $(element).addClass('deleting');
-                setTimeout(removeBee, 300, game.trash.trashList[i]);
+                setTimeout(removeBee, 300, object);
             }
 
 
@@ -311,11 +310,11 @@ function Bee(a, b, c) {
         return (this.sex == ("Male") ? true : false);
     };
     this.lock = function() {
-        this.locked=true;
+        this.locked = true;
         this.element.setAttribute('draggable', false);
     };
     this.unlock = function() {
-        this.locked=false;
+        this.locked = false;
         this.element.setAttribute('draggable', true);
     };
 }
@@ -353,33 +352,38 @@ function searchBees(element) {
 }
 
 /**
+ * @param  {method}
  * @param  {id}
  * @param  {time in milliseconds}
  * @param  {function}
  * @return {undefined}
  */
-function barHandler(a, b, c) {
+function barHandler(a, b, c, d) {
+    "use strict";
     var elem, width, interval, condition;
-    elem = document.getElementById(a).firstElementChild;
+    elem = document.getElementById(b).firstElementChild;
     width = 1;
 
     function frame() {
         if (width >= 100) {
             clearInterval(interval);
             $(elem).removeClass('progress');
-            condition = (typeof c == "function");
+            condition = (typeof d === "function");
             if (condition) {
-                c();
+                d();
             }
         } else {
             width += 0.5;
             elem.style.width = width + '%';
         }
     }
-    condition = $(elem).hasClass('progress');
-    if (!condition) {
-        $(elem).addClass('progress');
-        interval = setInterval(frame, b);
+
+    if (a == "progress") {
+        condition = $(elem).hasClass('progress');
+        if (!condition) {
+            $(elem).addClass('progress');
+            interval = setInterval(frame, c);
+        }
 
     }
 }
