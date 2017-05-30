@@ -139,10 +139,14 @@ div.beeCell {
 
 #progBar{
     width: 100%;
-    background-color: grey;
+    background-color: #f1f1f1;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 2px;
 }
-#progressBar{
+#progBar div{
     height: 20px;
     width: 0%;
     background-color: orange;
+    max-width: 100%;
 }

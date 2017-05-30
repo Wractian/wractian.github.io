@@ -1,3 +1,4 @@
+
 function Game() {
     "use strict";
     game.bees = {};
@@ -15,7 +16,7 @@ function Game() {
     //DeveloperStuff {
     beeDrawer();
     beeBox(null, 10);
-    fillBees();
+    devFillBees();
     //DeveloperStuff }
     game.Game = setInterval(ticks, 10);
 
@@ -25,6 +26,11 @@ function Game() {
     }
 }
 
+/**
+ * @param  {event}
+ * @param  {tabName}
+ * @return {null}
+ */
 function tabChange(evt, tabName) {
     "use strict";
     var i, tabcontent, tablinks;
@@ -40,7 +46,11 @@ function tabChange(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
-
+/**
+ * @param  {event}
+ * @param  {increment boxes}
+ * @return {null}
+ */
 function beeBox(evt, increment) {
     "use strict";
     var Boxes, Clone, Button, Parent, Template, Trash, length, condition, object, i;
@@ -86,6 +96,10 @@ function beeBox(evt, increment) {
     }
 }
 
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function beeDrawer(evt) {
     "use strict";
     var Box, Button;
@@ -100,6 +114,10 @@ function beeDrawer(evt) {
     }
 }
 
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function allowDrop(evt) {
     "use strict";
     var condition;
@@ -117,6 +135,10 @@ function allowDrop(evt) {
     }
 }
 
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function drag(evt) {
     "use strict";
     game.dragObj = evt.target;
@@ -124,6 +146,10 @@ function drag(evt) {
     evt.dataTransfer.effectAllowed = "copyMove";
 }
 
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function drop(evt) {
     "use strict";
     var data;
@@ -136,6 +162,10 @@ function drop(evt) {
     }
 }
 
+/**
+ * @param {event}
+ * @param {target id}
+ */
 function addBee(evt, elementid) {
     "use strict";
     var i, Template, html;
@@ -168,6 +198,10 @@ function addBee(evt, elementid) {
     }
 }
 
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function beeSelect(evt) {
     "use strict";
     var i, trashIndex, object, index;
@@ -191,7 +225,10 @@ function beeSelect(evt) {
         }
     }
 }
-//Remove Bee object
+/**
+ * @param  {object}
+ * @return {null}
+ */
 function removeBee(object) {
     "use strict";
     var index;
@@ -200,7 +237,10 @@ function removeBee(object) {
     game.bees.bees.splice(index, 1);
     relistBees();
 }
-
+/**
+ * @param  {event}
+ * @return {null}
+ */
 function beeTrash(evt) {
     "use strict";
     var element, i, bees, condition;
@@ -233,7 +273,9 @@ function beeTrash(evt) {
         }
     }
 }
-
+/**
+ * @return {null}
+ */
 function relistBees() {
     "use strict";
     var numBees, i, numA, numB;
@@ -248,7 +290,12 @@ function relistBees() {
     }
     game.bees.bees = numBees;
 }
-//Main Bee Object
+
+/**
+ * @param {element}
+ * @param {sex}
+ * @param {value}
+ */
 function Bee(a, b, c) {
     "use strict";
     //Statistics
@@ -259,18 +306,27 @@ function Bee(a, b, c) {
     this.delete = function() {
         removeBee(this);
     };
-    this.isMale = function () {
-        return(this.sex == ("Male") ? true:false);
+    this.isMale = function() {
+        return (this.sex == ("Male") ? true : false);
     };
 }
-
-function Apiary(a,b,c,d) {
+/**
+ * @param {type}
+ * @param {Queen Object}
+ * @param {Princess Object}
+ * @param {Drone Object}
+ */
+function Apiary(a, b, c, d) {
     this.type = a;
     this.queen = b;
     this.pricess = c;
     this.drone = d;
 }
 
+/**
+ * @param  {element}
+ * @return {bee}
+ */
 function searchBees(element) {
     "use strict";
     var array, i, index, condition;
@@ -284,5 +340,37 @@ function searchBees(element) {
         return game.bees.bees[index];
     } else {
         return null;
+    }
+}
+
+/**
+ * @param  {id}
+ * @param  {time in milliseconds}
+ * @param  {function}
+ * @return {undefined}
+ */
+function barHandler(a, b, c) {
+    var elem, width, interval, condition;
+    elem = document.getElementById(a).firstElementChild;
+    width = 1;
+
+    function frame() {
+        if (width >= 100) {
+            clearInterval(interval);
+            $(elem).removeClass('progress');
+            condition = (typeof c == "function");
+            if (condition) {
+                c();
+            }
+        } else {
+            width += 0.5;
+            elem.style.width = width + '%';
+        }
+    }
+    condition = $(elem).hasClass('progress');
+    if (!condition) {
+        $(elem).addClass('progress');
+        interval = setInterval(frame, b);
+
     }
 }

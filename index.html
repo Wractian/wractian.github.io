@@ -11,55 +11,61 @@
 </head>
 
 <body id="body">
-    <div class="tab">
-        <button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
-        <button class="tablinks" onclick="tabChange(event, 'game')" id="defaultOpen">Game</button>
-        <button class="tablinks" onclick="tabChange(event, 'Developer')">Developer</button>
-    </div>
-    <div id="Upgrades" class="tabcontent Upgrades">
-        <p>Buy some upgrades</p>
-    </div>
-    <div id="game" class="tabcontent game">
-        <div class=flex-row>
-            <div style="width:100%;"></div>
-            <div class="flex-column">
-                <div class="flex-row align-center">
-                    <div class="gameText">Queen</div>
-                    <div class="flex-column ">
-                        <div id="gameCell1" class="beeCell">
-                            <div id="queenCell" class="bugHolderDiv queenCell"></div>
-                        </div>
-                    </div>
+    <div class="flex-row nowrap">
+        <div style="width:60%">
+            <div class="tab">
+                <button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
+                <button class="tablinks" onclick="tabChange(event, 'Apiary')" id="defaultOpen">Apiary</button>
+            </div>
+            <div id="Upgrades" class="tabcontent Upgrades">
+                <p>Buy some upgrades</p>
+            </div>
+            <div id="Apiary" class="tabcontent Apiary">
+                <div class=flex-row>
+                    <div style="width:100%;"></div>
                     <div class="flex-column">
-                        <div class="flex-column">
-                            <div class="gameText">Princess</div>
-                            <div id="gameCell2" class="beeCell">
-                                <div id="princessCell" class="bugHolderDiv princessCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="flex-row align-center">
+                            <div class="gameText">Queen</div>
+                            <div class="flex-column ">
+                                <div id="gameCell1" class="beeCell">
+                                    <div id="queenCell" class="bugHolderDiv queenCell"></div>
+                                </div>
+                            </div>
+                            <div class="flex-column">
+                                <div class="flex-column">
+                                    <div class="gameText">Princess</div>
+                                    <div id="gameCell2" class="beeCell">
+                                        <div id="princessCell" class="bugHolderDiv princessCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </div>
+                                </div>
+                                <div style="height:10px;"></div>
+                                <div class="flex-column">
+                                    <div id="gameCell3" class="beeCell">
+                                        <div id="droneCell" class="bugHolderDiv droneCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </div>
+                                    <div class="gameText">Drone</div>
+                                </div>
                             </div>
                         </div>
-                        <div style="height:10px;"></div>
-                        <div class="flex-column">
-                            <div id="gameCell3" class="beeCell">
-                                <div id="droneCell" class="bugHolderDiv droneCell" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                            <div class="gameText">Drone</div>
+                        <div id="progBar">
+                            <div></div>
                         </div>
                     </div>
-                </div>
-                <div id="progBar">
-                    <div id="progressBar"></div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="Developer" class="tabcontent Developer">
-        <div class="flex-row">
-            <button onclick="beeBox(event, '-1')">-1</button>
-            <button onclick="beeBox(event, '1')">+1</button>
-            <button onclick="addBee(event, 'devCell')">Add Bee</button>
-            <button onclick="fillBees(event)">Fill Bees</button>
-            <button onclick="deleteBees(event)">Delete Bees</button>
-            <div id="devCell" class="bugHolderDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div>
+            <div id="Developer" class="Developer">
+                <div class="flex-row">
+
+                    <button onclick="beeBox(event, '-1')">-1</button>
+                    <button onclick="beeBox(event, '1')">+1</button>
+                    <button onclick="devAddBee(event)">Add Bee</button>
+                    <button onclick="devFillBees(event)">Fill Bees</button>
+                    <button onclick="devDeleteBees(event)">Delete Bees</button>
+                    <button onclick="devStartBreeding(event)">Start Breeding</button>
+                </div>
+            </div>
         </div>
     </div>
     <div id="bugDrawer" class="flex-column">
