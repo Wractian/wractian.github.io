@@ -7,8 +7,6 @@ function Game() {
     game.drawer.cells = [];
     game.drawer.drawerCounter = 0;
     game.bees.bees = [];
-    game.bees.beeStats = [];
-    game.bees.maxBees = 100;
     game.tick = 0;
     game.trash.trashon = false;
     game.trash.trashList = [];
@@ -295,29 +293,35 @@ function relistBees() {
  * @param {sex}
  * @param {value}
  */
+
+
 function Bee(a, b, c) {
     "use strict";
     //Statistics
     this.element = a;
     this.sex = b;
     this.random = c;
-    this.locked = false;
-    //functions
-    this.delete = function() {
+
+}
+
+Bee.prototype = {
+    locked: false,
+    delete: function() {
         removeBee(this);
-    };
-    this.isMale = function() {
-        return (this.sex == ("Male") ? true : false);
-    };
-    this.lock = function() {
+    },
+    isMale: function() {
+        return (this.sex == ("Male"));
+    },
+    lock: function() {
         this.locked = true;
         this.element.setAttribute('draggable', false);
-    };
-    this.unlock = function() {
+    },
+    unlock: function() {
         this.locked = false;
         this.element.setAttribute('draggable', true);
-    };
-}
+    }
+};
+
 /**
  * @param {type}
  * @param {Queen Object}
@@ -358,19 +362,19 @@ function searchBees(element) {
  * @param  {function}
  * @return {undefined}
  */
-function barHandler(a, b, c, d) {
+function barHandler(method, id, tickrate, func) {
     "use strict";
     var elem, width, interval, condition;
-    elem = document.getElementById(b).firstElementChild;
-    width = 1;
+    elem = document.getElementById(id).firstElementChild;
+    width
 
-    function frame() {
+    function progress() {
         if (width >= 100) {
             clearInterval(interval);
             $(elem).removeClass('progress');
-            condition = (typeof d === "function");
+            condition = (typeof func === "function");
             if (condition) {
-                d();
+                func();
             }
         } else {
             width += 0.5;
@@ -378,12 +382,11 @@ function barHandler(a, b, c, d) {
         }
     }
 
-    if (a == "progress") {
+    if (method == "progress") {
         condition = $(elem).hasClass('progress');
         if (!condition) {
             $(elem).addClass('progress');
-            interval = setInterval(frame, c);
+            interval = setInterval(progress, tickrate);
         }
-
     }
 }

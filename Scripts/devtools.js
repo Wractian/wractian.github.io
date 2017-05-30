@@ -43,13 +43,12 @@ function devAddBee(evt) {
         condition = game.drawer.cells[i].firstElementChild.hasChildNodes();
         if (!condition) {
             addBee(null, game.drawer.cells[i].firstElementChild.id);
-            break;
-        }
+            break;    }
     }
 }
 /**
  * @param  {event}
- * @return {null}
+ * @return {null} 
  */
 function devStartBreeding(evt) {
     "use strict";
@@ -71,4 +70,5 @@ function devEndBreeding(evt) {
     drone = searchBees(document.getElementById('droneCell').firstElementChild);
     princess.delete();
     drone.delete();
+    barHandler("progress","progBar",5, undefined);
 }
