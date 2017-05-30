@@ -302,12 +302,21 @@ function Bee(a, b, c) {
     this.element = a;
     this.sex = b;
     this.random = c;
+    this.locked = false;
     //functions
     this.delete = function() {
         removeBee(this);
     };
     this.isMale = function() {
         return (this.sex == ("Male") ? true : false);
+    };
+    this.lock = function() {
+        this.locked=true;
+        this.element.setAttribute('draggable', false);
+    };
+    this.unlock = function() {
+        this.locked=false;
+        this.element.setAttribute('draggable', true);
     };
 }
 /**

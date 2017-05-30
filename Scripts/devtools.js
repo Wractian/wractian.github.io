@@ -53,5 +53,19 @@ function devAddBee(evt) {
  */
 function devStartBreeding(evt) {
     "use strict";
-    barHandler("progBar",25,devAddBee);
+    var princess, drone;
+    princess = searchBees(document.getElementById('princessCell').firstElementChild);
+    drone = searchBees(document.getElementById('droneCell').firstElementChild);
+    princess.lock();
+    drone.lock();
+    barHandler("progBar",25,devEndBreeding);
+}
+
+function devEndBreeding(evt) {
+    "use strict";
+    var princess, drone;
+    princess = searchBees(document.getElementById('princessCell').firstElementChild);
+    drone = searchBees(document.getElementById('droneCell').firstElementChild);
+    princess.unlock();
+    drone.unlock();
 }
