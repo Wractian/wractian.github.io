@@ -108,7 +108,12 @@ div.beeCell {
     border: 3px solid;
     border-radius: 3px;
     background-color: #f1f1f1;
-    margin: 0px 1px;
+    margin: 0 1px;
+}
+.Developer {
+    border: 3px solid black;
+    border-radius: 3px;
+    padding: 2px;
 }
 
 #Developer button {
@@ -118,7 +123,7 @@ div.beeCell {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-    margin: 0px 2px 0px 0px;
+    margin: 0 1px 0 1px;
     width: 100px;
     height: 100px;
 }
