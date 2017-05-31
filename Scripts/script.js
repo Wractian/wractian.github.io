@@ -249,8 +249,8 @@ function beeTrash(evt) {
             object.element.parentNode.parentNode.style.backgroundColor = "#f1f1f1";
             condition = $(object.element).hasClass('deleting');
             if (!condition) {
-                $(element).fadeOut(300, "linear");
-                $(element).addClass('deleting');
+                $(object.element).fadeOut(300, "linear");
+                $(object.element).addClass('deleting');
                 setTimeout(removeBee, 300, object);
             }
 
@@ -335,6 +335,11 @@ function Apiary(a, b, c, d) {
     this.drone = d;
 }
 
+Apiary.prototype = {
+    startBreeding: function() {
+        console.log("breeding");
+    }
+};
 /**
  * @param  {element}
  * @return {bee}
@@ -362,22 +367,41 @@ function searchBees(element) {
  * @param  {function}
  * @return {undefined}
  */
-function barHandler(method, id, tickrate, func) {
+function barHandler(method, id, tickrate, increment, end) {
     "use strict";
-    var elem, width, interval, condition;
+    var elem, width, interval, condition, args;
     elem = document.getElementById(id).firstElementChild;
-    width
+    width = parseInt(elem.style.width.replace("%", ""));
+    args = arguments;
+    if (isNaN(width)) {
+        width = 0;
+    }
+    if (increment === undefined) {
+        increment = 0.5;
+    }
 
     function progress() {
-        if (width >= 100) {
+        if (width >= end) {
             clearInterval(interval);
             $(elem).removeClass('progress');
-            condition = (typeof func === "function");
-            if (condition) {
-                func();
+            for (var i = 5; i < args.length; i++) {
+                args[i]();
             }
         } else {
-            width += 0.5;
+            width += increment;
+            elem.style.width = width + '%';
+        }
+    }
+
+    function reverseProgress() {
+        if (width <= end) {
+            clearInterval(interval);
+            $(elem).removeClass('progress');
+            for (var i = 5; i < args.length; i++) {
+                args[i]();
+            }
+        } else {
+            width += increment;
             elem.style.width = width + '%';
         }
     }
@@ -387,6 +411,13 @@ function barHandler(method, id, tickrate, func) {
         if (!condition) {
             $(elem).addClass('progress');
             interval = setInterval(progress, tickrate);
+        }
+    }
+    if (method == "reverse progress") {
+        condition = $(elem).hasClass('progress');
+        if (!condition) {
+            $(elem).addClass('progress');
+            interval = setInterval(reverseProgress, tickrate);
         }
     }
 }
