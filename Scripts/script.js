@@ -339,6 +339,7 @@ Apiary.prototype = {
     startBreeding: function() {
         console.log("breeding");
     }
+    
 };
 /**
  * @param  {element}
