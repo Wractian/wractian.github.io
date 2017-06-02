@@ -99,6 +99,10 @@ div.tab button.active {
     flex-wrap: nowrap;
 }
 
+.Tabs{
+    flex-grow:1;
+}
+
 div.beeCell {
     user-select: none;
     overflow: hidden;
@@ -111,21 +115,25 @@ div.beeCell {
     margin: 0 1px;
 }
 .Developer {
-    border: 3px solid black;
-    border-radius: 3px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 2px;
+    max-width: 612px;
 }
 
 #Developer button {
     background-color: #f1f1f1;
-    border: 1px solid #ccc;
+    border: 1px solid #7F7F7F;
+    border-radius: 5px;
     float: left;
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-    margin: 0 1px 0 1px;
+    margin: 1px;
     width: 100px;
     height: 100px;
+
 }
 
 #drawerTrash {

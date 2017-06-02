@@ -43,7 +43,7 @@ function devAddBee(evt) {
         condition = game.drawer.cells[i].firstElementChild.hasChildNodes();
         if (!condition) {
             addBee(null, game.drawer.cells[i].firstElementChild.id);
-            break;    
+            break;
         }
     }
 }
@@ -60,20 +60,12 @@ function devStartBreeding(evt) {
     if (!condition) {
         princess.lock();
         drone.lock();
-        barHandler("progress","progBar", 25,0.5,100, devEndBreeding);
+        barHandler("progress", "progBar", 25, 0.5, 100, function() {
+            princess.delete();
+            drone.delete();
+            barHandler("reverse progress", "progBar", 5, -1, 0, function() {
+                console.log("Alert");
+            });
+        });
     }
-}
-
-function devEndBreeding(evt) {
-    "use strict";
-    var princess, drone;
-    princess = searchBees(document.getElementById('princessCell').firstElementChild);
-    drone = searchBees(document.getElementById('droneCell').firstElementChild);
-    princess.delete();
-    drone.delete();
-    barHandler("reverse progress","progBar",5,-1,0, alerts);
-}
-
-function alerts(argument) {
-    console.log("Alert");
 }

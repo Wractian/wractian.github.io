@@ -14,6 +14,7 @@ function Game() {
     beeDrawer();
     beeBox(null, 10);
     devFillBees();
+    game.apiary = new Apiary(1);
     //DeveloperStuff }
     game.Game = setInterval(ticks, 10);
 
@@ -43,10 +44,12 @@ function tabChange(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
 /**
- * @param  {event}
- * @param  {increment boxes}
- * @return {null}
+ * changes the size of the bee box
+ * @param  {event} evt       the event that gets sent
+ * @param  {integer} increment the amount to increment by
+ * @return {[type]}           [description]
  */
 function beeBox(evt, increment) {
     "use strict";
@@ -72,22 +75,27 @@ function beeBox(evt, increment) {
             }
         }
     } else {
-        length = game.drawer.cells.length;
         condition = game.drawer.cells.length === 0;
         if (!condition) {
-            condition = game.drawer.cells[length - 1].firstElementChild.hasChildNodes();
-            if (condition) {
-                object = searchBees(game.drawer.cells[length - 1].firstElementChild.firstElementChild);
-                removeBee(object);
+            increment = increment * -1;
+            for (i = 0; i < increment; i += 1) {
+                length = game.drawer.cells.length;
+                if (length === 0) {
+                    break;
+                }
+                condition = game.drawer.cells[length - 1].firstElementChild.hasChildNodes();
+                if (condition) {
+                    object = searchBees(game.drawer.cells[length - 1].firstElementChild.firstElementChild);
+                    removeBee(object);
+                }
+                Parent.removeChild(game.drawer.cells[length - 1]);
+                game.drawer.cells.splice(game.drawer.cells.length - 1);
+                game.drawer.drawerCounter += -1;
+                if (game.drawer.cells.length === 0) {
+                    $(Button).fadeOut(300, "linear");
+                    $(Trash).fadeOut(300, "linear");
+                }
             }
-            Parent.removeChild(game.drawer.cells[length - 1]);
-            game.drawer.cells.splice(game.drawer.cells.length - 1);
-            game.drawer.drawerCounter += -1;
-            if (game.drawer.cells.length === 0) {
-                $(Button).fadeOut(300, "linear");
-                $(Trash).fadeOut(300, "linear");
-            }
-
         }
 
     }
@@ -117,12 +125,13 @@ function beeDrawer(evt) {
  */
 function allowDrop(evt) {
     "use strict";
-    var condition;
+    var condition, beeSex;
     condition = ($(evt.target).hasClass("bugHolderDiv"));
     if (condition) {
         condition = ($(evt.target).hasClass("princessCell") || ($(evt.target).hasClass("droneCell")));
         if (condition) {
-            condition = (($(evt.target).hasClass("princessCell") && (searchBees(game.dragObj).isMale() === false)) || ($(evt.target).hasClass("droneCell") && (searchBees(game.dragObj).isMale() === true)));
+            beeSex = searchBees(game.dragObj).isMale();
+            condition = (($(evt.target).hasClass("princessCell") && (!beeSex) || ($(evt.target).hasClass("droneCell") && (beeSex))));
             if (condition) {
                 evt.preventDefault();
             }
@@ -133,8 +142,8 @@ function allowDrop(evt) {
 }
 
 /**
- * @param  {event}
- * @return {null}
+ * drag and drop-drag
+ * @param  {event} evt the event that gets sent
  */
 function drag(evt) {
     "use strict";
@@ -144,8 +153,8 @@ function drag(evt) {
 }
 
 /**
- * @param  {event}
- * @return {null}
+ * drag and drop-drop
+ * @param  {event} evt the event that gets sent
  */
 function drop(evt) {
     "use strict";
@@ -154,6 +163,13 @@ function drop(evt) {
     if ($(evt.target).hasClass('bugHolderDiv')) {
         if ($(evt.target).children().length === 0) {
             data = evt.dataTransfer.getData("dragid");
+            if (($(evt.target).hasClass("princessCell")) || ($(evt.target).hasClass("droneCell"))) {
+                if ($(evt.target).hasClass("princessCell")) {
+                    game.apiary.princess = searchBees(document.getElementById(data));
+                } else {
+                    game.apiary.drone = searchBees(document.getElementById(data));
+                }
+            }
             evt.target.appendChild(document.getElementById(data));
         }
     }
@@ -331,16 +347,43 @@ Bee.prototype = {
 function Apiary(a, b, c, d) {
     this.type = a;
     this.queen = b;
-    this.pricess = c;
+    this.princess = c;
     this.drone = d;
 }
 
 Apiary.prototype = {
+    createQueen: function() {
+        console.log("Making Queen from: " + this.princess.element.id + " and " + this.drone.element.id);
+    },
     startBreeding: function() {
-        console.log("breeding");
+        var condition;
+        condition = ((this.princess === null) || (this.drone === null));
+        if (!condition) {
+            condition = (($(this.princess.element.parentNode).hasClass("princessCell"))||($(this.drone.element.parentNode).hasClass("droneCell")));
+            if (condition) {
+                this.princess.lock();
+                this.drone.lock();
+                barHandler("progress", "progBar", 25, 0.5, 100, function() {
+                    barHandler("reverse progress", "progBar", 5, -1, 0, function() {
+                        this.princess.unlock();
+                        this.drone.unlock();
+                        console.log("Alert");
+                    });
+                });
+            }else{
+                condition = ($(this.princess.element.parentNode).hasClass("princessCell"));
+                if (!condition) {
+                    this.princess = undefined; 
+                } else {
+                    this.drone = undefined;
+                }
+            }
+        }
     }
-    
+
+
 };
+
 /**
  * @param  {element}
  * @return {bee}
@@ -361,12 +404,14 @@ function searchBees(element) {
     }
 }
 
+
 /**
- * @param  {method}
- * @param  {id}
- * @param  {time in milliseconds}
- * @param  {function}
- * @return {undefined}
+ * Takes a bar id and uses it
+ * @param  {String} method    How the barHandler execute
+ * @param  {String} id        The id of the object
+ * @param  {integer} tickrate  How fast the ticks increment
+ * @param  {integer} increment How much the bar increments by
+ * @param  {integer} end       Where the bar ends up
  */
 function barHandler(method, id, tickrate, increment, end) {
     "use strict";
