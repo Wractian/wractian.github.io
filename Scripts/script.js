@@ -7,7 +7,6 @@ function Game() {
     game.drawer.cells = [];
     game.drawer.drawerCounter = 0;
     game.bees.bees = [];
-    game.tick = 0;
     game.trash.trashon = false;
     game.trash.trashList = [];
     //DeveloperStuff {
@@ -19,8 +18,7 @@ function Game() {
     game.Game = setInterval(ticks, 10);
 
     function ticks() {
-        //placeholder
-        game.tick += 1;
+        //none
     }
 }
 
@@ -166,11 +164,16 @@ function drop(evt) {
             if (($(evt.target).hasClass("princessCell")) || ($(evt.target).hasClass("droneCell"))) {
                 if ($(evt.target).hasClass("princessCell")) {
                     game.apiary.princess = searchBees(document.getElementById(data));
+                    evt.target.appendChild(document.getElementById(data));
+                    game.apiary.startBreeding();
                 } else {
                     game.apiary.drone = searchBees(document.getElementById(data));
+                    evt.target.appendChild(document.getElementById(data));
+                    game.apiary.startBreeding();
                 }
+            } else {
+                evt.target.appendChild(document.getElementById(data));
             }
-            evt.target.appendChild(document.getElementById(data));
         }
     }
 }
@@ -197,7 +200,7 @@ function addBee(evt, elementid) {
                 html = $.parseHTML("<img class='template' id='beesTemp' draggable='true' ondragstart='drag(event)'>")[0];
                 html.className = html.className.replace("template", " bee");
                 html.id = "bee" + (game.bees.bees.length);
-                game.bees.bees.push(new Bee(html, randomGender(), Math.floor(Math.random() * 10)));
+                game.bees.bees.push(new Bee(html, randomGender(), new Trait("Random","dr",Math.floor(Math.random()*10)), new Trait("Nocturnal","rr",Math.random()>=0.5)));
                 if (game.bees.bees[game.bees.bees.length - 1].sex == "Female") {
                     html.src = "Content/beeFemale.png";
                 } else {
@@ -311,12 +314,13 @@ function relistBees() {
  */
 
 
-function Bee(a, b, c) {
+function Bee(a, b, c,d) {
     "use strict";
     //Statistics
     this.element = a;
     this.sex = b;
     this.random = c;
+    this.nocturnal = d;
 
 }
 
@@ -353,37 +357,70 @@ function Apiary(a, b, c, d) {
 
 Apiary.prototype = {
     createQueen: function() {
-        console.log("Making Queen from: " + this.princess.element.id + " and " + this.drone.element.id);
+        var self = this;
+        html = $.parseHTML("<img src='Content/beeRoyal.png' class='bee' id='beesTemp' draggable='true' ondragstart='drag(event)'>")[0];
+        html.id = "queen0";
+        $(html).hide();
+        document.getElementById("queenCell").appendChild(html);
+        $(html).fadeIn(300, "linear");
+        self.queen = new Bee(html, "queen", self.princess.random + self.drone.random);
+        self.queen.lock();
     },
     startBreeding: function() {
-        var condition;
-        condition = ((this.princess === null) || (this.drone === null));
+        var condition, self;
+        self = this;
+
+        function dbees() {
+            self.princess.delete();
+            self.drone.delete();
+            self.princess = undefined;
+            self.drone = undefined;
+        }
+        condition = (typeof self.queen == "object");
         if (!condition) {
-            condition = (($(this.princess.element.parentNode).hasClass("princessCell"))||($(this.drone.element.parentNode).hasClass("droneCell")));
+            condition = ((typeof self.princess == "object") && (typeof self.drone == "object"));
             if (condition) {
-                this.princess.lock();
-                this.drone.lock();
-                barHandler("progress", "progBar", 25, 0.5, 100, function() {
-                    barHandler("reverse progress", "progBar", 5, -1, 0, function() {
-                        this.princess.unlock();
-                        this.drone.unlock();
-                        console.log("Alert");
+                condition = (($(self.princess.element.parentNode).hasClass("princessCell")) && ($(self.drone.element.parentNode).hasClass("droneCell")));
+                if (condition) {
+                    self.princess.lock();
+                    self.drone.lock();
+                    barHandler("progress", "progBar", 25, 0.5, 100, function() {
+                        self.createQueen();
+                        $(self.princess.element).fadeOut(200, "linear");
+                        $(self.drone.element).fadeOut(200, "linear");
+                        $(self.princess.element).addClass('deleting');
+                        $(self.drone.element).addClass('deleting');
+                        setTimeout(dbees, 200);
+                        barHandler("reverse progress", "progBar", 20, -0.5, 0, function() {
+                            self.queen.delete();
+                            self.queen = undefined;
+                        });
                     });
-                });
-            }else{
-                condition = ($(this.princess.element.parentNode).hasClass("princessCell"));
-                if (!condition) {
-                    this.princess = undefined; 
                 } else {
-                    this.drone = undefined;
+                    condition = ($(self.princess.element.parentNode).hasClass("princessCell"));
+                    if (!condition) {
+                        self.princess = undefined;
+                    } else {
+                        self.drone = undefined;
+                    }
                 }
             }
         }
     }
-
-
 };
 
+function Trait(Name, Type, Value) {
+    this.name = Name;
+    this.type = Type;
+    this.value = Value;
+}
+
+
+Trait.prototype = {
+    run: function () {
+        console.log("running");
+    }
+};
 /**
  * @param  {element}
  * @return {bee}
@@ -425,7 +462,6 @@ function barHandler(method, id, tickrate, increment, end) {
     if (increment === undefined) {
         increment = 0.5;
     }
-
     function progress() {
         if (width >= end) {
             clearInterval(interval);
@@ -438,7 +474,6 @@ function barHandler(method, id, tickrate, increment, end) {
             elem.style.width = width + '%';
         }
     }
-
     function reverseProgress() {
         if (width <= end) {
             clearInterval(interval);
@@ -451,7 +486,6 @@ function barHandler(method, id, tickrate, increment, end) {
             elem.style.width = width + '%';
         }
     }
-
     if (method == "progress") {
         condition = $(elem).hasClass('progress');
         if (!condition) {
