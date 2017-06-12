@@ -3,7 +3,13 @@ function Game() {
   game.bees = {};
   game.trash = {};
   game.drawer = {};
+  game.time = {};
+  game.mouseDown = false;
   game.dragObj = null;
+  game.time.ticks = 0;
+  game.time.seconds = 0;
+  game.time.minutes = 0;
+  game.time.hours = 0;
   game.drawer.cells = [];
   game.drawer.drawerCounter = 0;
   game.bees.bees = [];
@@ -14,22 +20,49 @@ function Game() {
   beeBox(null, 10);
   devFillBees();
   game.apiary = new Apiary(1);
-  //DeveloperStuff }
-  $('.beeCell').hover(function() {
-    this.style.backgroundColor = "#94FF00";
-  }, function() {
-    this.style.backgroundColor = "#f1f1f1";
-  });
-
-  game.Game = setInterval(ticks, 1000);
+  var timeCell = document.getElementById('counter');
+    //DeveloperStuff }
+  init();
+  game.Game = setInterval(ticks, 10);
 
   function ticks() {
-
+    game.time.ticks += 1;
+    if (game.time.ticks == 100) {
+      game.time.seconds += 1;
+      if (game.time.seconds == 60) {
+        game.time.minutes += 1;
+        if (game.time.minutes == 60) {
+          game.time.hours += 1;
+          game.time.minutes = 0;
+        }
+        game.time.seconds = 0;
+      }
+      game.time.ticks = 0;
+      $(timeCell).children('.time')[0].innerHTML = twoDidgets(game.time.hours) + ":" + twoDidgets(game.time.minutes) + ":" + twoDidgets(game.time.seconds);
+    }
+    $(timeCell).children('.ticks')[0].innerHTML =twoDidgets(game.time.ticks);
   }
 }
 
 
-
+function init() {
+  //BeeCells
+  $('.beeCell').hover(function() {
+    if (!game.mouseDown) {
+      this.style.backgroundColor = "#94FF00";
+    }
+  }, function() {
+    this.style.backgroundColor = "#f1f1f1";
+  });
+  //Document
+  $(document).mousedown(function(e) {
+    game.mouseDown = true;
+  }).mouseup(function(e) {
+    game.mouseDown = false;
+  }).mouseleave(function(e) {
+    game.mouseDown = false;
+  });
+}
 
 
 /**
@@ -45,8 +78,7 @@ function tabChange(evt, tabName) {
     tabcontent[i].style.display = "none";
   }
 
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i += 1) {
+  tablinks = document.getElementsByClassName("tablinks");  for (i = 0; i < tablinks.length; i += 1) {
     tablinks[i].className = tablinks[i].className.replace("active", "");
   }
   document.getElementById(tabName).style.display = "block";
@@ -68,7 +100,7 @@ function beeBox(evt, increment) {
   Trash = document.getElementById("drawerTrash");
   if (increment > 0) {
     for (i = 0; i < increment; i += 1) {
-      condition = (game.drawer.cells.length === 27);
+      condition = (game.drawer.cells.length === "placeholder");
       if (!condition) {
         game.drawer.drawerCounter += 1;
         Clone = Template.firstElementChild.cloneNode(true);
@@ -513,4 +545,8 @@ function barHandler(method, id, tickrate, increment, end) {
       interval = setInterval(reverseProgress, tickrate);
     }
   }
+}
+
+function twoDidgets(number) {
+  return (number < 10 ? "0" + number : "" + number);
 }

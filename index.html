@@ -15,7 +15,11 @@
 </head>
 
 <body id="body">
+  <div id="topBar" class="flex-row flex-end">
+    <div id="counter">ticks: <span class="ticks">00</span> -- time: <span class="time">00:00:00</span></div>
+  </div>
   <div class="flex-row nowrap">
+    <div style="width:20px"></div>
     <div class="Tabs">
       <div class="tab">
         <button class="tablinks" onclick="tabChange(event, 'Upgrades')">Upgrades</button>
@@ -83,6 +87,7 @@
         </div>
       </div>
     </div>
+    <div style="width:20px"></div>
   </div>
   <div id="bugDrawer" class="flex-column">
     <div class="flex-row flex-end">
@@ -92,7 +97,7 @@
       <div style="width:4px"></div>
     </div>
     <div style="height: 2px"></div>
-    <div class="flex-row">
+    <div class="flex-row nowrap">
       <div>
         <div id="beeCollapse">
           <div id="MainBox" class="flex-row nowrap"></div>
@@ -115,7 +120,3 @@
 </body>
 
 </html>
-
-
-
-
