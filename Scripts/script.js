@@ -1,29 +1,33 @@
 function Game() {
   "use strict";
-  game.bees = {};
-  game.trash = {};
-  game.drawer = {};
-  game.time = {};
-  game.mouseDown = false;
-  game.dragObj = null;
-  game.time.ticks = 0;
-  game.time.seconds = 0;
-  game.time.minutes = 0;
-  game.time.hours = 0;
-  game.drawer.cells = [];
-  game.drawer.drawerCounter = 0;
-  game.bees.bees = [];
-  game.trash.trashon = false;
-  game.trash.trashList = [];
+  game.save = function() {
+    console.log("saved");
+    if (localStorage.saved) {
+      localStorage.setItem("time", JSON.stringify(game.time));
+      localStorage.setItem("date", JSON.stringify(game.date));
+    }
+  };
+  game.load = function() {
+    console.log("loaded");
+    if (localStorage.saved) {
+      game.time = JSON.parse(localStorage.getItem("time", '{"ticks":0,"seconds":0,"minutes":0,"hours":0}'));
+      game.date = JSON.parse(localStorage.getItem("date"));
+      $(timeCell).children('.time')[0].innerHTML = twoDigits(game.time.hours) + ":" + twoDigits(game.time.minutes) + ":" + twoDigits(game.time.seconds);
+      $(timeCell).children('.ticks')[0].innerHTML = twoDigits(game.time.ticks);
+    }
+  };
+  game.initFirst = function() {
+    localStorage.setItem("saved", true);
+  };
   //DeveloperStuff {
+  var timeCell = document.getElementById('counter');
+  initalize();
   beeDrawer();
   beeBox(null, 10);
   devFillBees();
   game.apiary = new Apiary(1);
-  var timeCell = document.getElementById('counter');
-    //DeveloperStuff }
-  init();
-  game.Game = setInterval(ticks, 10);
+  //DeveloperStuff }
+  game.game = setInterval(ticks, 10);
 
   function ticks() {
     game.time.ticks += 1;
@@ -36,17 +40,37 @@ function Game() {
           game.time.minutes = 0;
         }
         game.time.seconds = 0;
+        if ((game.time.minutes % 5) === 0) {
+          game.save();
+        }
       }
       game.time.ticks = 0;
-      $(timeCell).children('.time')[0].innerHTML = twoDidgets(game.time.hours) + ":" + twoDidgets(game.time.minutes) + ":" + twoDidgets(game.time.seconds);
+      $(timeCell).children('.time')[0].innerHTML = twoDigits(game.time.hours) + ":" + twoDigits(game.time.minutes) + ":" + twoDigits(game.time.seconds);
     }
-    $(timeCell).children('.ticks')[0].innerHTML =twoDidgets(game.time.ticks);
+    $(timeCell).children('.ticks')[0].innerHTML = twoDigits(game.time.ticks);
   }
 }
 
 
-function init() {
+
+function initalize() {
   //BeeCells
+  game.bees = {};
+  game.trash = {};
+  game.drawer = {};
+  game.time = {};
+  game.mouseDown = false;
+  game.dragObj = null;
+  game.time.ticks = 0;
+  game.time.seconds = 0;
+  game.time.minutes = 0;
+  game.time.hours = 0;
+  game.date = {};
+  game.drawer.cells = [];
+  game.drawer.drawerCounter = 0;
+  game.bees.bees = [];
+  game.trash.trashon = false;
+  game.trash.trashList = [];
   $('.beeCell').hover(function() {
     if (!game.mouseDown) {
       this.style.backgroundColor = "#94FF00";
@@ -62,6 +86,15 @@ function init() {
   }).mouseleave(function(e) {
     game.mouseDown = false;
   });
+  //Window
+  window.onbeforeunload = function() {
+    game.save();
+  };
+  if (localStorage.saved) {
+    game.load();
+  } else {
+    game.initFirst();
+  }
 }
 
 
@@ -78,7 +111,8 @@ function tabChange(evt, tabName) {
     tabcontent[i].style.display = "none";
   }
 
-  tablinks = document.getElementsByClassName("tablinks");  for (i = 0; i < tablinks.length; i += 1) {
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i += 1) {
     tablinks[i].className = tablinks[i].className.replace("active", "");
   }
   document.getElementById(tabName).style.display = "block";
@@ -547,6 +581,7 @@ function barHandler(method, id, tickrate, increment, end) {
   }
 }
 
-function twoDidgets(number) {
+function twoDigits(number) {
   return (number < 10 ? "0" + number : "" + number);
+
 }
