@@ -12,12 +12,14 @@ function Game() {
     if (localStorage.saved) {
       game.time = JSON.parse(localStorage.getItem("time", '{"ticks":0,"seconds":0,"minutes":0,"hours":0}'));
       game.date = JSON.parse(localStorage.getItem("date"));
+      game.date.start = new Date(game.date.start);
       $(timeCell).children('.time')[0].innerHTML = twoDigits(game.time.hours) + ":" + twoDigits(game.time.minutes) + ":" + twoDigits(game.time.seconds);
       $(timeCell).children('.ticks')[0].innerHTML = twoDigits(game.time.ticks);
     }
   };
   game.initFirst = function() {
     localStorage.setItem("saved", true);
+    game.date.start = new Date();
   };
   //DeveloperStuff {
   var timeCell = document.getElementById('counter');
@@ -55,6 +57,7 @@ function Game() {
 
 function initalize() {
   //BeeCells
+  clearInterval(game.game);
   game.bees = {};
   game.trash = {};
   game.drawer = {};
