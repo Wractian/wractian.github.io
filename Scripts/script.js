@@ -1,11 +1,57 @@
 function init() {
     'use strict';
-    var day
+    var date;                                      
+    var ordinal;
+    var day;
     var dayofweek = null;
     var month = null;
     var year = null;
     var dateraw = new Date();
     day = dateraw.getDate();
+    switch (day) {
+        case 1:
+        case 21:
+        case 31:
+            ordinal = "st";
+            break;
+        case 2:
+        case 22:
+            ordinal = "nd";
+            break;
+        case 3:
+        case 23:
+            ordinal = "rd";
+            break;
+        case 4:
+        case 5:b
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 23:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+        case 28:
+        case 29:
+        case 30:
+            ordinal = "th";
+            break;
+        default:
+            ordinal = null;
+    }
+    day = day + ordinal
     switch (dateraw.getDay()) {
         case 0:
             dayofweek = "Sunday";
@@ -73,16 +119,16 @@ function init() {
 
     }
     year = dateraw.getFullYear();
-    console.log(year);
-    console.log(month);
-    console.log(dayofweek);
-    console.log(day);
+    date = dayofweek + ", " + month + " " + day + ", " + year;
+    document.getElementById("datetext").innerHTML = date;
+
 
 }
 
 function resized() {
     var cw = $('.link').width();
-    $('.link').css({'height': cw + 'px'});
+    $('.link').css({ 'height': cw + 'px' });
+    return ("done");
 }
 
 
