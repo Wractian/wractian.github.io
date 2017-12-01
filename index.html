@@ -5,17 +5,38 @@
     <title>Wractian</title>
     <link rel="stylesheet" type="text/css" href="Styles/style.css">
     <script src="Scripts/script.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="Scripts/jquery.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 
-<body>
-    <div id="body">
-        <div>
-            <div>
-                <a href="./BeeBox" class="link">Bee Box</a>
+<body onresize="resized();" onload="resized();">
+    <div style="height:160px;">
+        <div id="headerbox">
+            <div id="header" class="flex">
+                <div id="headertext">
+                    My Websites
+                </div>
+            </div>
+            <div id="date" class="flex">
+                <div id="datetext">
+                    Tuesday, November 30th, 2017
+                </div>
             </div>
         </div>
+        <div style="height:75%">
+        </div>
     </div>
-
+    </div>
+    <div class="flex">
+        <div style="width:20%"></div>
+        <div id="linkholder" class="flex flex-wrap">
+            <button onclick="window.location.href='./BeeBox'" class="link">Bee Box</button>
+            <button onclick="window.location.href='./BeeBox'" class="link">Bee Box</button>
+            <button onclick="window.location.href='./BeeBox'" class="link">Bee Box</button>
+            <button onclick="window.location.href='./BeeBox'" class="link">Bee Box</button>
+            <button onclick="window.location.href='./BeeBox'" class="link">Bee Box</button>
+            
+        </div>
+        <div style="width:20%"></div>
+    </div>
 </body>
-
 </html>
