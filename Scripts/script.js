@@ -1,6 +1,6 @@
 function init() {
     'use strict';
-    var date;                                      
+    var date;
     var ordinal;
     var day;
     var dayofweek = null;
@@ -23,7 +23,7 @@ function init() {
             ordinal = "rd";
             break;
         case 4:
-        case 5:b
+        case 5:
         case 6:
         case 7:
         case 8:
