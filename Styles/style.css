@@ -15,6 +15,7 @@ body {
 .link {
     width: 10.5%;
     height: 0;
+    user-select: none;
     border: 1px solid #000000;
     border-radius: 6px;
     background-color: #ffffff;
@@ -71,4 +72,48 @@ body {
     text-wrap: nowrap;
 }
 
+#settingsbutton {
+    position: fixed;
+    padding: 1px;
+    bottom: 0;
+    left: 0;
+    width: 29px;
+    height: 29px;
+    border: 1px solid #000000;
+    border-style: solid solid none none;
+    border-radius: 0px 6px 0px 0px;
+    background-color: lightgray;
+}
 
+#settingspage {
+    position: fixed;
+    height: 80vh;
+    width: 80vw;
+    background-color: lightgray;
+    top: 10vh;
+    right: 10vw;
+    border: 1px solid #000000;
+    border-radius: 6px;
+}
+#settingstitle {
+    position: absolute;
+    user-select: none;
+    top: 0;
+    left: 0;
+    height: 20px;
+    border: 1px solid #000000;
+    border-style: none solid solid none;
+    border-radius: 0px 0px 6px 0px;
+}
+#settingsclose {
+    position: absolute;
+    user-select: none;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000000;
+    border-style: none none solid solid;
+    border-radius: 0px 0px 0px 6px;
+    text-align: center;
+}

@@ -1,11 +1,16 @@
+
+/**
+ * Date Function
+ * @return {[type]} [description]
+ */
 function init() {
     'use strict';
     var date;
     var ordinal;
     var day;
-    var dayofweek = null;
-    var month = null;
-    var year = null;
+    var dayofweek;
+    var month;
+    var year;
     var dateraw = new Date();
     day = dateraw.getDate();
     switch (day) {
@@ -124,13 +129,31 @@ function init() {
 
 
 }
-
+function settingsbutton() {
+    if (document.getElementById("settingspage").style.display=="none"){
+        $( "#settingspage" ).show();
+    } else {
+        closesettings();
+    }
+}
+function closesettings() {
+    $( "#settingspage" ).hide();
+}
 function resized() {
     var cw = $('.link').width();
     $('.link').css({ 'height': cw + 'px' });
     return ("done");
 }
 
-
+function load() {
+    resized();
+    $( "#settingsbutton" ).click(function() {
+    window.location.replace("#settings");
+    settingsbutton();
+    });
+    $( "#settingsclose" ).click(function() {
+    closesettings();
+});
+}
 
 init();
