@@ -56,7 +56,7 @@ function init() {
         default:
             ordinal = null;
     }
-    day = day + ordinal
+    day = day + ordinal;
     switch (dateraw.getDay()) {
         case 0:
             dayofweek = "Sunday";
