@@ -1,38 +1,59 @@
 function Trait(id) {
     this.id = id;
-    this.name = "Nocturnal";
+    this.name = function() { return (traitList[this.id].name); };
+
+    this.name=this.name();
 }
 Trait.prototype = {
-	//returns what traits do as a string
-    description: function() {
-
+    //returns what traits do as a string
+    desc: function() {
+        console.log(traitList[this.id].desc);
     },
+    pushArray: function() {
+        console.log("pushed");
+    }
 };
 
-function Bee() {
-	this.id = 
-    this.traitnumber = 0;
+function Bee(id) {
+    this.id = id;
+    this.traits = [];
 }
 Bee.prototype = {
-	//Lists off all the traits a certain object contains
+    //Lists off all the traits a certain object contains
     listTraits: function() {
         var string = "";
 
-        for (var i = 0; i < this.traitnumber; i++) {
-            string = string + this["_trait" + i].name + " ";
+        for (var i = 0; i < this.traits.length; i++) {
+            var trait = this.traits[i];
+            string = string + trait.name + " ";
+
+
         }
         console.log(string);
 
     },
     //Creates new trait with id of the number of traits, replace this with a better system
     newTrait: function() {
-        this["_trait" + this.traitnumber] = new Trait(this.traitnumber);
-        this.traitnumber++;
+        this.traits.push(new Trait(this.traits.length));
     },
 };
 
+
+var traitList = [
+    { desc: "Active during the night", name: "Nocturnal" },
+    { desc: "Active period reduced", name: "Sleepy" }
+];
+
+
+
+
+
 //Developer heck
-window.n=new Bee();
-n.newTrait();
-n.newTrait();
-n.listTraits();
+window.n=[];
+window.n[0] = new Bee(0);
+window.n[1] = new Bee(1);
+n[0].newTrait();
+n[0].newTrait();
+n[1].newTrait();
+n[0].listTraits();
+n[1].listTraits();
