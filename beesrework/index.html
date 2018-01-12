@@ -5,27 +5,30 @@
     <title>Bees Reworked</title>
     <link rel="stylesheet" type="text/css" href="Styles/style.css">
     <script src="Scripts/script.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="Scripts/jquery.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 
 <body>
     <div id="mainGrid">
+    	<div id="title">Bees!</div>
         <div id="bee1">
-        	<div class="beeText">Bee 1</div>
-			<img src="Content/Bee.png" alt="">
+            <div class="beeText">Bee 1</div>
+            <img src="Content/Bee.png" alt="">
         </div>
-        <div id="title">Bees!</div>
+        <button id="button2" onclick="beeButton(2)">Breed Button</button>
         <div id="bee2">
-        	<div class="beeText">Bee 2</div>
-        	<img src="Content/Bee.png" alt="">
+            <div class="beeText">Bee 2</div>
+            <img src="Content/Bee.png" alt="">
         </div>
-        <button id="button1">Bee Button</button>
-        <button id="button2">Breed Button</button>
-        <button id="button3">Bee Button</button>
+        <button id="button1" onclick="beeButton(1)">Bee Button</button>
+        <div id="bee3">
+            <div class="beeText">Bee 3</div>
+            <img class="basicBee" style="visibility:hidden;" src="Content/Bee.png" alt="">
+        </div>
+        <button id="button3" onclick="beeButton(3)">Bee Button</button>
         <div id="result1"></div>
         <div id="result2"></div>
         <div id="result3"></div>
-
-
     </div>
 </body>
 
