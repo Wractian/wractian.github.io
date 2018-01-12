@@ -1,2 +1,2 @@
 # wractian.github.io
-Buzz Buzz Buzz
+Just a personal project dedicated to the bees
