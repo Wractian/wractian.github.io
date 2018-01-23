@@ -1,8 +1,26 @@
 //Global variable
-;(function () {
+
+(function() {
+    "use strict";
     window.data = [];
     data.bees = {};
     data.bees.beeArray = [];
+    data.bees.newBee = function() {
+        var id = data.bees.beeArray.length;
+        data.bees.beeArray.push(new Bee(id));
+        return (id);
+    };
+    data.bees.deleteBee = function(id) {
+        data.bees.beeArray.splice(id, 1);
+        this.relistBees();
+        console.log("deleted");
+    };
+    data.bees.relistBees = function() {
+        var i;
+        for (i = 0; i < data.bees.beeArray.length; i += 1) {
+            data.bees.beeArray[i].id = i;
+        }
+    };
 }());
 
 
@@ -31,7 +49,8 @@ function Bee(id) {
     this.traits = [];
 }
 Bee.prototype = {
-    //Lists off all the traits a certain object contains, delete this later
+
+    //Lists off all the traits a certain object contains, delete this later, better as normal function
     returnTraitNames: function() {
         "use strict";
         var i;
@@ -57,10 +76,27 @@ Bee.prototype = {
             console.warn("Illegal trait id (" + id + ")");
         }
     },
+    removeDuplicateTraits: function() {
+        "use strict";
+        var i;
+        var seen = {};
+        var out = [];
+        var len = this.traits.length;
+        var j = 0;
+        for (i = 0; i < len; i+=1) {
+            var id = this.traits[i].id;
+            if (seen[id] !== 1) {
+                seen[id] = 1;
+            }else{
+                out[j++]=i;
+            }
+
+        }
+        for (i = out.length-1; i > -1; i--) {
+            this.traits.splice(out[i],1);
+        }
+    },
 };
-
-
-
 
 
 
@@ -74,47 +110,3 @@ var traitList = [
     { desc: "Minor increases to productivity and active period", name: "Hard-Worker" },
     { desc: "Productivity heavily reduced", name: "Sloth" },
 ];
-
-
-
-
-
-//Developer heck
-
-
-data.bees.beeArray[0] = new Bee(0);
-data.bees.beeArray[1] = new Bee(1);
-data.bees.beeArray[0].addTrait(0);
-data.bees.beeArray[0].addTrait(3);
-data.bees.beeArray[1].addTrait(4);
-
-
-
-function beeButton(button) {
-    "use strict";
-    if (button === 1) {
-        document.getElementById("result1").innerHTML = data.bees.beeArray[0].returnTraitNames();
-    } else if (button === 2) {
-        createBee(data.bees.beeArray[0], data.bees.beeArray[1]);
-        document.getElementById("result2").innerHTML = data.bees.beeArray[2].returnTraitNames();
-        $(".basicBee").css("visibility","");
-    } else {
-        document.getElementById("result3").innerHTML = data.bees.beeArray[1].returnTraitNames();
-    }
-}
-
-function createBee(parent1, parent2) {
-    "use strict";
-    var i = 0;
-    var traitPool = [];
-    for (i = 0; i < parent1.traits.length; i += 1) {
-        traitPool.push(parent1.traits[i]);
-    }
-    for (i = 0; i < parent2.traits.length; i += 1) {
-        traitPool.push(parent2.traits[i]);
-    }
-    data.bees.beeArray[2] = new Bee(2);
-    for (i = 0; i < traitPool.length; i += 1) {
-        data.bees.beeArray[2].addTrait(traitPool[i].id);
-    }
-}
