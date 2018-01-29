@@ -1,19 +1,21 @@
 //Developer heck
-alert("yoyoyo")
 
 //stupid code for a stupid website
 function beeButton(button) {
     "use strict";
     if (button === 1) {
         data.bees.beeArray[0].addTrait(Math.round(Math.random()*4));
+        data.bees.beeArray[0].removeDuplicateTraits();
         document.getElementById("result1").innerHTML = data.bees.beeArray[0].returnTraitNames();
 
     } else if (button === 2) {
         createBee(data.bees.beeArray[0], data.bees.beeArray[1]);
+        data.bees.beeArray[data.bees.beeArray.length-1].removeDuplicateTraits();
         document.getElementById("result2").innerHTML = data.bees.beeArray[data.bees.beeArray.length-1].returnTraitNames();
         $(".basicBee").css("visibility","");
     } else {
         data.bees.beeArray[1].addTrait(Math.round(Math.random()*4));
+        data.bees.beeArray[1].removeDuplicateTraits();
         document.getElementById("result3").innerHTML = data.bees.beeArray[1].returnTraitNames();
     }
 }
