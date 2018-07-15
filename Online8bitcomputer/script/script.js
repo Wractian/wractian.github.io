@@ -1,4 +1,4 @@
-class sevensegment {
+class SevenSegment {
   constructor(id) {
     this.id = id;
     this.segTruth = []
@@ -34,14 +34,26 @@ class sevensegment {
     }
   }
 }
+class SegmentController {
+  constructor() {
+    this.Segments = [];
+  }
+  addSegment() {
+    for (var i = 0; i < arguments.length; i++) {
+      this.Segments.push(new SevenSegment(arguments[i]));
+    }
 
+  }
+}
 
 
 
 function init() {
-  x = [];
-  x[0] = new sevensegment('7d1');
-  x[1] = new sevensegment('7d2');
-  x[2] = new sevensegment('7d3');
-  x[3] = new sevensegment('7d4');
+  display = new SegmentController();
+  display.addSegment("7d1", "7d2", "7d3", "7d4");
+}
+
+function submitBinary() {
+  var b = document.getElementById('binaryinput').value;
+
 }

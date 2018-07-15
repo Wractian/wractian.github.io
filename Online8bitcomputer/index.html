@@ -10,7 +10,7 @@
   </head>
 
   <body onload="init()">
-    <div>
+    <div id="displayHolder">
       <svg xmlns="http://www.w3.org/2000/svg" width="192px" height="320px" viewBox="-1 -1 12 20">
           <g id="7d1" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
             <polygon class="7da" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#b1b1b1"/>
@@ -62,7 +62,7 @@
     </div>
     <div style="padding:15px">
       <input type="text" name="" id="binaryinput">
-      <button onclick="x[0].setOutput(document.getElementById('binaryinput').value)">Enter</button>
+      <button onclick="submitBinary()">Enter</button>
     </div>
   </body>
 
