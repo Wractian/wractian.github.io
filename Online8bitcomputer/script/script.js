@@ -1,6 +1,7 @@
 class SevenSegment {
   constructor(id) {
     this.id = id;
+    this.input = [0, 0, 0, 0, 0, 0, 0, 0]
     this.segTruth = []
     this.segTruth["0000"] = [1, 1, 1, 1, 1, 1, 0, 0]
     this.segTruth["0001"] = [0, 1, 1, 0, 0, 0, 0, 0]
@@ -13,20 +14,18 @@ class SevenSegment {
     this.segTruth["1000"] = [1, 1, 1, 1, 1, 1, 1, 0]
     this.segTruth["1001"] = [1, 1, 1, 1, 0, 1, 1, 0]
   }
-  //Return element
-  retEle() {
+  retEle() { //Returns element of 7segment
     return document.getElementById(this.id);
   }
-  retSeg(segment) {
+  retSeg(segment) { //Returns segment from 7segment
     return this.retEle().getElementsByClassName("7d" + segment)[0]
   }
   colorSeg(segment, color) {
     this.retSeg(segment).style.fill = color;
-    return 0;
   }
-  setOutput(binary) {
-    for (var i = 0; i < this.segTruth[binary].length; i++) {
-      if (this.segTruth[binary][i] === 1) {
+  setOutput(colorOff = "#FF0000", colorOn = "#b1b1b1") {
+    for (var i = 0; i < this.input.length; i++) {
+      if (this.input[i] === 1) {
         this.colorSeg(String.fromCharCode(97 + i), "#FF0000")
       } else {
         this.colorSeg(String.fromCharCode(97 + i), "#b1b1b1")
@@ -42,7 +41,14 @@ class SegmentController {
     for (var i = 0; i < arguments.length; i++) {
       this.Segments.push(new SevenSegment(arguments[i]));
     }
-
+  }
+  setSegment(input, segment) {
+    this.Segments[segment].input = input;
+  }
+  updateDisplay() {
+    for (var i = 0; i < this.Segments.length; i++) {
+      this.Segments[i].setOutput();
+    }
   }
 }
 
@@ -51,9 +57,15 @@ class SegmentController {
 function init() {
   display = new SegmentController();
   display.addSegment("7d1", "7d2", "7d3", "7d4");
+  display.setSegment([0, 1, 1, 0, 1, 1, 1, 0], 0);
+  display.setSegment([1, 1, 1, 0, 1, 1, 1, 0], 1);
+  display.setSegment([0, 1, 1, 0, 1, 1, 1, 0], 2);
+  display.setSegment([1, 1, 1, 0, 1, 1, 1, 0], 3);
+
+  display.updateDisplay()
 }
 
 function submitBinary() {
   var b = document.getElementById('binaryinput').value;
-
+  console.log(b);
 }
