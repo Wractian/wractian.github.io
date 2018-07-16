@@ -6,6 +6,22 @@ body {
   background-color:#ffffff ;
 }
 
-#binaryinput {
-  margin-right: 0;
+svg.segment {
+  width:10%;
+}
+
+#binaryinput{
+  background-color: #ffffff;
+  border: 1px solid #b1b1b1;
+  height:30px;
+  margin-left: 0;
+  margin-right:-5;
+}
+#binarybutton{
+  background-color: #00d100;
+  border:1px solid #b1b1b1;
+  border-left: 0px;
+  color:white;
+  height:30px;
+  padding:4
 }

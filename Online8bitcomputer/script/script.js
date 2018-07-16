@@ -1,7 +1,7 @@
 class SevenSegment {
   constructor(id) {
     this.id = id;
-    this.input = [0, 0, 0, 0, 0, 0, 0, 0]
+    this.input = [1, 1, 1, 1, 1, 1, 0, 0]
 
   }
   retEle() { //Returns element of 7segment
@@ -52,6 +52,12 @@ class SegmentController {
       this.Segments[i].setOutput();
     }
   }
+  clearSegments() {
+    for (var i = 0; i < this.Segments.length; i++) {
+      this.setSegment([1, 1, 1, 1, 1, 1, 0, 0], i)
+    }
+    this.updateDisplay
+  }
 }
 
 
@@ -63,10 +69,11 @@ function init() {
 }
 
 function submitBinary() {
+  event.preventDefault();
   var number = parseInt(document.getElementById('binaryinput').value, 2);
   var length = String(number).length
+  display.clearSegments()
   for (var i = 0; i < length; i++) {
-    console.log(i)
     display.setSegment(display.segTruth[String(number).charAt((length - 1) - i)], i)
   }
   display.updateDisplay()
