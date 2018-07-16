@@ -38,6 +38,7 @@ class SegmentController {
     this.segTruth[7] = [1, 1, 1, 0, 0, 0, 0, 0]
     this.segTruth[8] = [1, 1, 1, 1, 1, 1, 1, 0]
     this.segTruth[9] = [1, 1, 1, 1, 0, 1, 1, 0]
+    this.segTruth[10] = [0, 0, 0, 0, 0, 0, 1, 0]
   }
   addSegment() {
     for (var i = 0; i < arguments.length; i++) {
