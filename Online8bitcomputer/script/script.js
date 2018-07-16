@@ -2,17 +2,7 @@ class SevenSegment {
   constructor(id) {
     this.id = id;
     this.input = [0, 0, 0, 0, 0, 0, 0, 0]
-    this.segTruth = []
-    this.segTruth["0000"] = [1, 1, 1, 1, 1, 1, 0, 0]
-    this.segTruth["0001"] = [0, 1, 1, 0, 0, 0, 0, 0]
-    this.segTruth["0010"] = [1, 1, 0, 1, 1, 0, 1, 0]
-    this.segTruth["0011"] = [1, 1, 1, 1, 0, 0, 1, 0]
-    this.segTruth["0100"] = [0, 1, 1, 0, 0, 1, 1, 0]
-    this.segTruth["0101"] = [1, 0, 1, 1, 0, 1, 1, 0]
-    this.segTruth["0110"] = [1, 0, 1, 1, 1, 1, 1, 0]
-    this.segTruth["0111"] = [1, 1, 1, 0, 0, 0, 0, 0]
-    this.segTruth["1000"] = [1, 1, 1, 1, 1, 1, 1, 0]
-    this.segTruth["1001"] = [1, 1, 1, 1, 0, 1, 1, 0]
+
   }
   retEle() { //Returns element of 7segment
     return document.getElementById(this.id);
@@ -24,18 +14,30 @@ class SevenSegment {
     this.retSeg(segment).style.fill = color;
   }
   setOutput(colorOff = "#FF0000", colorOn = "#b1b1b1") {
-    for (var i = 0; i < this.input.length; i++) {
+    for (var i = 0; i < 8; i++) {
       if (this.input[i] === 1) {
         this.colorSeg(String.fromCharCode(97 + i), "#FF0000")
       } else {
-        this.colorSeg(String.fromCharCode(97 + i), "#b1b1b1")
+        this.colorSeg(String.fromCharCode(97 + i), "#eFeFeF")
       }
     }
   }
 }
 class SegmentController {
-  constructor() {
+  constructor(bits) {
     this.Segments = [];
+    this.bits = bits;
+    this.segTruth = []
+    this.segTruth[0] = [1, 1, 1, 1, 1, 1, 0, 0]
+    this.segTruth[1] = [0, 1, 1, 0, 0, 0, 0, 0]
+    this.segTruth[2] = [1, 1, 0, 1, 1, 0, 1, 0]
+    this.segTruth[3] = [1, 1, 1, 1, 0, 0, 1, 0]
+    this.segTruth[4] = [0, 1, 1, 0, 0, 1, 1, 0]
+    this.segTruth[5] = [1, 0, 1, 1, 0, 1, 1, 0]
+    this.segTruth[6] = [1, 0, 1, 1, 1, 1, 1, 0]
+    this.segTruth[7] = [1, 1, 1, 0, 0, 0, 0, 0]
+    this.segTruth[8] = [1, 1, 1, 1, 1, 1, 1, 0]
+    this.segTruth[9] = [1, 1, 1, 1, 0, 1, 1, 0]
   }
   addSegment() {
     for (var i = 0; i < arguments.length; i++) {
@@ -55,17 +57,27 @@ class SegmentController {
 
 
 function init() {
-  display = new SegmentController();
+  display = new SegmentController(8);
   display.addSegment("7d1", "7d2", "7d3", "7d4");
-  display.setSegment([0, 1, 1, 0, 1, 1, 1, 0], 0);
-  display.setSegment([1, 1, 1, 0, 1, 1, 1, 0], 1);
-  display.setSegment([0, 1, 1, 0, 1, 1, 1, 0], 2);
-  display.setSegment([1, 1, 1, 0, 1, 1, 1, 0], 3);
-
-  display.updateDisplay()
+  display.updateDisplay();
 }
 
 function submitBinary() {
-  var b = document.getElementById('binaryinput').value;
-  console.log(b);
+  var number = parseInt(document.getElementById('binaryinput').value, 2);
+  var length = String(number).length
+  for (var i = 0; i < length; i++) {
+    console.log(i)
+    display.setSegment(display.segTruth[String(number).charAt((length - 1) - i)], i)
+  }
+  display.updateDisplay()
 }
+
+
+
+
+
+
+
+
+
+//fd
