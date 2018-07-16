@@ -60,13 +60,46 @@ class SegmentController {
     this.updateDisplay
   }
 }
+class LED {
+  constructor() {
+    this.state = 0;
+    this.colorOff = "#008A42";
+    this.colorOn = "#00FF00";
+  }
+  on() {
+    this.state = 1;
+  }
+  off() {
+    this.state = 0;
+  }
+  toggle() {
+    if (this.state) {
+      this.off();
+    } else {
+      this.on();
+    }
+  }
+}
+class LEDholder {
+  constructor(id) {
+    this.id = id;
+    this.LEDs = [];
+  }
+  addLED() {
+    for (var i = 0; i < arguments[0]; i++) {
+      this.LEDs.push(new LED());
+    }
+  }
 
-
+}
 
 function init() {
+  LEDholders = [];
   display = new SegmentController(8);
   display.addSegment("7d1", "7d2", "7d3", "7d4");
   display.updateDisplay();
+  LEDholders[0] = new LEDholder("LEDholder1");
+  LEDholders[0].addLED(8);
 }
 
 function submitBinary() {
@@ -81,7 +114,12 @@ function submitBinary() {
 }
 
 
-
+function clickLED(a, b) {
+  LEDholders[a.replace("LEDholder", "")].LEDs[b].toggle();
+  for (var i = 0; i < LEDholders[a.replace("LEDholder", "")].LEDs.length; i++) {
+    console.log("LED" + i + ": " + LEDholders[a.replace("LEDholder", "")].LEDs[i].state);
+  }
+}
 
 
 

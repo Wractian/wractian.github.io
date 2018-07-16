@@ -8,6 +8,23 @@ body {
 
 svg.segment {
   width:10%;
+
+}
+svg.LED {
+  height:50px;
+  margin: 0 3px;
+}
+.LEDholder{
+  margin-left: 15px;
+  padding:3px;
+  border: 1px solid #b1b1b1;
+  display:inline-flex;
+}
+
+.displayHolder{
+  margin: 15px;
+  border:1px solid #b1b1b1;
+  display:inline-flex;
 }
 
 #binaryinput{
@@ -26,6 +43,9 @@ svg.segment {
   padding:4
 }
 
-.st0{fill:#B3B3B3;stroke:#808080;stroke-width:3;stroke-miterlimit:10;}
-
-.st1{fill:#00FF00;stroke:#008A42;stroke-width:3;stroke-miterlimit:10;}
+.st0{
+  fill:#B3B3B3;
+  stroke:#808080;
+  stroke-width:3;
+  stroke-miterlimit:10;
+}
