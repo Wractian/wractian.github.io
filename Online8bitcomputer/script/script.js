@@ -81,10 +81,11 @@ class LED {
   }
 }
 class LEDholder {
-  constructor(id) {
+  constructor(id, bits = 8) {
     this.id = id;
     this.LEDs = [];
-    this.bits = 8
+    this.bits = bits
+    this.state = "00000000"
   }
   addLED() {
     for (var i = 0; i < arguments[0]; i++) {
@@ -92,6 +93,7 @@ class LEDholder {
     }
   }
   setOutput(input) {
+    this.state = input;
     var stepper = String(input).split("");
     console.log(stepper)
     for (var i = 0; i < this.LEDs.length; i++) {
@@ -101,6 +103,9 @@ class LEDholder {
         this.LEDs[i].off()
       }
     }
+  }
+  setLED(value, position) {
+
   }
   updateLEDs() {
     var elements = [];
@@ -123,6 +128,15 @@ function init() {
   LEDholders[0] = new LEDholder("LEDholder0");
   LEDholders[0].addLED(8);
   LEDholders[0].updateLEDs();
+  LEDholders[1] = new LEDholder("LEDholder1", 9);
+  LEDholders[1].addLED(9);
+  LEDholders[1].LEDs[8].colorOff = "#000080"
+  LEDholders[1].LEDs[8].colorOn = "#0000FF"
+  LEDholders[1].updateLEDs();
+  LEDholders[2] = new LEDholder("LEDholder2");
+  LEDholders[2].addLED(8);
+  LEDholders[2].updateLEDs();
+
 }
 
 function submitBinary() {

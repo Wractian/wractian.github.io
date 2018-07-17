@@ -5,6 +5,20 @@ body {
   margin: 10px;
   background-color:#ffffff ;
 }
+#registerHolder{
+  display:flex;
+  justify-content: space-between;
+  width:100%;
+}
+
+
+.Register div {
+  text-align:center;
+}
+.Register{
+  margin: 0 15px;
+  display:inline-block;
+}
 
 svg.segment {
   width:10%;
@@ -15,10 +29,11 @@ svg.LED {
   margin: 0 3px;
 }
 .LEDholder{
-  margin-left: 15px;
   padding:3px;
   border: 1px solid #b1b1b1;
   display:inline-flex;
+  flex-flow: row wrap;
+  align-self: flex-end;
 }
 
 .displayHolder{
