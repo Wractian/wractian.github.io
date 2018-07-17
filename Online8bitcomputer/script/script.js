@@ -84,13 +84,35 @@ class LEDholder {
   constructor(id) {
     this.id = id;
     this.LEDs = [];
+    this.bits = 8
   }
   addLED() {
     for (var i = 0; i < arguments[0]; i++) {
       this.LEDs.push(new LED());
     }
   }
-
+  setOutput(input) {
+    var stepper = String(input).split("");
+    console.log(stepper)
+    for (var i = 0; i < this.LEDs.length; i++) {
+      if (stepper[(String(input).length - 1) - i] == "1") {
+        this.LEDs[i].on()
+      } else {
+        this.LEDs[i].off()
+      }
+    }
+  }
+  updateLEDs() {
+    var elements = [];
+    elements = document.getElementById(this.id).children
+    for (var i = 0; i < this.LEDs.length; i++) {
+      if (this.LEDs[i].state) { //1
+        elements[(elements.length - 1) - i].children[2].style.fill = this.LEDs[i].colorOn
+      } else { //0
+        elements[(elements.length - 1) - i].children[2].style.fill = this.LEDs[i].colorOff
+      }
+    }
+  }
 }
 
 function init() {
@@ -98,8 +120,9 @@ function init() {
   display = new SegmentController(8);
   display.addSegment("7d1", "7d2", "7d3", "7d4");
   display.updateDisplay();
-  LEDholders[0] = new LEDholder("LEDholder1");
+  LEDholders[0] = new LEDholder("LEDholder0");
   LEDholders[0].addLED(8);
+  LEDholders[0].updateLEDs();
 }
 
 function submitBinary() {
@@ -116,9 +139,7 @@ function submitBinary() {
 
 function clickLED(a, b) {
   LEDholders[a.replace("LEDholder", "")].LEDs[b].toggle();
-  for (var i = 0; i < LEDholders[a.replace("LEDholder", "")].LEDs.length; i++) {
-    console.log("LED" + i + ": " + LEDholders[a.replace("LEDholder", "")].LEDs[i].state);
-  }
+  LEDholders[a.replace("LEDholder", "")].updateLEDs();
 }
 
 
