@@ -11,6 +11,15 @@ body {
   width:100%;
 }
 
+#Calculate {
+  background-color: #d10000;
+  border:1px solid #b1b1b1;
+  color:white;
+  height:30px;
+  padding:4;
+  margin-left: 15px;
+
+}
 
 .Register div {
   text-align:center;

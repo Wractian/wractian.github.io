@@ -95,7 +95,6 @@ class LEDholder {
   setOutput(input) {
     this.state = input;
     var stepper = String(input).split("");
-    console.log(stepper)
     for (var i = 0; i < this.LEDs.length; i++) {
       if (stepper[(String(input).length - 1) - i] == "1") {
         this.LEDs[i].on()
@@ -109,6 +108,7 @@ class LEDholder {
   }
   updateLEDs() {
     var elements = [];
+    let input = ''
     elements = document.getElementById(this.id).children
     for (var i = 0; i < this.LEDs.length; i++) {
       if (this.LEDs[i].state) { //1
@@ -116,11 +116,63 @@ class LEDholder {
       } else { //0
         elements[(elements.length - 1) - i].children[2].style.fill = this.LEDs[i].colorOff
       }
+      input = this.LEDs[i].state + input
     }
+    this.state = input
+  }
+}
+class ALU {
+  constructor(bits = 1) {
+    this.state = "000000000"
+    this.carryin = 0
+    this.bits = bits
+  }
+  xor(a, b) {
+    return (a === b ? 0 : 1);
+  }
+  and(a, b) {
+    return a == 1 && b == 1 ? 1 : 0;
+  }
+  or(a, b) {
+    return (a || b);
+  }
+  halfAdder(a, b) {
+    const sum = this.xor(a, b);
+    const carry = this.and(a, b);
+    return [sum, carry];
+  }
+  fullAdder(a, b, carry) {
+    const halfAdd = this.halfAdder(a, b)
+    const sum = this.xor(carry, halfAdd[0]);
+    carry = this.and(carry, halfAdd[0]);
+    carry = this.or(carry, halfAdd[1])
+    return [sum, carry]
+  }
+  calculate(a, b) {
+    let sum = '';
+    let carry = '';
+    for (var i = this.bits - 1; i >= 0; i--) {
+      if (i == this.bits - 1) {
+        //half add the first pair
+        const fullAdd = this.fullAdder(a[i], b[i], this.carryin);
+        sum = fullAdd[0] + sum;
+        carry = fullAdd[1];
+      } else {
+        //full add the rest
+        const fullAdd = this.fullAdder(a[i], b[i], carry);
+        sum = fullAdd[0] + sum;
+        carry = fullAdd[1];
+      }
+    }
+
+    return [sum, carry]
   }
 }
 
+
+
 function init() {
+  Alu = new ALU(8);
   LEDholders = [];
   display = new SegmentController(8);
   display.addSegment("7d1", "7d2", "7d3", "7d4");
@@ -156,6 +208,13 @@ function clickLED(a, b) {
   LEDholders[a.replace("LEDholder", "")].updateLEDs();
 }
 
+function addAB() {
+  a = LEDholders[0].state;
+  b = LEDholders[2].state;
+  c = Alu.calculate(a, b);
+  LEDholders[1].setOutput(c[1] + c[0]);
+  LEDholders[1].updateLEDs();
+}
 
 
 
