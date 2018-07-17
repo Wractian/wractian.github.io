@@ -61,13 +61,18 @@
         </svg>
     </div>
     <div style="display:inline-flex;margin:15px;">
-      <form action="">
+      <form action="" style="margin:0;">
         <input type="text" name="" id="binaryinput">
         <button id="binarybutton" style="margin:0;" onclick="submitBinary()">
           Send
         </button>
       </form>
       <button id="Calculate" onclick="addAB()">Calculate ALU</button>
+      <div style="background-color: #d10000;"></div>
+      <label class="container">
+        <input onclick="addSwap();" type="checkbox" checked="false">
+        <span id ="ALUcheck" class="checkmark">add</span>
+      </label>
     </div>
     <div id="registerHolder">
       <div class="Register" id="A-Register">

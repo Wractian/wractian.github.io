@@ -124,8 +124,15 @@ class LEDholder {
 class ALU {
   constructor(bits = 1) {
     this.state = "000000000"
-    this.carryin = 0
+    this.subMode = 0
     this.bits = bits
+  }
+  flip(a) {
+    let b = '';
+    for (var i = 0; i < a.length; i++) {
+      b = b + (a[i] == "1" ? "0" : "1");
+    }
+    return b;
   }
   xor(a, b) {
     return (a === b ? 0 : 1);
@@ -150,21 +157,19 @@ class ALU {
   }
   calculate(a, b) {
     let sum = '';
-    let carry = '';
-    for (var i = this.bits - 1; i >= 0; i--) {
-      if (i == this.bits - 1) {
-        //half add the first pair
-        const fullAdd = this.fullAdder(a[i], b[i], this.carryin);
-        sum = fullAdd[0] + sum;
-        carry = fullAdd[1];
-      } else {
-        //full add the rest
-        const fullAdd = this.fullAdder(a[i], b[i], carry);
-        sum = fullAdd[0] + sum;
-        carry = fullAdd[1];
-      }
+    let carry = 0;
+    if (this.subMode) { //2's complimant
+      b = this.flip(b);
+      carry = 1;
     }
-
+    for (var i = this.bits - 1; i >= 0; i--) {
+      const fullAdd = this.fullAdder(a[i], b[i], carry);
+      sum = fullAdd[0] + sum;
+      carry = fullAdd[1];
+    }
+    if (this.subMode) { //Fixes Carry bit for 2's
+      carry = "0"
+    }
     return [sum, carry]
   }
 }
@@ -214,6 +219,21 @@ function addAB() {
   c = Alu.calculate(a, b);
   LEDholders[1].setOutput(c[1] + c[0]);
   LEDholders[1].updateLEDs();
+  document.getElementById('binaryinput').value = c[0]
+  submitBinary()
+}
+
+function addSwap() {
+  console.log("swap")
+  if (document.getElementById('ALUcheck').innerHTML == "sub") {
+    document.getElementById('ALUcheck').innerHTML = "add"
+    document.getElementById('Calculate').style.background = "#d10000"
+    Alu.subMode = 0;
+  } else {
+    document.getElementById('ALUcheck').innerHTML = "sub"
+    document.getElementById('Calculate').style.background = "#0000d1"
+    Alu.subMode = 1;
+  }
 }
 
 

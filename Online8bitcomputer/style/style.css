@@ -14,11 +14,11 @@ body {
 #Calculate {
   background-color: #d10000;
   border:1px solid #b1b1b1;
+  border-right:none;
   color:white;
   height:30px;
   padding:4;
   margin-left: 15px;
-
 }
 
 .Register div {
@@ -49,6 +49,7 @@ svg.LED {
   margin: 15px;
   border:1px solid #b1b1b1;
   display:inline-flex;
+  width:90%;
 }
 
 #binaryinput{
@@ -76,4 +77,61 @@ svg.LED {
 .st1 {
   stroke-width: 3;
   stroke-miterlimit: 10;
+}
+.container {
+  display: block;
+  position: relative;
+  padding:14px;
+  padding-left: 15px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  border:1px solid #b1b1b1;
+  border-left: none;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0000d1;
+  font-size: 15px;
+  text-align:center;
+  color:white;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #d10000;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 11px;
+  top: 13px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
