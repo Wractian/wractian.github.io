@@ -61,10 +61,10 @@ class SegmentController {
   }
 }
 class LED {
-  constructor() {
+  constructor(colorOn = "#00FF00", colorOff = "#008A42") {
     this.state = 0;
-    this.colorOff = "#008A42";
-    this.colorOn = "#00FF00";
+    this.colorOff = colorOff;
+    this.colorOn = colorOn;
   }
   on() {
     this.state = 1;
@@ -81,15 +81,16 @@ class LED {
   }
 }
 class LEDholder {
-  constructor(id, bits = 8) {
+  constructor(id, bits = 8, colorOn = "#00FF00", colorOff = "#008A42") {
     this.id = id;
     this.LEDs = [];
     this.bits = bits
     this.state = "00000000"
+    this.defaultColor = [colorOn, colorOff]
   }
   addLED() {
     for (var i = 0; i < arguments[0]; i++) {
-      this.LEDs.push(new LED());
+      this.LEDs.push(new LED(this.defaultColor[0], this.defaultColor[1]));
     }
   }
   setOutput(input) {
@@ -173,7 +174,12 @@ class ALU {
     return [sum, carry]
   }
 }
-
+class RAM {
+  constructor(abit, bit) {
+    this.abit = abit;
+    this.bit = bit;
+  }
+}
 
 
 function init() {
@@ -185,17 +191,28 @@ function init() {
   LEDholders[0] = new LEDholder("LEDholder0");
   LEDholders[0].addLED(8);
   LEDholders[0].updateLEDs();
-  LEDholders[1] = new LEDholder("LEDholder1", 9);
-  LEDholders[1].addLED(9);
-  LEDholders[1].LEDs[8].colorOff = "#000080"
-  LEDholders[1].LEDs[8].colorOn = "#0000FF"
+  LEDholders[1] = new LEDholder("LEDholder1", 1, "#0000FF", "#000080");
+  LEDholders[1].addLED(1);
   LEDholders[1].updateLEDs();
   LEDholders[2] = new LEDholder("LEDholder2");
   LEDholders[2].addLED(8);
   LEDholders[2].updateLEDs();
-
+  LEDholders[3] = new LEDholder("LEDholder3");
+  LEDholders[3].addLED(8);
+  LEDholders[3].updateLEDs();
+  LEDholders[4] = new LEDholder("LEDholder4", 4, "#FFb100", "#6b2a00");
+  LEDholders[4].addLED(4);
+  LEDholders[4].updateLEDs();
+  LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000");
+  LEDholders[5].addLED(8);
+  LEDholders[5].updateLEDs();
+  LEDholders[6] = new LEDholder("LEDholder6", 8, "#FF0000", "#580000");
+  LEDholders[6].addLED(8);
+  LEDholders[6].updateLEDs();
+  Ram = new RAM(LEDholders[4], LEDholders[5]);
 }
 
+//Dev Functions
 function submitBinary() {
   event.preventDefault();
   var number = parseInt(document.getElementById('binaryinput').value, 2);
@@ -207,7 +224,6 @@ function submitBinary() {
   display.updateDisplay()
 }
 
-
 function clickLED(a, b) {
   LEDholders[a.replace("LEDholder", "")].LEDs[b].toggle();
   LEDholders[a.replace("LEDholder", "")].updateLEDs();
@@ -215,10 +231,12 @@ function clickLED(a, b) {
 
 function addAB() {
   a = LEDholders[0].state;
-  b = LEDholders[2].state;
+  b = LEDholders[3].state;
   c = Alu.calculate(a, b);
-  LEDholders[1].setOutput(c[1] + c[0]);
+  LEDholders[1].setOutput(c[1]);
   LEDholders[1].updateLEDs();
+  LEDholders[2].setOutput(c[0]);
+  LEDholders[2].updateLEDs();
   document.getElementById('binaryinput').value = c[0]
   submitBinary()
 }
@@ -236,8 +254,12 @@ function addSwap() {
   }
 }
 
+function clockButton(a) {
+  if (a === 0 || a === 1) {
 
+  } else if (a === 2) {
 
-
-
-//fd
+  } else {
+    clock()
+  }
+}
