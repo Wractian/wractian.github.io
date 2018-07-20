@@ -27,6 +27,9 @@ class SegmentController {
   constructor(bits) {
     this.Segments = [];
     this.bits = bits;
+    for (var i = 0; i < arguments.length - 1; i++) {
+      this.addSegment(arguments[i + 1])
+    }
     this.segTruth = []
     this.segTruth[0] = [1, 1, 1, 1, 1, 1, 0, 0]
     this.segTruth[1] = [0, 1, 1, 0, 0, 0, 0, 0]
@@ -39,11 +42,10 @@ class SegmentController {
     this.segTruth[8] = [1, 1, 1, 1, 1, 1, 1, 0]
     this.segTruth[9] = [1, 1, 1, 1, 0, 1, 1, 0]
     this.segTruth[10] = [0, 0, 0, 0, 0, 0, 1, 0]
+    this.updateDisplay();
   }
-  addSegment() {
-    for (var i = 0; i < arguments.length; i++) {
-      this.Segments.push(new SevenSegment(arguments[i]));
-    }
+  addSegment(a) {
+    this.Segments.push(new SevenSegment(a));
   }
   setSegment(input, segment) {
     this.Segments[segment].input = input;
@@ -57,7 +59,7 @@ class SegmentController {
     for (var i = 0; i < this.Segments.length; i++) {
       this.setSegment([1, 1, 1, 1, 1, 1, 0, 0], i)
     }
-    this.updateDisplay
+    this.updateDisplay();
   }
 }
 class LED {
@@ -81,12 +83,17 @@ class LED {
   }
 }
 class LEDholder {
-  constructor(id, bits = 8, colorOn = "#00FF00", colorOff = "#008A42") {
+  constructor(id, bits = 8, colorOn = "#00FF00", colorOff = "#008A42", onupdate = "") {
     this.id = id;
     this.LEDs = [];
     this.bits = bits
     this.state = "00000000"
     this.defaultColor = [colorOn, colorOff]
+    this.onUpdate = onupdate;
+    for (var i = 0; i < bits; i++) {
+      this.addLED(1);
+    }
+    this.updateLEDs();
   }
   addLED() {
     for (var i = 0; i < arguments[0]; i++) {
@@ -120,6 +127,9 @@ class LEDholder {
       input = this.LEDs[i].state + input
     }
     this.state = input
+    if (!(this.onUpdate == "")) {
+      window[this.onUpdate]();
+    }
   }
 }
 class ALU {
@@ -178,37 +188,28 @@ class RAM {
   constructor(abit, bit) {
     this.abit = abit;
     this.bit = bit;
+    this.astate = 0
+    this.state = "00000000"
+    this.statestorage = []
+  }
+  changeAState(a = "0000") {
+    this.astate = a;
+    this.state = this.statestorage[a]
   }
 }
 
 
 function init() {
   Alu = new ALU(8);
+  display = new SegmentController(8, "7d1", "7d2", "7d3", "7d4");
   LEDholders = [];
-  display = new SegmentController(8);
-  display.addSegment("7d1", "7d2", "7d3", "7d4");
-  display.updateDisplay();
-  LEDholders[0] = new LEDholder("LEDholder0");
-  LEDholders[0].addLED(8);
-  LEDholders[0].updateLEDs();
+  LEDholders[0] = new LEDholder("LEDholder0", 8, "#00FF00", "#008A42");
   LEDholders[1] = new LEDholder("LEDholder1", 1, "#0000FF", "#000080");
-  LEDholders[1].addLED(1);
-  LEDholders[1].updateLEDs();
-  LEDholders[2] = new LEDholder("LEDholder2");
-  LEDholders[2].addLED(8);
-  LEDholders[2].updateLEDs();
-  LEDholders[3] = new LEDholder("LEDholder3");
-  LEDholders[3].addLED(8);
-  LEDholders[3].updateLEDs();
-  LEDholders[4] = new LEDholder("LEDholder4", 4, "#FFb100", "#6b2a00");
-  LEDholders[4].addLED(4);
-  LEDholders[4].updateLEDs();
-  LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000");
-  LEDholders[5].addLED(8);
-  LEDholders[5].updateLEDs();
-  LEDholders[6] = new LEDholder("LEDholder6", 8, "#FF0000", "#580000");
-  LEDholders[6].addLED(8);
-  LEDholders[6].updateLEDs();
+  LEDholders[2] = new LEDholder("LEDholder2", 8, "#00FF00", "#008A42");
+  LEDholders[3] = new LEDholder("LEDholder3", 8, "#00FF00", "#008A42");
+  LEDholders[4] = new LEDholder("LEDholder4", 4, "#FFb100", "#6b2a00", "alertAddress");
+  LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
+  LEDholders[6] = new LEDholder("LEDholder6", 8, "#00ffff", "#005454");
   Ram = new RAM(LEDholders[4], LEDholders[5]);
 }
 
@@ -261,5 +262,22 @@ function clockButton(a) {
 
   } else {
     clock()
+  }
+}
+
+function alertAddress() {
+  if (!(typeof Ram === 'undefined')) {
+    Ram.state = Ram.statestorage[Ram.abit.state];
+    Ram.bit.setOutput(Ram.state)
+    Ram.bit.updateLEDs();
+    console.log(Ram.state)
+  }
+}
+
+function alertMemory() {
+  if (!(typeof Ram === 'undefined')) {
+    Ram.state = Ram.bit.state
+    Ram.statestorage[Ram.abit.state] = Ram.state;
+    console.log(Ram.state)
   }
 }
