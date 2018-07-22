@@ -189,7 +189,7 @@ class RAM {
     this.abit = abit;
     this.bit = bit;
     this.astate = 0
-    this.state = "00000000"
+    this.state = "00000000";
     this.statestorage = []
   }
   changeAState(a = "0000") {
@@ -197,6 +197,34 @@ class RAM {
     this.state = this.statestorage[a]
   }
 }
+class Clock {
+  constructor() {
+    this.state = 0
+    this.continue = 0
+    this.clocks = 0
+    this.duration = 1000
+  }
+  clockOn() {
+    if (this.state === 0) {
+      this.state = 1;
+      document.getElementById("clockLED").src = "content/Indicator.svg"
+      this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
+    }
+  }
+  clockOff() {
+    this.state = 0;
+    document.getElementById("clockLED").src = "content/IndicatorOff.svg"
+    if (this.continue) {
+      this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
+    }
+  }
+}
+class OverallController {
+  constructor() {
+
+  }
+}
+
 
 
 function init() {
@@ -211,9 +239,11 @@ function init() {
   LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
   LEDholders[6] = new LEDholder("LEDholder6", 8, "#00ffff", "#005454");
   Ram = new RAM(LEDholders[4], LEDholders[5]);
+  clock = new Clock();
+  document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
 }
 
-//Dev Functions
+//Dev Functions, sloppy frankenstein code
 function submitBinary() {
   event.preventDefault();
   var number = parseInt(document.getElementById('binaryinput').value, 2);
@@ -255,16 +285,6 @@ function addSwap() {
   }
 }
 
-function clockButton(a) {
-  if (a === 0 || a === 1) {
-
-  } else if (a === 2) {
-
-  } else {
-    clock()
-  }
-}
-
 function alertAddress() {
   if (!(typeof Ram === 'undefined')) {
     Ram.state = Ram.statestorage[Ram.abit.state];
@@ -279,5 +299,36 @@ function alertMemory() {
     Ram.state = Ram.bit.state
     Ram.statestorage[Ram.abit.state] = Ram.state;
     console.log(Ram.state)
+  }
+}
+
+function clockButton(a) {
+  if (a === 0 || a === 1) {
+    if (a === 0) {
+      clock.duration += 50
+    } else {
+      if (clock.duration > 0) {
+        clock.duration -= 50
+      }
+    }
+    document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
+  } else if (a === 2) {
+    if (clock.continue) {
+      document.getElementById("pauseplay").src = "content/play.svg";
+      document.getElementById("singlestep").src = "content/singleFrame.svg"
+      clock.continue = 0
+      if (clock.state === 0) {
+        clearTimeout(clock.clocks);
+      }
+    } else {
+      document.getElementById("pauseplay").src = "content/pause.svg";
+      document.getElementById("singlestep").src = "content/singleFrameOff.svg"
+      clock.continue = 1
+      clock.clockOn()
+    }
+  } else {
+    if (clock.continue === 0) {
+      clock.clockOn()
+    }
   }
 }

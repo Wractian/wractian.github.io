@@ -388,10 +388,14 @@
       <div style="text-align: center">Clock</div>
       <div id="clock">
         <img onclick="clockButton(0)" style="height:100%" src="content/Minus.svg" alt="">
-        <img style="height:100%" src="content/Indicator.svg" alt="">
+        <svg style="height:100%" version="1.1" id="Hertz" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 288 288" style="enable-background:new 0 0 288 288;" xml:space="preserve">
+          <text text-anchor="middle" transform="matrix(1 0 0 1 144 122)" class="hrtztext">1</text>
+          <text text-anchor="middle" transform="matrix(1 0 0 1 144 213)" class="hrtztext">Hertz</text>
+          </svg>
         <img onclick="clockButton(1)" style="height:100%; border-right:1px solid #b1b1b1;" src="content/Plus.svg" alt="">
-        <img onclick="clockButton(2)" style="height:100%; border-right:1px solid #b1b1b1;" src="content/Play.svg" alt="">
-        <img onclick="clockButton(3)" style="height:100%" src="content/SingleFrame.svg" alt="">
+        <img id="clockLED" style="height:100%" src="content/IndicatorOff.svg" alt="">
+        <img id="pauseplay" onclick="clockButton(2)" style="height:100%; border-right:1px solid #b1b1b1;" src="content/Play.svg" alt="">
+        <img id="singlestep" onclick="clockButton(3)" style="height:100%" src="content/SingleFrame.svg" alt="">
       </div>
     </div>
   </body>

@@ -133,3 +133,8 @@ svg.LED {
   height:50px;
   display: flex;
 }
+
+.hrtztext{
+  font-family:'MyriadPro-Regular';
+  font-size:72px;
+}
