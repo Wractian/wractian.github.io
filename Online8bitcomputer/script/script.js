@@ -125,6 +125,20 @@ class LEDholder {
   setLED(value, position) {
 
   }
+  retFirstFour() {
+    let s = ''
+    for (var i = 0; i < 4; i++) {
+      s = this.state[(this.state.length - 1) - i] + s
+    }
+    return s
+  }
+  retLastFour() {
+    let s = ''
+    for (var i = 4; i < this.state.length; i++) {
+      s = this.state[(this.state.length - 1) - i] + s
+    }
+    return s
+  }
   updateLEDs() {
     var elements = [];
     let input = ''
@@ -240,30 +254,20 @@ class Clock {
         document.getElementById("clockLED").src = "content/Indicator.svg"
         this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
 
-        //input
+        //Fetch Command
         if (LEDholders[9].state[0] == "1") {
-          control.CounterOutput(1);
-          control.MemoryInput(1);
+          control.state["CO"] = 1;
+          control.state["MI"] = 1;
+        } else if (LEDholders[9].state[1] == "1") {
+          control.state["RO"] = 1;
+          control.state["II"] = 1;
+        } else if (LEDholders[9].state[2] == "1") {
+          control.state["CE"] = 1;
+        } else {
+          control.setState(LEDholders[10].retLastFour(), LEDholders[9].state)
         }
-        if (LEDholders[9].state[1] == "1") {
-          control.RAMOutput(1);
-          control.InstructionInput(1);
-        }
-        if (LEDholders[9].state[2] == "1") {
-          control.CounterEnable(1);
-        }
-        if (LEDholders[9].state[3] == "1") {
-          control.InstructionOutput(1);
-          control.MemoryInput(1);
-        }
-        if (LEDholders[9].state[4] == "1") {
-          control.RAMOutput(1);
-          control.ARegisterInput(1)
-        }
-        if (LEDholders[9].state[5] == "1") {
-          control.ARegisterOutput(1);
-          control.DisplayOutput(1);
-        }
+        console.log(control.state)
+
         //PutStuff here
         if (control.state["SU"]) {
           Alu.subMode = 1
@@ -276,6 +280,9 @@ class Clock {
         if (control.state["CO"]) {
           LEDholders[7].setOutput(LEDholders[6].state);
         }
+        if (control.state["SO"]) {
+          LEDholders[7].setOutput(LEDholders[2].state);
+        }
         if (control.state["RO"]) {
           LEDholders[7].setOutput(LEDholders[5].state)
         }
@@ -285,11 +292,17 @@ class Clock {
         if (control.state["AI"]) {
           LEDholders[0].setOutput(LEDholders[7].state)
         }
+        if (control.state["BI"]) {
+          LEDholders[3].setOutput(LEDholders[7].state)
+        }
         if (control.state["II"]) {
           LEDholders[10].setOutput(LEDholders[7].state)
         }
         if (control.state["OI"]) {
           display.setOutput(LEDholders[0].state)
+        }
+        if (control.state["J"]) {
+          LEDholders[6].setOutput(LEDholders[7])
         }
       }
     }
@@ -303,7 +316,9 @@ class Clock {
     LEDholders[9].LEDs[(LEDholders[9].LEDs.length - 1) - parseInt(LEDholders[8].state, 2)].state = 1
     LEDholders[9].updateLEDs();
     Alu.calcAB();
-    control.state = [];
+    if (!(control.state["HLT"])) {
+      control.state = [];
+    }
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
     }
@@ -312,8 +327,41 @@ class Clock {
 class OverallController {
   constructor() {
     this.state = []
+    this.commands = []
+    this.commands["0000"] = [] //LDA
+    this.commands["0000"]["000100"] = ["IO", "MI"]
+    this.commands["0000"]["000010"] = ["RO", "AI"]
+    this.commands["0000"]["000001"] = []
+    this.commands["0001"] = [] //ADD
+    this.commands["0001"]["000100"] = ["IO", "MI"]
+    this.commands["0001"]["000010"] = ["RO", "BI"]
+    this.commands["0001"]["000001"] = ["SO", "AI"]
+    this.commands["0010"] = [] //SUB
+    this.commands["0010"]["000100"] = ["IO", "MI"]
+    this.commands["0010"]["000010"] = ["RO", "BI", "SU"]
+    this.commands["0010"]["000001"] = ["SO", "AI"]
+    this.commands["0011"] = [] //DISPLAY
+    this.commands["0011"]["000100"] = ["AO", "OI"]
+    this.commands["0011"]["000010"] = []
+    this.commands["0011"]["000001"] = []
+    this.commands["1100"] = [] //JMP
+    this.commands["1100"]["000100"] = ["IO", "J"]
+    this.commands["1100"]["000010"] = []
+    this.commands["1100"]["000001"] = []
+    this.commands["1111"] = [] //HLT
+    this.commands["1111"]["000100"] = ["HLT"]
+    this.commands["1111"]["000010"] = []
+    this.commands["1111"]["000001"] = []
   }
-  Halt(input) {
+  setState(instruction, counter) {
+    for (var i = 0; i < this.commands[instruction][counter].length; i++) {
+      this.state[this.commands[instruction][counter][i]] = 1
+    }
+  }
+  reset() {
+
+  }
+  /*Halt(input) {
     this.state["HLT"] = input;
   }
   CounterEnable(input) {
@@ -357,7 +405,7 @@ class OverallController {
   }
   Jump(input) {
     this.state["J"] = input;
-  }
+  }*/
 }
 //Hlt,
 
