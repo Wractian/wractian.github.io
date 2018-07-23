@@ -209,6 +209,9 @@ class Clock {
       this.state = 1;
       document.getElementById("clockLED").src = "content/Indicator.svg"
       this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
+      LEDholders[6].setOutput(countup(LEDholders[6].state));
+      LEDholders[6].updateLEDs();
+
     }
   }
   clockOff() {
@@ -223,6 +226,7 @@ class OverallController {
   constructor() {
 
   }
+
 }
 
 
@@ -237,7 +241,8 @@ function init() {
   LEDholders[3] = new LEDholder("LEDholder3", 8, "#00FF00", "#008A42");
   LEDholders[4] = new LEDholder("LEDholder4", 4, "#FFb100", "#6b2a00", "alertAddress");
   LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
-  LEDholders[6] = new LEDholder("LEDholder6", 8, "#00ffff", "#005454");
+  LEDholders[6] = new LEDholder("LEDholder6", 4, "#ff00e6", "#550048");
+  LEDholders[7] = new LEDholder("LEDholder7", 8, "#00ffff", "#005454");
   Ram = new RAM(LEDholders[4], LEDholders[5]);
   clock = new Clock();
   document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
@@ -273,7 +278,6 @@ function addAB() {
 }
 
 function addSwap() {
-  console.log("swap")
   if (document.getElementById('ALUcheck').innerHTML == "sub") {
     document.getElementById('ALUcheck').innerHTML = "add"
     document.getElementById('Calculate').style.background = "#d10000"
@@ -332,3 +336,22 @@ function clockButton(a) {
     }
   }
 }
+
+function countup(a) {
+  let carry = 0;
+  let sum = '';
+  let b = '0001'
+  for (var i = 3; i >= 0; i--) {
+    const fullAdd = Alu.fullAdder(a[i], b[i], carry);
+    sum = fullAdd[0] + sum;
+    carry = fullAdd[1];
+  }
+  return sum;
+}
+
+
+
+
+
+
+//oll
