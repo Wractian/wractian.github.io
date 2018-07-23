@@ -239,7 +239,31 @@ class Clock {
         this.state = 1;
         document.getElementById("clockLED").src = "content/Indicator.svg"
         this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
-        Alu.calcAB();
+
+        //input
+        if (LEDholders[9].state[0] == "1") {
+          control.CounterOutput(1);
+          control.MemoryInput(1);
+        }
+        if (LEDholders[9].state[1] == "1") {
+          control.RAMOutput(1);
+          control.InstructionInput(1);
+        }
+        if (LEDholders[9].state[2] == "1") {
+          control.CounterEnable(1);
+        }
+        if (LEDholders[9].state[3] == "1") {
+          control.InstructionOutput(1);
+          control.MemoryInput(1);
+        }
+        if (LEDholders[9].state[4] == "1") {
+          control.RAMOutput(1);
+          control.ARegisterInput(1)
+        }
+        if (LEDholders[9].state[5] == "1") {
+          control.ARegisterOutput(1);
+          control.DisplayOutput(1);
+        }
         //PutStuff here
         if (control.state["SU"]) {
           Alu.subMode = 1
@@ -252,17 +276,17 @@ class Clock {
         if (control.state["CO"]) {
           LEDholders[7].setOutput(LEDholders[6].state);
         }
+        if (control.state["RO"]) {
+          LEDholders[7].setOutput(LEDholders[5].state)
+        }
         if (control.state["MI"]) {
           LEDholders[4].setOutput(LEDholders[7].state)
         }
         if (control.state["AI"]) {
-          LEDholders[7].setOutput(LEDholders[0].state)
-        }
-        if (control.state["RO"]) {
-          LEDholders[7].setOutput(LEDholders[5].state)
+          LEDholders[0].setOutput(LEDholders[7].state)
         }
         if (control.state["II"]) {
-          LEDholders[8].setOutput(LEDholders[7].state)
+          LEDholders[10].setOutput(LEDholders[7].state)
         }
         if (control.state["OI"]) {
           display.setOutput(LEDholders[0].state)
@@ -278,6 +302,8 @@ class Clock {
     LEDholders[9].clearLEDs();
     LEDholders[9].LEDs[(LEDholders[9].LEDs.length - 1) - parseInt(LEDholders[8].state, 2)].state = 1
     LEDholders[9].updateLEDs();
+    Alu.calcAB();
+    control.state = [];
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
     }
