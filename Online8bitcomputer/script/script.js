@@ -133,10 +133,12 @@ class LEDholder {
   }
 }
 class ALU {
-  constructor(bits = 1) {
+  constructor(bits = 1, aReg, bReg) {
     this.state = "000000000"
     this.subMode = 0
     this.bits = bits
+    this.AReg = aReg
+    this.BReg = bReg
   }
   flip(a) {
     let b = '';
@@ -183,6 +185,15 @@ class ALU {
     }
     return [sum, carry]
   }
+  calcAB() {
+    let a = this.AReg.state;
+    let b = this.BReg.state;
+    let c = Alu.calculate(a, b);
+    LEDholders[1].setOutput(c[1]);
+    LEDholders[1].updateLEDs();
+    LEDholders[2].setOutput(c[0]);
+    LEDholders[2].updateLEDs();
+  }
 }
 class RAM {
   constructor(abit, bit) {
@@ -202,16 +213,46 @@ class Clock {
     this.state = 0
     this.continue = 0
     this.clocks = 0
-    this.duration = 1000
+    this.duration = 250
   }
   clockOn() {
-    if (this.state === 0) {
-      this.state = 1;
-      document.getElementById("clockLED").src = "content/Indicator.svg"
-      this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
-      LEDholders[6].setOutput(countup(LEDholders[6].state));
-      LEDholders[6].updateLEDs();
-
+    if (!control.state["HLT"]) {
+      if (this.state === 0) {
+        this.state = 1;
+        document.getElementById("clockLED").src = "content/Indicator.svg"
+        this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
+        Alu.calcAB();
+        //PutStuff here
+        if (control.state["SU"]) {
+          Alu.subMode = 1
+        } else {
+          Alu.subMode = 0
+        }
+        if (control.state["CE"]) {
+          LEDholders[6].setOutput(countup(LEDholders[6].state));
+          LEDholders[6].updateLEDs();
+        }
+        if (control.state["CO"]) {
+          LEDholders[7].setOutput(LEDholders[6].state);
+          LEDholders[7].updateLEDs();
+        }
+        if (control.state["MI"]) {
+          LEDholders[4].setOutput(LEDholders[7].state)
+          LEDholders[4].updateLEDs();
+        }
+        if (control.state["AI"]) {
+          LEDholders[7].setOutput(LEDholders[0].state)
+          LEDholders[7].updateLEDs();
+        }
+        if (control.state["RO"]) {
+          LEDholders[7].setOutput(LEDholders[5].state)
+          LEDholders[7].updateLEDs();
+        }
+        if (control.state["II"]) {
+          LEDholders[8].setOutput(LEDholders[7].state)
+          LEDholders[8].updateLEDs();
+        }
+      }
     }
   }
   clockOff() {
@@ -224,15 +265,58 @@ class Clock {
 }
 class OverallController {
   constructor() {
-
+    this.state = []
   }
-
+  Halt(input) {
+    this.state["HLT"] = input;
+  }
+  CounterEnable(input) {
+    this.state["CE"] = input;
+  }
+  CounterOutput(input) {
+    this.state["CO"] = input;
+  }
+  MemoryInput(input) {
+    this.state["MI"] = input;
+  }
+  RAMInput(input) {
+    this.state["RI"] = input;
+  }
+  RAMOutput(input) {
+    this.state["RO"] = input;
+  }
+  InstructionInput(input) {
+    this.state["II"] = input;
+  }
+  InstructionOutput(input) {
+    this.state["IO"] = input;
+  }
+  ARegisterInput(input) {
+    this.state["AI"] = input;
+  }
+  ARegisterOutput(input) {
+    this.state["AO"] = input;
+  }
+  SumOutput(input) {
+    this.state["SO"] = input;
+  }
+  Sub(input) {
+    this.state["SU"] = input;
+  }
+  BRegisterInput(input) {
+    this.state["AI"] = input;
+  }
+  DisplayOutput(input) {
+    this.state["OI"] = input;
+  }
+  Jump(input) {
+    this.state["J"] = input;
+  }
 }
-
+//Hlt,
 
 
 function init() {
-  Alu = new ALU(8);
   display = new SegmentController(8, "7d1", "7d2", "7d3", "7d4");
   LEDholders = [];
   LEDholders[0] = new LEDholder("LEDholder0", 8, "#00FF00", "#008A42");
@@ -243,8 +327,20 @@ function init() {
   LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
   LEDholders[6] = new LEDholder("LEDholder6", 4, "#ff00e6", "#550048");
   LEDholders[7] = new LEDholder("LEDholder7", 8, "#00ffff", "#005454");
+  LEDholders[8] = new LEDholder("LEDholder8", 8, "#0000FF", "#000080")
+  LEDholders[8].LEDs[0].colorOff = "#6b2a00"
+  LEDholders[8].LEDs[1].colorOff = "#6b2a00"
+  LEDholders[8].LEDs[2].colorOff = "#6b2a00"
+  LEDholders[8].LEDs[3].colorOff = "#6b2a00"
+  LEDholders[8].LEDs[0].colorOn = "#FFb100"
+  LEDholders[8].LEDs[1].colorOn = "#FFb100"
+  LEDholders[8].LEDs[2].colorOn = "#FFb100"
+  LEDholders[8].LEDs[3].colorOn = "#FFb100"
+  LEDholders[8].updateLEDs();
   Ram = new RAM(LEDholders[4], LEDholders[5]);
+  Alu = new ALU(8, LEDholders[0], LEDholders[3]);
   clock = new Clock();
+  control = new OverallController();
   document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
 }
 
@@ -265,18 +361,6 @@ function clickLED(a, b) {
   LEDholders[a.replace("LEDholder", "")].updateLEDs();
 }
 
-function addAB() {
-  a = LEDholders[0].state;
-  b = LEDholders[3].state;
-  c = Alu.calculate(a, b);
-  LEDholders[1].setOutput(c[1]);
-  LEDholders[1].updateLEDs();
-  LEDholders[2].setOutput(c[0]);
-  LEDholders[2].updateLEDs();
-  document.getElementById('binaryinput').value = c[0]
-  submitBinary()
-}
-
 function addSwap() {
   if (document.getElementById('ALUcheck').innerHTML == "sub") {
     document.getElementById('ALUcheck').innerHTML = "add"
@@ -294,7 +378,6 @@ function alertAddress() {
     Ram.state = Ram.statestorage[Ram.abit.state];
     Ram.bit.setOutput(Ram.state)
     Ram.bit.updateLEDs();
-    console.log(Ram.state)
   }
 }
 
@@ -302,7 +385,6 @@ function alertMemory() {
   if (!(typeof Ram === 'undefined')) {
     Ram.state = Ram.bit.state
     Ram.statestorage[Ram.abit.state] = Ram.state;
-    console.log(Ram.state)
   }
 }
 
