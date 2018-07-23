@@ -257,7 +257,7 @@ class Clock {
   }
   clockOff() {
     this.state = 0;
-    document.getElementById("clockLED").src = "content/IndicatorOff.svg"
+    document.getElementById("clockLED").src = "content/OffIndicator.svg"
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
     }
@@ -408,7 +408,7 @@ function clockButton(a) {
       }
     } else {
       document.getElementById("pauseplay").src = "content/pause.svg";
-      document.getElementById("singlestep").src = "content/singleFrameOff.svg"
+      document.getElementById("singlestep").src = "content/OffsingleFrame.svg"
       clock.continue = 1
       clock.clockOn()
     }
