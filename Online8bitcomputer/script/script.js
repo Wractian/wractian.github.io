@@ -234,6 +234,7 @@ class RAM {
     this.astate = 0
     this.state = "00000000";
     this.statestorage = []
+
   }
   changeAState(a = "0000") {
     this.astate = a;
@@ -266,7 +267,6 @@ class Clock {
         } else {
           control.setState(LEDholders[10].retLastFour(), LEDholders[9].state)
         }
-        console.log(control.state)
 
         //PutStuff here
         if (control.state["SU"]) {
@@ -286,6 +286,9 @@ class Clock {
         if (control.state["RO"]) {
           LEDholders[7].setOutput(LEDholders[5].state)
         }
+        if (control.state["IO"]) {
+          LEDholders[7].setOutput(LEDholders[10].retFirstFour())
+        }
         if (control.state["MI"]) {
           LEDholders[4].setOutput(LEDholders[7].state)
         }
@@ -302,7 +305,7 @@ class Clock {
           display.setOutput(LEDholders[0].state)
         }
         if (control.state["J"]) {
-          LEDholders[6].setOutput(LEDholders[7])
+          LEDholders[6].setOutput(LEDholders[7].state)
         }
       }
     }
@@ -328,26 +331,42 @@ class OverallController {
   constructor() {
     this.state = []
     this.commands = []
-    this.commands["0000"] = [] //LDA
-    this.commands["0000"]["000100"] = ["IO", "MI"]
-    this.commands["0000"]["000010"] = ["RO", "AI"]
+    this.commands["0000"] = [] //NOP
     this.commands["0000"]["000001"] = []
-    this.commands["0001"] = [] //ADD
+    this.commands["0000"]["000100"] = []
+    this.commands["0000"]["000010"] = []
+    this.commands["0001"] = [] //LDA
     this.commands["0001"]["000100"] = ["IO", "MI"]
-    this.commands["0001"]["000010"] = ["RO", "BI"]
-    this.commands["0001"]["000001"] = ["SO", "AI"]
-    this.commands["0010"] = [] //SUB
+    this.commands["0001"]["000010"] = ["RO", "AI"]
+    this.commands["0001"]["000001"] = []
+    this.commands["0010"] = [] //ADD
     this.commands["0010"]["000100"] = ["IO", "MI"]
-    this.commands["0010"]["000010"] = ["RO", "BI", "SU"]
+    this.commands["0010"]["000010"] = ["RO", "BI"]
     this.commands["0010"]["000001"] = ["SO", "AI"]
-    this.commands["0011"] = [] //DISPLAY
-    this.commands["0011"]["000100"] = ["AO", "OI"]
-    this.commands["0011"]["000010"] = []
-    this.commands["0011"]["000001"] = []
-    this.commands["1100"] = [] //JMP
-    this.commands["1100"]["000100"] = ["IO", "J"]
-    this.commands["1100"]["000010"] = []
-    this.commands["1100"]["000001"] = []
+    this.commands["0011"] = [] //SUB
+    this.commands["0011"]["000100"] = ["IO", "MI"]
+    this.commands["0011"]["000010"] = ["RO", "BI", "SU"]
+    this.commands["0011"]["000001"] = ["SO", "AI"]
+    this.commands["0100"] = [] //LDI
+    this.commands["0100"]["000100"] = ["AI", "IO"]
+    this.commands["0100"]["000010"] = []
+    this.commands["0100"]["000001"] = []
+    this.commands["0101"] = [] //DISPLAY
+    this.commands["0101"]["000100"] = ["AO", "OI"]
+    this.commands["0101"]["000010"] = []
+    this.commands["0101"]["000001"] = []
+    this.commands["0110"] = [] //JMP
+    this.commands["0110"]["000100"] = ["IO", "J"]
+    this.commands["0110"]["000010"] = []
+    this.commands["0110"]["000001"] = []
+    this.commands["0111"] = [] //JMC
+    this.commands["0111"]["000100"] = ["IO", "J"] //only if carry is 1
+    this.commands["0111"]["000010"] = []
+    this.commands["0111"]["000001"] = []
+    this.commands["1000"] = [] //JMZ
+    this.commands["1000"]["000100"] = ["IO", "J"] //only if sum is zero
+    this.commands["1000"]["000010"] = []
+    this.commands["1000"]["000001"] = []
     this.commands["1111"] = [] //HLT
     this.commands["1111"]["000100"] = ["HLT"]
     this.commands["1111"]["000010"] = []
@@ -355,7 +374,22 @@ class OverallController {
   }
   setState(instruction, counter) {
     for (var i = 0; i < this.commands[instruction][counter].length; i++) {
-      this.state[this.commands[instruction][counter][i]] = 1
+      if (instruction == "0111") {
+        if (LEDholders[1].state == "1") {
+          this.state[this.commands[instruction][counter][i]] = 1
+        } else {
+          this.state[this.commands[instruction][counter][i]] = 0
+        }
+      } else if (instruction == "1000") {
+        if (LEDholders[2].state == "00000000") {
+          this.state[this.commands[instruction][counter][i]] = 1
+        } else {
+          this.state[this.commands[instruction][counter][i]] = 0
+        }
+      } else {
+        this.state[this.commands[instruction][counter][i]] = 1
+      }
+
     }
   }
   reset() {
