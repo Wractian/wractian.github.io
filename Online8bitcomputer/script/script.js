@@ -61,6 +61,16 @@ class SegmentController {
     }
     this.updateDisplay();
   }
+  setOutput(a) {
+    let number = parseInt(a, 2);
+    let length = String(number).length
+    this.clearSegments()
+    for (var i = 0; i < length; i++) {
+      this.setSegment(display.segTruth[String(number).charAt((length - 1) - i)], i)
+
+    }
+    display.updateDisplay()
+  }
 }
 class LED {
   constructor(colorOn = "#00FF00", colorOff = "#008A42") {
@@ -110,6 +120,7 @@ class LEDholder {
         this.LEDs[i].off()
       }
     }
+    this.updateLEDs();
   }
   setLED(value, position) {
 
@@ -130,6 +141,13 @@ class LEDholder {
     if (!(this.onUpdate == "")) {
       window[this.onUpdate]();
     }
+  }
+  clearLEDs() {
+    let b = ''
+    for (var i = 0; i < this.bits; i++) {
+      b = b + "0"
+    }
+    this.setOutput(b)
   }
 }
 class ALU {
@@ -213,7 +231,7 @@ class Clock {
     this.state = 0
     this.continue = 0
     this.clocks = 0
-    this.duration = 250
+    this.duration = 360
   }
   clockOn() {
     if (!control.state["HLT"]) {
@@ -230,27 +248,24 @@ class Clock {
         }
         if (control.state["CE"]) {
           LEDholders[6].setOutput(countup(LEDholders[6].state));
-          LEDholders[6].updateLEDs();
         }
         if (control.state["CO"]) {
           LEDholders[7].setOutput(LEDholders[6].state);
-          LEDholders[7].updateLEDs();
         }
         if (control.state["MI"]) {
           LEDholders[4].setOutput(LEDholders[7].state)
-          LEDholders[4].updateLEDs();
         }
         if (control.state["AI"]) {
           LEDholders[7].setOutput(LEDholders[0].state)
-          LEDholders[7].updateLEDs();
         }
         if (control.state["RO"]) {
           LEDholders[7].setOutput(LEDholders[5].state)
-          LEDholders[7].updateLEDs();
         }
         if (control.state["II"]) {
           LEDholders[8].setOutput(LEDholders[7].state)
-          LEDholders[8].updateLEDs();
+        }
+        if (control.state["OI"]) {
+          display.setOutput(LEDholders[0].state)
         }
       }
     }
@@ -258,6 +273,11 @@ class Clock {
   clockOff() {
     this.state = 0;
     document.getElementById("clockLED").src = "content/IndicatorOff.svg"
+    var counter = countup(LEDholders[8].state);
+    LEDholders[8].setOutput((counter == "110") ? "000" : countup(LEDholders[8].state));
+    LEDholders[9].clearLEDs();
+    LEDholders[9].LEDs[(LEDholders[9].LEDs.length - 1) - parseInt(LEDholders[8].state, 2)].state = 1
+    LEDholders[9].updateLEDs();
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
     }
@@ -327,16 +347,20 @@ function init() {
   LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
   LEDholders[6] = new LEDholder("LEDholder6", 4, "#ff00e6", "#550048");
   LEDholders[7] = new LEDholder("LEDholder7", 8, "#00ffff", "#005454");
-  LEDholders[8] = new LEDholder("LEDholder8", 8, "#0000FF", "#000080")
-  LEDholders[8].LEDs[0].colorOff = "#6b2a00"
-  LEDholders[8].LEDs[1].colorOff = "#6b2a00"
-  LEDholders[8].LEDs[2].colorOff = "#6b2a00"
-  LEDholders[8].LEDs[3].colorOff = "#6b2a00"
-  LEDholders[8].LEDs[0].colorOn = "#FFb100"
-  LEDholders[8].LEDs[1].colorOn = "#FFb100"
-  LEDholders[8].LEDs[2].colorOn = "#FFb100"
-  LEDholders[8].LEDs[3].colorOn = "#FFb100"
-  LEDholders[8].updateLEDs();
+  LEDholders[8] = new LEDholder("LEDholder8", 3, "#00ffba", "#004532");
+  LEDholders[9] = new LEDholder("LEDholder9", 6, "#00FF00", "#008A42");
+  LEDholders[9].LEDs[5].state = 1;
+  LEDholders[9].updateLEDs();
+  LEDholders[10] = new LEDholder("LEDholder10", 8, "#0000FF", "#000080")
+  LEDholders[10].LEDs[0].colorOff = "#6b2a00"
+  LEDholders[10].LEDs[1].colorOff = "#6b2a00"
+  LEDholders[10].LEDs[2].colorOff = "#6b2a00"
+  LEDholders[10].LEDs[3].colorOff = "#6b2a00"
+  LEDholders[10].LEDs[0].colorOn = "#FFb100"
+  LEDholders[10].LEDs[1].colorOn = "#FFb100"
+  LEDholders[10].LEDs[2].colorOn = "#FFb100"
+  LEDholders[10].LEDs[3].colorOn = "#FFb100"
+  LEDholders[10].updateLEDs();
   Ram = new RAM(LEDholders[4], LEDholders[5]);
   Alu = new ALU(8, LEDholders[0], LEDholders[3]);
   clock = new Clock();
@@ -347,13 +371,7 @@ function init() {
 //Dev Functions, sloppy frankenstein code
 function submitBinary() {
   event.preventDefault();
-  var number = parseInt(document.getElementById('binaryinput').value, 2);
-  var length = String(number).length
-  display.clearSegments()
-  for (var i = 0; i < length; i++) {
-    display.setSegment(display.segTruth[String(number).charAt((length - 1) - i)], i)
-  }
-  display.updateDisplay()
+  display.setOutput(document.getElementById('binaryinput').value)
 }
 
 function clickLED(a, b) {
@@ -391,23 +409,23 @@ function alertMemory() {
 function clockButton(a) {
   if (a === 0 || a === 1) {
     if (a === 0) {
-      clock.duration += 50
+      clock.duration += 20
     } else {
       if (clock.duration > 0) {
-        clock.duration -= 50
+        clock.duration -= 20
       }
     }
     document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
   } else if (a === 2) {
     if (clock.continue) {
-      document.getElementById("pauseplay").src = "content/play.svg";
+      document.getElementById("pauseplay").src = "content/Play.svg";
       document.getElementById("singlestep").src = "content/SingleFrame.svg"
       clock.continue = 0
       if (clock.state === 0) {
         clearTimeout(clock.clocks);
       }
     } else {
-      document.getElementById("pauseplay").src = "content/pause.svg";
+      document.getElementById("pauseplay").src = "content/Pause.svg";
       document.getElementById("singlestep").src = "content/SingleFrameOff.svg"
       clock.continue = 1
       clock.clockOn()
@@ -422,8 +440,12 @@ function clockButton(a) {
 function countup(a) {
   let carry = 0;
   let sum = '';
-  let b = '0001'
-  for (var i = 3; i >= 0; i--) {
+  let b = '';
+  for (var i = 0; i < a.length - 1; i++) {
+    b = b + "0"
+  }
+  b = b + "1"
+  for (var i = a.length - 1; i >= 0; i--) {
     const fullAdd = Alu.fullAdder(a[i], b[i], carry);
     sum = fullAdd[0] + sum;
     carry = fullAdd[1];
