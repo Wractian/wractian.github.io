@@ -257,7 +257,7 @@ class Clock {
   }
   clockOff() {
     this.state = 0;
-    document.getElementById("clockLED").src = "content/OffIndicator.svg"
+    document.getElementById("clockLED").src = "content/IndicatorOff.svg"
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
     }
@@ -401,14 +401,14 @@ function clockButton(a) {
   } else if (a === 2) {
     if (clock.continue) {
       document.getElementById("pauseplay").src = "content/play.svg";
-      document.getElementById("singlestep").src = "content/singleFrame.svg"
+      document.getElementById("singlestep").src = "content/SingleFrame.svg"
       clock.continue = 0
       if (clock.state === 0) {
         clearTimeout(clock.clocks);
       }
     } else {
       document.getElementById("pauseplay").src = "content/pause.svg";
-      document.getElementById("singlestep").src = "content/OffsingleFrame.svg"
+      document.getElementById("singlestep").src = "content/SingleFrameOff.svg"
       clock.continue = 1
       clock.clockOn()
     }
