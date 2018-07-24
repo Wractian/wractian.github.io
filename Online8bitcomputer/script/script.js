@@ -460,8 +460,6 @@ class OverallController {
     this.state["J"] = input;
   }*/
 }
-//Hlt,
-
 
 function init() {
   display = new SegmentController(8, "7d1", "7d2", "7d3", "7d4");
