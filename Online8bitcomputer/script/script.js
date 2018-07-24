@@ -221,10 +221,15 @@ class ALU {
     let a = this.AReg.state;
     let b = this.BReg.state;
     let c = Alu.calculate(a, b);
-    LEDholders[1].setOutput(c[1]);
-    LEDholders[1].updateLEDs();
-    LEDholders[2].setOutput(c[0]);
+    LEDholders[2].setOutput(c[1]);
     LEDholders[2].updateLEDs();
+    LEDholders[3].setOutput(c[0]);
+    LEDholders[3].updateLEDs();
+    if (c[0] == "00000000") {
+      LEDholders[1].setOutput("1");
+    } else {
+      LEDholders[1].setOutput(0);
+    }
   }
 }
 class RAM {
@@ -246,7 +251,7 @@ class Clock {
     this.state = 0
     this.continue = 0
     this.clocks = 0
-    this.duration = 360
+    this.duration = 20
   }
   clockOn() {
     if (!control.state["HLT"]) {
@@ -256,18 +261,17 @@ class Clock {
         this.clocks = setTimeout(this.clockOff.bind(this), this.duration)
 
         //Fetch Command
-        if (LEDholders[9].state[0] == "1") {
+        if (LEDholders[10].state[0] == "1") {
           control.state["CO"] = 1;
           control.state["MI"] = 1;
-        } else if (LEDholders[9].state[1] == "1") {
+        } else if (LEDholders[10].state[1] == "1") {
           control.state["RO"] = 1;
           control.state["II"] = 1;
-        } else if (LEDholders[9].state[2] == "1") {
+        } else if (LEDholders[10].state[2] == "1") {
           control.state["CE"] = 1;
         } else {
-          control.setState(LEDholders[10].retLastFour(), LEDholders[9].state)
+          control.setState(LEDholders[11].retLastFour(), LEDholders[10].state)
         }
-
         //PutStuff here
         if (control.state["SU"]) {
           Alu.subMode = 1
@@ -275,37 +279,41 @@ class Clock {
           Alu.subMode = 0
         }
         if (control.state["CE"]) {
-          LEDholders[6].setOutput(countup(LEDholders[6].state));
+          LEDholders[7].setOutput(countup(LEDholders[7].state));
         }
         if (control.state["CO"]) {
-          LEDholders[7].setOutput(LEDholders[6].state);
+          LEDholders[8].setOutput(LEDholders[7].state);
         }
         if (control.state["SO"]) {
-          LEDholders[7].setOutput(LEDholders[2].state);
+          LEDholders[8].setOutput(LEDholders[3].state);
         }
         if (control.state["RO"]) {
-          LEDholders[7].setOutput(LEDholders[5].state)
+          LEDholders[8].setOutput(LEDholders[6].state)
         }
         if (control.state["IO"]) {
-          LEDholders[7].setOutput(LEDholders[10].retFirstFour())
+          LEDholders[8].setOutput(LEDholders[11].retFirstFour())
         }
         if (control.state["MI"]) {
-          LEDholders[4].setOutput(LEDholders[7].state)
+          LEDholders[5].setOutput(LEDholders[8].state)
         }
         if (control.state["AI"]) {
-          LEDholders[0].setOutput(LEDholders[7].state)
+          LEDholders[0].setOutput(LEDholders[8].state)
         }
         if (control.state["BI"]) {
-          LEDholders[3].setOutput(LEDholders[7].state)
+          LEDholders[4].setOutput(LEDholders[8].state)
         }
         if (control.state["II"]) {
-          LEDholders[10].setOutput(LEDholders[7].state)
+          LEDholders[11].setOutput(LEDholders[8].state)
         }
         if (control.state["OI"]) {
           display.setOutput(LEDholders[0].state)
         }
         if (control.state["J"]) {
-          LEDholders[6].setOutput(LEDholders[7].state)
+          LEDholders[7].setOutput(LEDholders[8].state)
+        }
+        if (control.state["FL"]) {
+          LEDholders[12].setOutput(LEDholders[1].state)
+          LEDholders[13].setOutput(LEDholders[2].state)
         }
       }
     }
@@ -313,14 +321,25 @@ class Clock {
   clockOff() {
     this.state = 0;
     document.getElementById("clockLED").src = "content/IndicatorOff.svg"
-    var counter = countup(LEDholders[8].state);
-    LEDholders[8].setOutput((counter == "110") ? "000" : countup(LEDholders[8].state));
-    LEDholders[9].clearLEDs();
-    LEDholders[9].LEDs[(LEDholders[9].LEDs.length - 1) - parseInt(LEDholders[8].state, 2)].state = 1
-    LEDholders[9].updateLEDs();
+    var counter = countup(LEDholders[9].state);
+    LEDholders[9].setOutput((counter == "110") ? "000" : countup(LEDholders[9].state));
+    LEDholders[10].clearLEDs();
+    LEDholders[10].LEDs[(LEDholders[10].LEDs.length - 1) - parseInt(LEDholders[9].state, 2)].state = 1
+    LEDholders[10].updateLEDs();
     Alu.calcAB();
     if (!(control.state["HLT"])) {
       control.state = [];
+    } else {
+      for (var i = 0; i < LEDholders.length; i++) {
+        if (!(i == 6)) {
+          LEDholders[i].setOutput("00000000")
+        }
+      }
+      display.setOutput("00000000")
+      document.getElementById("pauseplay").src = "content/Play.svg";
+      document.getElementById("singlestep").src = "content/SingleFrame.svg"
+      this.continue = 0
+      control.state = []
     }
     if (this.continue) {
       this.clocks = setTimeout(this.clockOn.bind(this), this.duration)
@@ -342,11 +361,11 @@ class OverallController {
     this.commands["0010"] = [] //ADD
     this.commands["0010"]["000100"] = ["IO", "MI"]
     this.commands["0010"]["000010"] = ["RO", "BI"]
-    this.commands["0010"]["000001"] = ["SO", "AI"]
+    this.commands["0010"]["000001"] = ["SO", "AI", "FL"]
     this.commands["0011"] = [] //SUB
     this.commands["0011"]["000100"] = ["IO", "MI"]
     this.commands["0011"]["000010"] = ["RO", "BI", "SU"]
-    this.commands["0011"]["000001"] = ["SO", "AI"]
+    this.commands["0011"]["000001"] = ["SO", "AI", "FL"]
     this.commands["0100"] = [] //LDI
     this.commands["0100"]["000100"] = ["AI", "IO"]
     this.commands["0100"]["000010"] = []
@@ -375,13 +394,13 @@ class OverallController {
   setState(instruction, counter) {
     for (var i = 0; i < this.commands[instruction][counter].length; i++) {
       if (instruction == "0111") {
-        if (LEDholders[1].state == "1") {
+        if (LEDholders[13].state == "1") {
           this.state[this.commands[instruction][counter][i]] = 1
         } else {
           this.state[this.commands[instruction][counter][i]] = 0
         }
       } else if (instruction == "1000") {
-        if (LEDholders[2].state == "00000000") {
+        if (LEDholders[12].state == "1") {
           this.state[this.commands[instruction][counter][i]] = 1
         } else {
           this.state[this.commands[instruction][counter][i]] = 0
@@ -449,28 +468,31 @@ function init() {
   LEDholders = [];
   LEDholders[0] = new LEDholder("LEDholder0", 8, "#00FF00", "#008A42");
   LEDholders[1] = new LEDholder("LEDholder1", 1, "#0000FF", "#000080");
-  LEDholders[2] = new LEDholder("LEDholder2", 8, "#00FF00", "#008A42");
+  LEDholders[2] = new LEDholder("LEDholder2", 1, "#0000FF", "#000080");
   LEDholders[3] = new LEDholder("LEDholder3", 8, "#00FF00", "#008A42");
-  LEDholders[4] = new LEDholder("LEDholder4", 4, "#FFb100", "#6b2a00", "alertAddress");
-  LEDholders[5] = new LEDholder("LEDholder5", 8, "#FF0000", "#580000", "alertMemory");
-  LEDholders[6] = new LEDholder("LEDholder6", 4, "#ff00e6", "#550048");
-  LEDholders[7] = new LEDholder("LEDholder7", 8, "#00ffff", "#005454");
-  LEDholders[8] = new LEDholder("LEDholder8", 3, "#00ffba", "#004532");
-  LEDholders[9] = new LEDholder("LEDholder9", 6, "#00FF00", "#008A42");
-  LEDholders[9].LEDs[5].state = 1;
-  LEDholders[9].updateLEDs();
-  LEDholders[10] = new LEDholder("LEDholder10", 8, "#0000FF", "#000080")
-  LEDholders[10].LEDs[0].colorOff = "#6b2a00"
-  LEDholders[10].LEDs[1].colorOff = "#6b2a00"
-  LEDholders[10].LEDs[2].colorOff = "#6b2a00"
-  LEDholders[10].LEDs[3].colorOff = "#6b2a00"
-  LEDholders[10].LEDs[0].colorOn = "#FFb100"
-  LEDholders[10].LEDs[1].colorOn = "#FFb100"
-  LEDholders[10].LEDs[2].colorOn = "#FFb100"
-  LEDholders[10].LEDs[3].colorOn = "#FFb100"
+  LEDholders[4] = new LEDholder("LEDholder4", 8, "#00FF00", "#008A42");
+  LEDholders[5] = new LEDholder("LEDholder5", 4, "#FFb100", "#6b2a00", "alertAddress");
+  LEDholders[6] = new LEDholder("LEDholder6", 8, "#FF0000", "#580000", "alertMemory");
+  LEDholders[7] = new LEDholder("LEDholder7", 4, "#ff00e6", "#550048");
+  LEDholders[8] = new LEDholder("LEDholder8", 8, "#00ffff", "#005454");
+  LEDholders[9] = new LEDholder("LEDholder9", 3, "#00ffba", "#004532");
+  LEDholders[10] = new LEDholder("LEDholder10", 6, "#00FF00", "#008A42");
+  LEDholders[10].LEDs[5].state = 1;
   LEDholders[10].updateLEDs();
-  Ram = new RAM(LEDholders[4], LEDholders[5]);
-  Alu = new ALU(8, LEDholders[0], LEDholders[3]);
+  LEDholders[11] = new LEDholder("LEDholder11", 8, "#0000FF", "#000080")
+  LEDholders[11].LEDs[0].colorOff = "#6b2a00"
+  LEDholders[11].LEDs[1].colorOff = "#6b2a00"
+  LEDholders[11].LEDs[2].colorOff = "#6b2a00"
+  LEDholders[11].LEDs[3].colorOff = "#6b2a00"
+  LEDholders[11].LEDs[0].colorOn = "#FFb100"
+  LEDholders[11].LEDs[1].colorOn = "#FFb100"
+  LEDholders[11].LEDs[2].colorOn = "#FFb100"
+  LEDholders[11].LEDs[3].colorOn = "#FFb100"
+  LEDholders[11].updateLEDs();
+  LEDholders[12] = new LEDholder("LEDholder12", 1, "#0000FF", "#000080");
+  LEDholders[13] = new LEDholder("LEDholder13", 1, "#0000FF", "#000080");
+  Ram = new RAM(LEDholders[5], LEDholders[6]);
+  Alu = new ALU(8, LEDholders[0], LEDholders[4]);
   clock = new Clock();
   control = new OverallController();
   document.getElementById("Hertz").children[0].innerHTML = (Math.trunc((1 / (clock.duration / 1000)) * 100) / 100);
@@ -560,10 +582,3 @@ function countup(a) {
   }
   return sum;
 }
-
-
-
-
-
-
-//oll

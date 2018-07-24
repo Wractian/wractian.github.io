@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>8bit(WIP)</title>
+    <title>8bit</title>
     <script src="script/script.js" charset="utf-8"></script>
     <link rel="stylesheet" href="style/style.css">
   </head>
@@ -131,14 +131,22 @@
       <div class="Register" id="ALU">
         <div>ALU</div>
         <div id="LEDholder1" class=LEDholder>
-          <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg id="zerobit" class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#0000ff" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
         </div>
-        <div id="LEDholder2" class="LEDholder">
+        <div id="LEDholder2" class=LEDholder>
+          <svg id="carrybit" class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
+            <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
+            <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#0000ff" stroke="#008A42"/>
+            <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
+          </svg>
+        </div>
+        <div id="LEDholder3" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -191,50 +199,50 @@
       </div>
       <div class="Register" id="B-Register">
         <div>B Register</div>
-        <div id="LEDholder3" class="LEDholder">
-          <svg class="LED" onclick="clickLED('LEDholder3', 7)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+        <div id="LEDholder4" class="LEDholder">
+          <svg class="LED" onclick="clickLED('LEDholder4', 7)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 6)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 6)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 5)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 5)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 4)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 4)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-          <svg class="LED" onclick="clickLED('LEDholder3', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <svg class="LED" onclick="clickLED('LEDholder4', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#008A42"/>
@@ -247,26 +255,26 @@
       <div id="ramHolder">
         <div class="Register" id="Address">
           <div>Address</div>
-          <div id="LEDholder4" class="LEDholder">
-            <svg class="LED" onclick="clickLED('LEDholder4', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <div id="LEDholder5" class="LEDholder">
+            <svg class="LED" onclick="clickLED('LEDholder5', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#FFb100" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder4', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder5', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#FFb100" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder4', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder5', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#FFb100" stroke="#008A42"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder4', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder5', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#FFb100" stroke="#008A42"/>
@@ -276,50 +284,50 @@
         </div>
         <div class="Register" id="Memory">
           <div>Memory</div>
-          <div id="LEDholder5" class="LEDholder">
-            <svg class="LED" onclick="clickLED('LEDholder5', 7)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <div id="LEDholder6" class="LEDholder">
+            <svg class="LED" onclick="clickLED('LEDholder6', 7)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 6)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 6)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 5)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 5)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 4)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 4)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 3)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 2)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
             <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
           </svg>
-            <svg class="LED" onclick="clickLED('LEDholder5', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+            <svg class="LED" onclick="clickLED('LEDholder6', 0)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
             <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
             <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
             <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#00FF00" stroke="#580000"/>
@@ -332,7 +340,7 @@
     <div style="display:flex;justify-content: center; margin-top:30px;">
       <div class="Register">
         <div>Program</div>
-        <div id="LEDholder6" class="LEDholder">
+        <div id="LEDholder7" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
           <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
           <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -361,7 +369,7 @@
       </div>
       <div class="Register" id="busHolder">
         <div>Bus</div>
-        <div id="LEDholder7" class="LEDholder">
+        <div id="LEDholder8" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
           <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
           <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -416,7 +424,7 @@
     <div style="display:flex;justify-content: center; margin-top:30px;">
       <div class="Register">
         <div>Counter</div>
-        <div id="LEDholder8" class="LEDholder">
+        <div id="LEDholder9" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
           <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
           <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -439,7 +447,7 @@
       </div>
       <div class="Register">
         <div>Counter</div>
-        <div id="LEDholder9" class="LEDholder">
+        <div id="LEDholder10" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
           <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
           <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -480,7 +488,7 @@
       </div>
       <div class="Register" id="InstructionReg">
         <div>Instruction</div>
-        <div id="LEDholder10" class="LEDholder">
+        <div id="LEDholder11" class="LEDholder">
           <svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
           <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
           <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
@@ -532,6 +540,24 @@
         </div>
       </div>
     </div>
+    <div style="display:flex;justify-content: center; margin-top:30px;">
+      <div id="LEDholder12" class=LEDholder>
+        <svg id="zerobit" class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
+          <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
+          <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#0000ff" stroke="#008A42"/>
+          <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
+        </svg>
+      </div>
+      <div id="LEDholder13" class=LEDholder>
+        <svg id="zerobit" class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+          <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z"/>
+          <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z"/>
+          <path class="st1" d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z" fill="#0000ff" stroke="#008A42"/>
+          <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0"/>
+        </svg>
+      </div>
+    </div>
     <div id="clockHolder">
       <div style="text-align: center">Clock</div>
       <div id="clock">
@@ -546,6 +572,7 @@
         <img id="singlestep" onclick="clockButton(3)" style="height:100%" src="content/SingleFrame.svg" alt="">
       </div>
     </div>
+    <!--Stupid shit to fix non native image replacements-->
     <img style="display:none" src="content/SingleFrameOff.svg">
     <img style="display:none" src="content/Indicator.svg">
     <img style="display:none" src="content/Pause.svg">
