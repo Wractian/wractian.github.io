@@ -1,0 +1,20 @@
+body{
+
+}
+.mapwrapper{
+  width:50vw;
+}
+.mapwrapper embed{
+  padding:3vw;
+  background-color: #000403;
+}
+.maptext{
+  background-color:rgb(3, 92, 17);
+  width:56vw;
+  height:4vw;
+  font-size:2.5vw;
+  text-align: center;
+  vertical-align: middle;
+  line-height:4vw;
+  color: #000403;
+}
