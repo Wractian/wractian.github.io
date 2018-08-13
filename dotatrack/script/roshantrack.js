@@ -33,9 +33,22 @@ class timer {
   }
 }
 
-
-var time;
-roshmin = new timer(4800, "ping", "roshmin")
-roshmax = new timer(6600, "ping", "roshmax")
-roshmin.starttimer();
-roshmax.starttimer();
+function init() {
+  var xhttp;
+  roshmin = new timer(4800, "ping", "roshmin")
+  roshmax = new timer(6600, "ping", "roshmax")
+  roshmin.starttimer();
+  roshmax.starttimer();
+  //workaround to easally edit svg file without constant copypaste
+  xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "content/map1.svg", true);
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+    var str, img
+    if (this.readyState == 4) {
+      str = this.responseText.replace('<?xml version="1.0" encoding="utf-8"?>', '')
+      str = str.replace('<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->', '')
+      document.getElementById('overlaywrapper').outerHTML = str;
+    }
+  }
+}

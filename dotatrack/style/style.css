@@ -1,12 +1,7 @@
-body{
 
-}
 .mapwrapper{
-  width:50vw;
-}
-.mapwrapper embed{
-  padding:3vw;
-  background-color: #000403;
+  width:56vw;
+  height:60vw;
 }
 .maptext{
   background-color:rgb(3, 92, 17);
@@ -17,4 +12,15 @@ body{
   vertical-align: middle;
   line-height:4vw;
   color: #000403;
+}
+#mapimage{
+  padding:3vw;
+  background-color: #000403;
+  width:50vw;
+}
+#mapoverlay{
+  width:50vw;
+  position:relative;
+  left:3vw;
+  top:-53vw;
 }
