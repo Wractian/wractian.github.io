@@ -12,12 +12,21 @@
   </head>
 
   <body onload="init()">
-    <div class="mapwrapper">
-      <div class="maptext">Minimap</div>
-      <img id="mapimage" src="content/map.png" alt="">
-      <span id="overlaywrapper"></span>
+    <div style="display:flex;">
+      <div class="boxwrapper">
+        <div class="boxtext">Minimap</div>
+        <img id="mapimage" src="content/map.png" alt="">
+        <span whtml='outer content/map1.svg'></span>
+      </div>
+      <div class="boxwrapper">
+        <div class="boxtext">Game</div>
+        <div>The current time is :0</div>
+        <span whtmlupdate='gamebutton' whtml="inner content/GameButton.svg"></span>
+      </div>
     </div>
-    <button type="button" name="Roshbutton">Rosh</button>
+    <div style="margin-top:8px;">
+      <a id="roshbutton">Rosh</a> <span whtmlupdate='roshtext'>Roshan is alive</span>
+    </div>
   </body>
 
 </html>

@@ -3,10 +3,9 @@
 <svg version="1.1" id="mapoverlay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 2108 2108" style="enable-background:new 0 0 2108 2108;" xml:space="preserve">
 <style type="text/css">
-	.st0{opacity:0.44;fill:#00D400;enable-background:new    ;}
-	.st1{font-family:'ArialMT';}
-	.st2{font-size:100px;}
+	.st0{opacity:0.7;fill:#00D400;stroke:#000000;stroke-width:10;stroke-miterlimit:10;enable-background:new    ;}
+	.st1{font-family:'ArialMT';font-size:67px;}
 </style>
 <circle class="st0" cx="679.9" cy="758.7" r="119.7"/>
-<text transform="matrix(1 0 0 1 512.5856 785.5413)" class="st1 st2">Roshan</text>
+<text transform="matrix(1 0 0 1 580 770)" class="st1 st2">Roshan</text>
 </svg>

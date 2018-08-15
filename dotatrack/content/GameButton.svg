@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="gamebutton" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1710 1510" style="enable-background:new 0 0 1710 1510;" xml:space="preserve">
+<style type="text/css">
+	.buttonbackground{stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.gamebuttontext{font-family:'ArialMT';font-size:300px;}
+	.buttonoverlay{fill-opacity:0;}
+</style>
+<path class="buttonbackground" d="M1175.7,1505H534.3C243.2,1505,5,1266.8,5,975.7V534.3C5,243.2,243.2,5,534.3,5h641.4
+	C1466.8,5,1705,243.2,1705,534.3v441.4C1705,1266.8,1466.8,1505,1175.7,1505z" fill="rgb(25, 238, 6)"/>
+<text text-anchor="middle" transform="matrix(1 0 0 1 846.5284 1125)" class="gamebuttontext">Game</text>
+<text text-anchor="middle" transform="matrix(1 0 0 1 838.2278 615.9993)" class="gamebuttontext">Start</text>
+<path class="buttonoverlay buttonbackground" d="M1175.7,1505H534.3C243.2,1505,5,1266.8,5,975.7V534.3C5,243.2,243.2,5,534.3,5h641.4
+	C1466.8,5,1705,243.2,1705,534.3v441.4C1705,1266.8,1466.8,1505,1175.7,1505z"/>
+</svg>

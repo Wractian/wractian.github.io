@@ -1,54 +1,55 @@
-"usestrict";
+"use strict";
 
-class timer {
-  constructor(end = "5000", func) {
-    this.args = []
-    this.start = new Date();
-    this.end = end;
-    if (!func == '') {
-      this.endfunc = window[func]
+function roshtimer() {
+  var timer, timerID, startD, currentD, roshmin
+  if (window.roshtimeractive) {
+    window.roshtimeractive = false;
+  } else {
+    window.roshtimeractive = true;
+  }
+  startD = new Date()
+  window.Domlist["roshtext"].innerHTML = "Roshan is dead"
+  timer = function() {
+    currentD = new Date();
+    if ((currentD - startD >= 480000) && (!roshmin)) {
+      console.log('roshmin ' + msToTime(currentD - startD))
+      window.Domlist["roshtext"].innerHTML = "Roshan might be alive"
+      roshmin = true;
+    } else if (currentD - startD >= 660000) {
+      console.log('roshmax ' + msToTime(currentD - startD))
+      window.Domlist["roshtext"].innerHTML = "Roshan is alive"
+      return 0
     }
-    this.timerID = ''
-    if (arguments.length > 2) {
-      for (var i = 2; i < arguments.length; i++) {
-        this.args[i - 2] = arguments[i]
-      }
-
+    if (window.roshtimeractive) {
+      timerID = window.requestAnimationFrame(timer);
+    } else {
+      window.Domlist["roshtext"].innerHTML = "Roshan is alive"
     }
   }
-  timer() {
-    this.timerID = window.requestAnimationFrame(this.timer.bind(this))
-    if ((new Date() - this.start) >= this.end) {
-      if (typeof this.endfunc == 'function') {
-        this.endfunc(...this.args)
-      }
-      this.stoptimer()
-    }
-  }
-  stoptimer() {
-    window.cancelAnimationFrame(this.timerID)
-  }
-  starttimer() {
-    this.timerID = window.requestAnimationFrame(this.timer.bind(this))
-  }
+  timer();
 }
 
+function gametimer() {
+
+}
+
+
+//INIT FUNCTION
 function init() {
-  var xhttp;
-  roshmin = new timer(4800, "ping", "roshmin")
-  roshmax = new timer(6600, "ping", "roshmax")
-  roshmin.starttimer();
-  roshmax.starttimer();
-  //workaround to easally edit svg file without constant copypaste
-  xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "content/map1.svg", true);
-  xhttp.send();
-  xhttp.onreadystatechange = function() {
-    var str, img
-    if (this.readyState == 4) {
-      str = this.responseText.replace('<?xml version="1.0" encoding="utf-8"?>', '')
-      str = str.replace('<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->', '')
-      document.getElementById('overlaywrapper').outerHTML = str;
-    }
-  }
+  whtml(function() {
+    Domlist["gamebutton"].firstElementChild.children[4].onclick = function() {
+      if (window.gamebutton) {
+        window.gamebutton = 0;
+        Domlist["gamebutton"].firstElementChild.children[1].style.fill = "#e44949"
+        Domlist["gamebutton"].firstElementChild.children[3].innerHTML = "Pause"
+      } else {
+        window.gamebutton = 1;
+        Domlist["gamebutton"].firstElementChild.children[1].style.fill = "#19ee06"
+        Domlist["gamebutton"].firstElementChild.children[3].innerHTML = "Start"
+      }
+    };
+  });
+  whtmlupdateinit();
+  document.getElementById('roshbutton').onclick = roshtimer
+
 }

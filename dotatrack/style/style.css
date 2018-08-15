@@ -1,11 +1,13 @@
 
-.mapwrapper{
-  width:56vw;
-  height:60vw;
+.boxwrapper{
+  width:41vw;
+  height:45vw;
+  margin-right:10px;
+  background-color: #747474;
 }
-.maptext{
+.boxtext{
   background-color:rgb(3, 92, 17);
-  width:56vw;
+  width:41vw;
   height:4vw;
   font-size:2.5vw;
   text-align: center;
@@ -16,11 +18,32 @@
 #mapimage{
   padding:3vw;
   background-color: #000403;
-  width:50vw;
+  width:35vw;
+  cursor:default;
 }
 #mapoverlay{
-  width:50vw;
+  width:35vw;
   position:relative;
   left:3vw;
-  top:-53vw;
+  top:-38vw;
+  user-select: none;
+  cursor:default;
+}
+#roshbutton{
+  background:rgb(0, 255, 86);
+  border:1px solid black;
+  border-radius: 3px;
+  padding:5px;
+  cursor:pointer;
+}
+#roshbutton:active{
+  background:rgb(7, 177, 64);
+}
+#gamebutton{
+  width:25vw;
+  margin: 0 8vw 0 8vw;
+  user-select:none;
+}
+#gamebutton path {
+    cursor:pointer;
 }
