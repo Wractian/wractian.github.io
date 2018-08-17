@@ -5,11 +5,14 @@ function ping(a = "ping") {
 }
 
 
-function pingms(a = 0) {
-  console.log(msToTime(a))
-}
-
 function msToTime(duration) {
+  var multiplier
+  if (duration < 0) {
+    multiplier = '-'
+    duration = Math.abs(duration)
+  } else {
+    multiplier = ''
+  }
   var seconds = parseInt((duration / 1000) % 60);
   var minutes = parseInt((duration / (1000 * 60)) % 60);
   var hours = parseInt(Math.round((duration / (1000 * 60 * 60))));
@@ -18,9 +21,9 @@ function msToTime(duration) {
   }
   seconds = (seconds < 10) ? "0" + seconds : seconds;
   if (hours >= 1) {
-    return hours + ":" + minutes + ":" + seconds;
+    return multiplier + hours + ":" + minutes + ":" + seconds;
   } else {
-    return minutes + ":" + seconds;
+    return multiplier + minutes + ":" + seconds;
   }
 }
 

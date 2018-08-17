@@ -30,18 +30,50 @@ function roshtimer() {
 }
 
 function gametimer() {
+  if (!window.gametime) {
+    window.gametime = 1
+    var timer, start = new Date(),
+      pausetotal = 0,
+      startoffset = new Date(start.valueOf() - 90000),
+      timerID, now, previous, currenttime;
+    previous = start
+    timer = function() {
+      now = new Date()
+      if (!window.gamebutton) {
+        //if unpaused
+        currenttime = (((now - start) + pausetotal) - (start - startoffset))
+        window.Domlist["gametext"].innerHTML = ("The current time is: " + msToTime(currenttime))
+        if (window.sunstate == "sun" && (parseInt((((currenttime / (1000 * 60)) % 60) / 4) % 2))) {
+          window.sunstate = "moon"
+          window.Domlist["celestial"].src = 'content/Moon.svg'
+        }
+        if (window.sunstate == "moon" && (parseInt((((currenttime / (1000 * 60)) % 60) / 4) % 2) == 0)) {
+          window.sunstate = "sun"
+          window.Domlist["celestial"].src = 'content/Sun.svg'
+        }
+      } else {
+        //if paused
+        pausetotal = pausetotal + (previous - now)
+      }
+      previous = now;
+      timerID = window.requestAnimationFrame(timer);
+    }
+    timer()
+  }
 
 }
 
 
 //INIT FUNCTION
 function init() {
+  window.sunstate = 'sun'
   whtml(function() {
     Domlist["gamebutton"].firstElementChild.children[4].onclick = function() {
       if (window.gamebutton) {
         window.gamebutton = 0;
         Domlist["gamebutton"].firstElementChild.children[1].style.fill = "#e44949"
         Domlist["gamebutton"].firstElementChild.children[3].innerHTML = "Pause"
+        gametimer();
       } else {
         window.gamebutton = 1;
         Domlist["gamebutton"].firstElementChild.children[1].style.fill = "#19ee06"

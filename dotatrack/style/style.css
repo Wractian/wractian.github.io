@@ -47,3 +47,14 @@
 #gamebutton path {
     cursor:pointer;
 }
+#gameinfowrapper{
+  margin:8px;
+  padding:4vw;
+  background-color: rgb(164, 164, 164);
+  border: 2px solid black;
+  border-radius: 9px;
+  text-align:center;
+}
+.gametext{
+  text-align:center;
+}
