@@ -41,15 +41,18 @@ function gametimer() {
       now = new Date()
       if (!window.gamebutton) {
         //if unpaused
+        var seconds = parseInt((currenttime / 1000) % 60);
+        var minutes = parseInt(((currenttime / (1000 * 60)) % 60));
         currenttime = (((now - start) + pausetotal) - (start - startoffset))
         window.Domlist["gametext"].innerHTML = ("The current time is: " + msToTime(currenttime))
-        if (window.sunstate == "sun" && (parseInt((((currenttime / (1000 * 60)) % 60) / 4) % 2))) {
-          window.sunstate = "moon"
-          window.Domlist["celestial"].src = 'content/Moon.svg'
+        if (window.Domlist['solarstate'].src.includes("Sun") && (Math.floor(((minutes / 4) % 2))) && ((minutes > 0))) {
+          window.Domlist["solarstate"].src = 'content/Moon.svg'
         }
-        if (window.sunstate == "moon" && (parseInt((((currenttime / (1000 * 60)) % 60) / 4) % 2) == 0)) {
-          window.sunstate = "sun"
-          window.Domlist["celestial"].src = 'content/Sun.svg'
+        if (window.Domlist['solarstate'].src.includes("Moon") && (Math.floor(((minutes / 4) % 2) == 0))) {
+          window.Domlist["solarstate"].src = 'content/Sun.svg'
+        }
+        if ((currenttime > 0) && (String(seconds)).includes("53")) {
+          console.log("STACK")
         }
       } else {
         //if paused
@@ -66,7 +69,6 @@ function gametimer() {
 
 //INIT FUNCTION
 function init() {
-  window.sunstate = 'sun'
   whtml(function() {
     Domlist["gamebutton"].firstElementChild.children[4].onclick = function() {
       if (window.gamebutton) {
@@ -80,8 +82,51 @@ function init() {
         Domlist["gamebutton"].firstElementChild.children[3].innerHTML = "Start"
       }
     };
+    var overlay = document.getElementById("mapoverlay")
+    for (var i = 0; i < 4; i++) {
+      overlay.getElementById('BRune' + [i]).style.display = "none"
+    }
+    for (var i = 0; i < 18; i++) {
+      overlay.getElementById('Camp' + [i]).style.display = "none"
+    }
+
   });
   whtmlupdateinit();
   document.getElementById('roshbutton').onclick = roshtimer
 
 }
+
+function showBRunes() {
+  var overlay = document.getElementById("mapoverlay")
+  for (var i = 0; i < 4; i++) {
+    overlay.getElementById('BRune' + [i]).style.display = "block"
+  }
+}
+
+function hideBRunes() {
+  var overlay = document.getElementById("mapoverlay")
+  for (var i = 0; i < 4; i++) {
+    overlay.getElementById('BRune' + [i]).style.display = "none"
+  }
+}
+
+function hideCamps() {
+  var overlay = document.getElementById("mapoverlay")
+  for (var i = 0; i < 18; i++) {
+    overlay.getElementById('Camp' + [i]).style.display = "none"
+  }
+}
+
+function showCamps() {
+  var overlay = document.getElementById("mapoverlay")
+  for (var i = 0; i < 18; i++) {
+    overlay.getElementById('Camp' + [i]).style.display = "block"
+  }
+}
+
+
+
+
+
+
+//ws

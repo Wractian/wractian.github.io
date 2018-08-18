@@ -15,7 +15,7 @@ function msToTime(duration) {
   }
   var seconds = parseInt((duration / 1000) % 60);
   var minutes = parseInt((duration / (1000 * 60)) % 60);
-  var hours = parseInt(Math.round((duration / (1000 * 60 * 60))));
+  var hours = parseInt(Math.floor((duration / (1000 * 60 * 60))));
   if (!hours == '0') {
     minutes = (minutes < 10) ? "0" + minutes : minutes;
   }

@@ -3,9 +3,105 @@
 <svg version="1.1" id="mapoverlay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 2108 2108" style="enable-background:new 0 0 2108 2108;" xml:space="preserve">
 <style type="text/css">
-	.st0{opacity:0.7;fill:#00D400;stroke:#000000;stroke-width:10;stroke-miterlimit:10;enable-background:new    ;}
-	.st1{font-family:'ArialMT';font-size:67px;}
+	.st0{opacity:0.5;fill:#FBFF1F;stroke:#000000;stroke-width:10;stroke-miterlimit:10;enable-background:new    ;}
+	.st1{fill:#B300D4;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st2{fill:#00BE00;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st3{fill:#FF0000;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st4{fill:#FFFFFF;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st5{fill:none;stroke:#FFCA56;stroke-width:8;stroke-miterlimit:10;}
+	.st6{fill:#C36B00;}
+	.st7{fill:#794500;}
+	.st8{fill:#6E3400;}
 </style>
-<circle class="st0" cx="679.9" cy="758.7" r="119.7"/>
-<text transform="matrix(1 0 0 1 580 770)" class="st1 st2">Roshan</text>
+<circle class="st0" cx="681.6" cy="767.9" r="110.9"/>
+<circle id="Camp0" class="st1" cx="977.3" cy="708.9" r="24.7"/>
+<circle id="Camp1" class="st2" cx="1254.8" cy="531.4" r="24.7"/>
+<circle id="Camp2" class="st3" cx="1039.6" cy="567.6" r="24.7"/>
+<circle id="Camp3" class="st2" cx="759.1" cy="435.9" r="24.7"/>
+<circle id="Camp4" class="st4" cx="666.9" cy="377.4" r="24.7"/>
+<circle id="Camp5" class="st3" cx="438.9" cy="542.9" r="24.7"/>
+<circle id="Camp6" class="st2" cx="488.4" cy="961.6" r="24.7"/>
+<circle id="Camp7" class="st1" cx="611.4" cy="1054" r="24.7"/>
+<circle id="Camp8" class="st3" cx="345.9" cy="1115.3" r="24.7"/>
+<circle id="Camp9" class="st3" cx="1002.1" cy="1526.4" r="24.7"/>
+<circle id="Camp10" class="st2" cx="788.6" cy="1703.3" r="24.7"/>
+<circle id="Camp11" class="st4" cx="1500.8" cy="1728.1" r="24.7"/>
+<circle id="Camp12" class="st2" cx="1118.3" cy="1745.3" r="24.7"/>
+<circle id="Camp13" class="st1" cx="1078.7" cy="1335.8" r="24.7"/>
+<circle id="Camp14" class="st3" cx="1751.3" cy="1709.3" r="24.7"/>
+<circle id="Camp15" class="st2" cx="1451.3" cy="1029.3" r="24.7"/>
+<circle id="Camp16" class="st1" cx="1635.8" cy="1128.9" r="24.7"/>
+<circle id="Camp17" class="st3" cx="1671.8" cy="936.8" r="24.7"/>
+<g id="BRune0">
+	<g id="Layer_4_1_">
+		<path class="st5" d="M1628.8,1536.8c13.1,1.5,31.5,13.8,40.1,28.7"/>
+	</g>
+	<g id="rune_1_">
+		<polygon class="st6" points="1636.9,1561.7 1656.3,1542 1622.5,1542.7 1615.7,1548.1 		"/>
+		<polygon class="st7" points="1634.4,1604 1636.9,1561.7 1615.7,1548.1 1616.2,1586.9 		"/>
+		<polygon class="st8" points="1656.3,1542 1655.1,1570 1648.5,1592.8 1634.4,1604 1636.9,1561.7 		"/>
+	</g>
+	<g id="ring_1_">
+		<g>
+			<path class="st5" d="M1668.9,1565.3c1.5,2.7,3.3,11.9,2.2,14.5c-1.1,2.3-1.7,4.9-3,7.1c-4.4,7.4-11.6,18.8-24.9,22.9
+				c-6.2,1.9-19.9,1.2-25.9-1.3c-3.4-1.4-7.8-7.1-10.6-10.1c-10.5-10.9,8.9-33.3,8.9-33.3c-2.9-5.8-9.9-5.8-12.3-18.4
+				c0,0-2.7-13.3,25.4-9.9"/>
+			<path class="st5" d="M1613.7,1562.3c0,0,17.6,13.7,23.7,15.6c8,2.5,33.7,1.9,33.7,1.9"/>
+		</g>
+	</g>
+</g>
+<g id="BRune1">
+	<g id="Layer_4_2_">
+		<path class="st5" d="M1652,1274.4c13.1,1.5,31.5,13.8,40.1,28.7"/>
+	</g>
+	<g id="rune_2_">
+		<polygon class="st6" points="1660,1299.3 1679.5,1279.6 1645.7,1280.3 1638.8,1285.7 		"/>
+		<polygon class="st7" points="1657.6,1341.6 1660,1299.3 1638.8,1285.7 1639.4,1324.5 		"/>
+		<polygon class="st8" points="1679.5,1279.6 1678.3,1307.6 1671.6,1330.5 1657.6,1341.6 1660,1299.3 		"/>
+	</g>
+	<g id="ring_2_">
+		<g>
+			<path class="st5" d="M1692.1,1302.9c1.5,2.7,3.3,11.9,2.2,14.5c-1.1,2.3-1.7,4.9-3,7.1c-4.4,7.4-11.6,18.8-24.9,22.9
+				c-6.2,1.9-19.9,1.2-25.9-1.3c-3.4-1.4-7.8-7.1-10.6-10.1c-10.5-10.9,8.9-33.3,8.9-33.3c-2.9-5.8-9.9-5.8-12.3-18.4
+				c0,0-2.7-13.3,25.4-9.9"/>
+			<path class="st5" d="M1636.8,1300c0,0,17.6,13.7,23.7,15.6c8,2.5,33.7,1.9,33.7,1.9"/>
+		</g>
+	</g>
+</g>
+<g id="BRune2">
+	<g id="Layer_4_3_">
+		<path class="st5" d="M596.2,481.5c13.1,1.5,31.5,13.8,40.1,28.7"/>
+	</g>
+	<g id="rune_3_">
+		<polygon class="st6" points="604.2,506.4 623.7,486.7 589.9,487.3 583,492.8 		"/>
+		<polygon class="st7" points="601.8,548.7 604.2,506.4 583,492.8 583.6,531.6 		"/>
+		<polygon class="st8" points="623.7,486.7 622.5,514.7 615.8,537.5 601.8,548.7 604.2,506.4 		"/>
+	</g>
+	<g id="ring_3_">
+		<g>
+			<path class="st5" d="M636.3,510c1.5,2.7,3.3,11.9,2.2,14.5c-1.1,2.3-1.7,4.9-3,7.1c-4.4,7.4-11.6,18.8-24.9,22.9
+				c-6.2,1.9-19.9,1.2-25.9-1.3c-3.4-1.4-7.8-7.1-10.6-10.1c-10.5-10.9,8.9-33.3,8.9-33.3c-2.9-5.8-9.9-5.8-12.3-18.4
+				c0,0-2.7-13.3,25.4-9.9"/>
+			<path class="st5" d="M581,507c0,0,17.6,13.7,23.7,15.6c8,2.5,33.7,1.9,33.7,1.9"/>
+		</g>
+	</g>
+</g>
+<g id="BRune3">
+	<g id="Layer_4_5_">
+		<path class="st5" d="M430.3,774.7c13.1,1.5,31.5,13.8,40.1,28.7"/>
+	</g>
+	<g id="rune_5_">
+		<polygon class="st6" points="438.4,799.6 457.8,779.9 424,780.5 417.2,786 		"/>
+		<polygon class="st7" points="436,841.8 438.4,799.6 417.2,786 417.7,824.7 		"/>
+		<polygon class="st8" points="457.8,779.9 456.6,807.8 450,830.7 436,841.8 438.4,799.6 		"/>
+	</g>
+	<g id="ring_5_">
+		<g>
+			<path class="st5" d="M470.4,803.2c1.5,2.7,3.3,11.9,2.2,14.5c-1.1,2.3-1.7,4.9-3,7.1c-4.4,7.4-11.6,18.8-24.9,22.9
+				c-6.2,1.9-19.9,1.2-25.9-1.3c-3.4-1.4-7.8-7.1-10.6-10.1c-10.5-10.9,8.9-33.3,8.9-33.3c-2.9-5.8-9.9-5.8-12.3-18.4
+				c0,0-2.7-13.3,25.4-9.9"/>
+			<path class="st5" d="M415.2,800.2c0,0,17.6,13.7,23.7,15.6c8,2.5,33.7,1.9,33.7,1.9"/>
+		</g>
+	</g>
+</g>
 </svg>
