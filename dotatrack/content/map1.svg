@@ -3,7 +3,7 @@
 <svg version="1.1" id="mapoverlay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 2108 2108" style="enable-background:new 0 0 2108 2108;" xml:space="preserve">
 <style type="text/css">
-	.st0{opacity:0.5;fill:#FBFF1F;stroke:#000000;stroke-width:10;stroke-miterlimit:10;enable-background:new    ;}
+	.st0{opacity:1.0;fill:none;stroke:#9f9f9f;stroke-width:35;stroke-miterlimit:10;enable-background:new    ;}
 	.st1{fill:#B300D4;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
 	.st2{fill:#00BE00;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
 	.st3{fill:#FF0000;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
@@ -12,8 +12,12 @@
 	.st6{fill:#C36B00;}
 	.st7{fill:#794500;}
 	.st8{fill:#6E3400;}
+	.st9{fill:none;;stroke-width:35;};
 </style>
 <circle class="st0" cx="681.6" cy="767.9" r="110.9"/>
+<g transform = "rotate(-90 681.6 767.9)">
+<circle id="progresscircle" stroke="#00bd24" class="st9" cx="681.6" cy="767.9" r="110.9" stroke-dasharray="691.15038379" stroke-dashoffset="0" stroke-linecap="butt"/>
+</g>
 <circle id="Camp0" class="st1" cx="977.3" cy="708.9" r="24.7"/>
 <circle id="Camp1" class="st2" cx="1254.8" cy="531.4" r="24.7"/>
 <circle id="Camp2" class="st3" cx="1039.6" cy="567.6" r="24.7"/>

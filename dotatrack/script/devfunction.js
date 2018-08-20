@@ -21,9 +21,9 @@ function msToTime(duration) {
   }
   seconds = (seconds < 10) ? "0" + seconds : seconds;
   if (hours >= 1) {
-    return multiplier + hours + ":" + minutes + ":" + seconds;
+    return hours + ":" + minutes + ":" + seconds;
   } else {
-    return multiplier + minutes + ":" + seconds;
+    return minutes + ":" + seconds;
   }
 }
 

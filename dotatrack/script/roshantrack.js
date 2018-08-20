@@ -1,31 +1,41 @@
 "use strict";
 
 function roshtimer() {
-  var timer, timerID, startD, currentD, roshmin
+  var timer, timerID, startD, currentD, roshmin, progresscircle;
+  progresscircle = document.getElementById('progresscircle')
   if (window.roshtimeractive) {
     window.roshtimeractive = false;
   } else {
     window.roshtimeractive = true;
+    progresscircle.setAttribute("stroke", "#d54a16")
   }
   startD = new Date()
   window.Domlist["roshtext"].innerHTML = "Roshan is dead"
+
   timer = function() {
     currentD = new Date();
     if ((currentD - startD >= 480000) && (!roshmin)) {
       console.log('roshmin ' + msToTime(currentD - startD))
       window.Domlist["roshtext"].innerHTML = "Roshan might be alive"
+      progresscircle.setAttribute("stroke", "#f2db07")
       roshmin = true;
     } else if (currentD - startD >= 660000) {
       console.log('roshmax ' + msToTime(currentD - startD))
       window.Domlist["roshtext"].innerHTML = "Roshan is alive"
+      progresscircle.setAttribute("stroke", "#00bd24")
       return 0
     }
+    var percent = ((currentD - startD) / 660000)
+    changePercent(percent)
     if (window.roshtimeractive) {
       timerID = window.requestAnimationFrame(timer);
     } else {
       window.Domlist["roshtext"].innerHTML = "Roshan is alive"
+      changePercent(1)
+      progresscircle.setAttribute("stroke", "#00bd24")
     }
   }
+
   timer();
 }
 
@@ -44,7 +54,7 @@ function gametimer() {
         var seconds = parseInt((currenttime / 1000) % 60);
         var minutes = parseInt(((currenttime / (1000 * 60)) % 60));
         currenttime = (((now - start) + pausetotal) - (start - startoffset))
-        window.Domlist["gametext"].innerHTML = ("The current time is: " + msToTime(currenttime))
+        window.Domlist["gametext"].innerHTML = (msToTime(currenttime))
         if (window.Domlist['solarstate'].src.includes("Sun") && (Math.floor(((minutes / 4) % 2))) && ((minutes > 0))) {
           window.Domlist["solarstate"].src = 'content/Moon.svg'
         }
@@ -124,7 +134,12 @@ function showCamps() {
   }
 }
 
-
+function changePercent(a) {
+  var circle = document.getElementById('progresscircle')
+  var b = circle.getAttribute("stroke-dasharray").split(' ')
+  var c = String(b[0] * (1 - (a)))
+  circle.setAttribute("stroke-dashoffset", c)
+}
 
 
 
