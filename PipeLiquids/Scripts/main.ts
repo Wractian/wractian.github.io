@@ -18,6 +18,8 @@ class Vector2D {
 
 };
 
+
+
 class Machine {
     position: Vector2D;
     constructor(pos: Vector2D){
@@ -45,11 +47,27 @@ class Complex_Machine extends Machine {
     }
 }
 
+class Basic_Distiller extends Basic_Machine{
+    
+    
+    constructor(pos: Vector2D, size: Vector2D, texture: string){
+        super(pos,size,texture)
+    }
+
+}
+interface Basic_Distiller {
+    capacity: number;
+}
+Basic_Distiller.prototype.capacity = 0;
+
+
+
 
 var y = new Vector2D(1,2);
 var m = new Basic_Machine(y,y,"hit or miss");
 console.log(m);
 
-var u: Vector2D[] = [y, new Vector2D(2,3)];var c = new Complex_Machine(y,u,"hit or miss");
+var u: Vector2D[] = [y, new Vector2D(2,3)];
+var c = new Complex_Machine(y,u,"hit or miss");
 console.log(c);
 

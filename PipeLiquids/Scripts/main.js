@@ -52,6 +52,14 @@ var Complex_Machine = /** @class */ (function (_super) {
     }
     return Complex_Machine;
 }(Machine));
+var Basic_Distiller = /** @class */ (function (_super) {
+    __extends(Basic_Distiller, _super);
+    function Basic_Distiller(pos, size, texture) {
+        return _super.call(this, pos, size, texture) || this;
+    }
+    return Basic_Distiller;
+}(Basic_Machine));
+Basic_Distiller.prototype.capacity = 0;
 var y = new Vector2D(1, 2);
 var m = new Basic_Machine(y, y, "hit or miss");
 console.log(m);
