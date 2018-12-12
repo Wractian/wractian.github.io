@@ -47,10 +47,9 @@ class Complex_Machine extends Machine {
 
 
 var y = new Vector2D(1,2);
-var m = new Basic_Machine(y,y,"ooga");
+var m = new Basic_Machine(y,y,"hit or miss");
 console.log(m);
 
-var u: Vector2D[] = [y, new Vector2D(2,3)];
-var c = new Complex_Machine(y,u,"ooga");
+var u: Vector2D[] = [y, new Vector2D(2,3)];var c = new Complex_Machine(y,u,"hit or miss");
 console.log(c);
 
