@@ -290,6 +290,11 @@ class Clock {
         if (control.state["RO"]) {
           LEDholders[8].setOutput(LEDholders[6].state)
         }
+        if (control.state["AO"]) {
+          console.log("error1")
+          LEDholders[8].setOutput(LEDholders[0].state)
+          console.log("error2")
+        }
         if (control.state["IO"]) {
           LEDholders[8].setOutput(LEDholders[11].retFirstFour())
         }
@@ -304,6 +309,11 @@ class Clock {
         }
         if (control.state["II"]) {
           LEDholders[11].setOutput(LEDholders[8].state)
+        }
+        if (control.state["RI"]) {
+          console.log("error3")
+          LEDholders[6].setOutput(LEDholders[8].state)
+          console.log("error4")
         }
         if (control.state["OI"]) {
           display.setOutput(LEDholders[0].state)
@@ -334,8 +344,9 @@ class Clock {
         if (!(i == 6)) {
           LEDholders[i].setOutput("00000000")
         }
+        LEDholders[10].LEDs[5].state = 1;
+        LEDholders[10].updateLEDs();
       }
-      display.setOutput("00000000")
       document.getElementById("pauseplay").src = "content/Play.svg";
       document.getElementById("singlestep").src = "content/SingleFrame.svg"
       this.continue = 0
@@ -386,12 +397,17 @@ class OverallController {
     this.commands["1000"]["000100"] = ["IO", "J"] //only if sum is zero
     this.commands["1000"]["000010"] = []
     this.commands["1000"]["000001"] = []
+    this.commands["1001"] = [] //STA
+    this.commands["1001"]["000100"] = ["IO", "MI"]
+    this.commands["1001"]["000010"] = ["AO", "RI"]
+    this.commands["1001"]["000001"] = []
     this.commands["1111"] = [] //HLT
     this.commands["1111"]["000100"] = ["HLT"]
     this.commands["1111"]["000010"] = []
     this.commands["1111"]["000001"] = []
   }
   setState(instruction, counter) {
+
     for (var i = 0; i < this.commands[instruction][counter].length; i++) {
       if (instruction == "0111") {
         if (LEDholders[13].state == "1") {
