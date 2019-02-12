@@ -118,8 +118,12 @@ window.addEventListener('resize' , onresize)
 
 x = 0;
 var prevtime,
-fpscap = 36;
+fpscap = 30;
 fpsarr = [];
+
+var imagesource = document.createElement("img")
+imagesource.src = "Content/Sprites/test.png"
+
 function draw(time){
     window.requestAnimationFrame(draw);
     //Deals with fps stuff
@@ -146,6 +150,8 @@ function draw(time){
     context.beginPath()
     context.arc(x,Math.sin(x/4)*10+60,40,0,2*Math.PI)
     context.stroke()
+    context.drawImage(imagesource,40,40)
+
     x+=.5;
     prevtime = time
 
