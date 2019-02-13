@@ -12,6 +12,12 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+/*
+
+Maybe make the game with you manually clicking a "collect water" button,
+and end the game with creating a silly fluid, like lemonaid or something funny like that
+
+*/
 var Vector2D = /** @class */ (function () {
     function Vector2D(x, y) {
         this.x = x || 0;
@@ -25,7 +31,6 @@ var Vector2D = /** @class */ (function () {
     };
     return Vector2D;
 }());
-;
 var Machine = /** @class */ (function () {
     function Machine(pos) {
         this.position = pos;
@@ -83,14 +88,14 @@ var FluidTank = /** @class */ (function () {
         this.capacity = 0;
     };
     FluidTank.prototype.isEmpty = function () {
-        if (this.fluid == Fluid.Empty) {
+        if (this.fluid === Fluid.Empty) {
             return true;
         }
         return false;
     };
     FluidTank.prototype.Insert = function (flu, cap) {
         if (this.isEmpty) {
-            this.fluid = flu; //Sets fluid type if tank currently empty
+            this.fluid = flu; // Sets fluid type if tank currently empty
         }
         if (this.fluid != flu) {
             return 0;
@@ -108,12 +113,12 @@ var FluidTank = /** @class */ (function () {
      * BETA FUNCTION JUST FOR TESTING
      */
     FluidTank.prototype.Transfer = function (tank, num) {
-        if (this.capacity - num < 0) { //Fixes too much num
+        if (this.capacity - num < 0) { // Fixes too much num
             num = this.capacity;
         }
         this.capacity = this.capacity - tank.Insert(this.fluid, num);
         console.log(this.capacity);
-        if (this.capacity == 0) {
+        if (this.capacity === 0) {
             this.fluid = Fluid.Empty;
         }
     };
@@ -138,14 +143,20 @@ var Pipe = /** @class */ (function () {
 }());
 function tickpipes() {
     var processarr = [];
-    //First create array of transfer materials
-    processarr[processarr.length] = { target: 0, reciver: 1, amount: pipes[0].tank.capacity / 2 }; //A-B
-    processarr[processarr.length] = { target: 1, reciver: 0, amount: pipes[1].tank.capacity / 2 / 2 }; //B-A
-    processarr[processarr.length] = { target: 1, reciver: 2, amount: pipes[1].tank.capacity / 2 / 2 }; //B-C
-    processarr[processarr.length] = { target: 2, reciver: 1, amount: pipes[2].tank.capacity / 2 }; //C-B
-    //Now transfer
+    // First create array of transfer materials
+    processarr[processarr.length] = { target: 0, reciver: 1, tamount: pipes[0].tank.capacity, ramount: pipes[1].tank.capacity }; // A-B
+    processarr[processarr.length] = { target: 1, reciver: 0, tamount: pipes[1].tank.capacity, ramount: pipes[0].tank.capacity }; // B-A
+    processarr[processarr.length] = { target: 1, reciver: 2, tamount: pipes[1].tank.capacity, ramount: pipes[2].tank.capacity }; // B-C
+    processarr[processarr.length] = { target: 2, reciver: 1, tamount: pipes[2].tank.capacity, ramount: pipes[1].tank.capacity }; // C-B
+    // Now transfer
     for (var i = 0; i < processarr.length; i++) {
-        pipes[processarr[i].target].tank.Transfer(pipes[processarr[i].reciver].tank, processarr[i].amount);
+        if (processarr[i].ramount < processarr[i].tamount) {
+            if (processarr[i].ramount + processarr[i].tamount * 0.01 > processarr[i].tamount) {
+            }
+            else {
+                pipes[processarr[i].target].tank.Transfer(pipes[processarr[i].reciver].tank, processarr[i].tamount * 0.01);
+            }
+        }
     }
     console.table([pipes[0].tank, pipes[1].tank, pipes[2].tank]);
 }
@@ -154,8 +165,8 @@ for (var i = 0; i < 3; i++) {
     pipes[i] = new Pipe();
 }
 var y = new Vector2D(1, 2);
-//var m = new Basic_Machine(y, y);
-//console.log(m);
+// var m = new Basic_Machine(y, y);
+// console.log(m);
 /*var u: Vector2D[] = [y, new Vector2D(2, 3)];
 var c = new Complex_Machine(y, u);
 console.log(c);
@@ -173,6 +184,5 @@ function redrawdistillers() {
     console.table(gy);
     console.table(gy.tank);
 }
-;
 redrawdistillers();
 //# sourceMappingURL=main.js.map

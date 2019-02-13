@@ -1,14 +1,17 @@
 class Character {
 
-    Moves = [];
-    Statuses = [];
-    Items = [];
-    x = 0;
-    y = 0;
+
+    
+    
     constructor(name, health, sanity) {
         this.name = name;
         this.health = health;
         this.sanity = sanity;
+        this.Moves = [];
+        this.Statuses = [];
+        this.Items = [];
+        this.x = 0;
+        this.y = 0;
     }
 
     useMove(num, target) {
