@@ -35,5 +35,6 @@ export default Utils = {
     avgArr(array){
         return sumArr(array)/array.length;
     },
+    
 }
 

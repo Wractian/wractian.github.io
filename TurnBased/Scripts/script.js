@@ -16,7 +16,7 @@ class Character {
     useMove(num, target) {
         this.Moves[num].useMove(target);
     }
-    
+
     tickStatuses() {
         for (let i = 0; i < this.Statuses.length; i++) {
             this.Statuses[i].tick(this);
@@ -106,7 +106,6 @@ class Item {
 
 function onresize() {
     var desiredAspectRatio = 4 / 3;
-    console.log();
 }
 window.addEventListener("resize", onresize);
 
@@ -134,23 +133,23 @@ imagesource.src = "Content/Sprites/test.png";
 var playerimage = document.createElement("img");
 playerimage.src = "Content/Sprites/player.png";
 
-function draw(time) {
-    window.requestAnimationFrame(draw);
-    //Deals with fps stuff
-    var timediff = time - prevtime;
-    if (timediff < 1000 / fpscap) {
-        return;
-    }
-    if (fpsarr.length >= 30) {
-        fpsarr.shift();
-    }
-    fpsarr.push(timediff);
-    
-    var sum = Utils.sumArr(fpsarr) / fpsarr.length;
-    sum = Math.trunc((1 / sum) * 1000);
-    document.getElementById("fpsmeter").innerHTML = sum;
 
-    //Actual draw event
+
+var renderlist = []
+var renderdepth = 10
+function gameLoop() {
+    renderlist = [];
+    for (let i = 0; i < renderdepth; i++) {
+        renderlist.push([]);      
+    }
+
+    renderlist[1].push([playerimage, ch.x, ch.y])
+    for (let i = 0; i < 25; i++) {
+        for (let j = 0; j < 19; j++) {
+            renderlist[0].push([imagesource, i * 32, j * 32])
+        }
+    }
+
     var playerspeed = 2;
 
     if (keys["w"] || keys["arrowup"]) {
@@ -168,18 +167,34 @@ function draw(time) {
 
     ch.x = Utils.clamp(ch.x, 0, canvas.width - 32)
     ch.y = Utils.clamp(ch.y, 0, canvas.height - 32)
+}
+
+function animLoop(time) {
+    window.requestAnimationFrame(animLoop);
+    //Deals with fps stuff
+    var timediff = time - prevtime;
+    //if (timediff < 1000 / fpscap) {
+    //    return;
+    //}
+    if (fpsarr.length >= 30) {
+        fpsarr.shift();
+    }
+    fpsarr.push(timediff);
+
+    var sum = Utils.sumArr(fpsarr) / fpsarr.length;
+    sum = Math.trunc((1 / sum) * 1000);
+    document.getElementById("fpsmeter").innerHTML = sum;
+
     //DRAW STUFF
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-
-    for (let i = 0; i < renderlist.length; i++) {
-        context.drawImage(renderlist[i][0], renderlist[i][1], renderlist[i][2])
-
+    for (let d = 0; d < renderlist.length; d++) {
+        for (let i = 0; i < renderlist[d].length; i++) {
+            context.drawImage(renderlist[d][i][0], renderlist[d][i][1], renderlist[d][i][2])
+        }
     }
-    context.beginPath();
-    context.arc(x, Math.floor(Math.sin(x / 4) * 10 + 60), 40, 0, 2 * Math.PI);
-    context.stroke();
-    context.drawImage(playerimage, ch.x, ch.y);
+
+
 
     x += 1;
     prevtime = time;
@@ -209,18 +224,16 @@ ch.addItem(
     )
 );
 
+var canvassize = 576
 var canvas = document.getElementById("mainCanvas");
-canvas.height = 576;
-canvas.width = canvas.height * 4/3;
+canvas.height = canvassize;
+canvas.width = canvassize * 4 / 3;
 var context = canvas.getContext("2d");
 
 
-var renderlist = [];
-for (let i = 0; i < 25; i++) {
-    for (let j = 0; j < 19; j++) {
-        renderlist.push([imagesource, i * 32, j * 32])
-    }
-}
 
 
-window.requestAnimationFrame(draw);
+
+
+window.requestAnimationFrame(animLoop);
+setInterval(gameLoop, 20);
