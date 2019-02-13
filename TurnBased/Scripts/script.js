@@ -1,3 +1,7 @@
+'use strict';
+//imports
+import Utils from "./Utils.js";
+
 class Character {
     constructor(name, health, sanity) {
         this.name = name;
@@ -9,11 +13,10 @@ class Character {
         this.x = 0;
         this.y = 0;
     }
-
     useMove(num, target) {
         this.Moves[num].useMove(target);
     }
-
+    
     tickStatuses() {
         for (let i = 0; i < this.Statuses.length; i++) {
             this.Statuses[i].tick(this);
@@ -107,7 +110,7 @@ function onresize() {
 }
 window.addEventListener("resize", onresize);
 
-keys = [];
+var keys = [];
 
 function keyboardHandler(e) {
     if (e.type == "keydown") {
@@ -121,7 +124,7 @@ window.addEventListener("keydown", keyboardHandler, false);
 window.addEventListener("keypress", keyboardHandler, false);
 window.addEventListener("keyup", keyboardHandler, false);
 
-x = 0;
+var x = 0;
 var prevtime;
 var fpscap = 31;
 var fpsarr = [];
@@ -182,7 +185,7 @@ function draw(time) {
     prevtime = time;
 }
 
-ch = new Character("Liam", 10, 10);
+var ch = new Character("Liam", 10, 10);
 ch.addMove(
     new Move("Slice", 10, function (e) {
         console.log(e);
@@ -206,13 +209,13 @@ ch.addItem(
     )
 );
 
-canvas = document.getElementById("mainCanvas");
+var canvas = document.getElementById("mainCanvas");
 canvas.height = 576;
 canvas.width = canvas.height * 4/3;
-context = canvas.getContext("2d");
+var context = canvas.getContext("2d");
 
 
-renderlist = [];
+var renderlist = [];
 for (let i = 0; i < 25; i++) {
     for (let j = 0; j < 19; j++) {
         renderlist.push([imagesource, i * 32, j * 32])
