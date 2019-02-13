@@ -19,7 +19,6 @@ class Character {
         for (let i = 0; i < this.Statuses.length; i++) {
             this.Statuses[i].tick(this);
             if (this.Statuses[i].duration <= 0) {
-                this.Statuses.splice(i, 1)
             }
         }
     }
@@ -119,10 +118,10 @@ window.addEventListener('resize', onresize)
 keys = [];
 
 function keyboardHandler(e) {
-    if(e.type == "keydown"){
+    if (e.type == "keydown") {
         keys[e.key] = true;
     }
-    if(e.type == "keyup"){
+    if (e.type == "keyup") {
         keys[e.key] = false;
     }
 }
@@ -160,24 +159,31 @@ function draw(time) {
     //Actual draw event
     var playerspeed = 2
 
-    if(keys["w"]||keys["ArrowUp"]){
+    if (keys["w"] || keys["ArrowUp"]) {
         ch.y -= playerspeed;
     }
-    if(keys["s"]||keys["ArrowDown"]){
+    if (keys["s"] || keys["ArrowDown"]) {
         ch.y += playerspeed;
     }
-    if(keys["a"]||keys["ArrowLeft"]){
+    if (keys["a"] || keys["ArrowLeft"]) {
         ch.x -= playerspeed;
     }
-    if(keys["d"]||keys["ArrowRight"]){
+    if (keys["d"] || keys["ArrowRight"]) {
         ch.x += playerspeed;
     }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    
+    for (let i = 0; i < renderlist.length; i++) {
+        context.drawImage(renderlist[i][0],renderlist[i][1],renderlist[i][2])
+        
+    }
+    context.drawImage(imagesource, ch.x, ch.y);
+
     context.beginPath()
     context.arc(x, Math.floor(Math.sin(x / 4) * 10 + 60), 40, 0, 2 * Math.PI)
     context.stroke()
-    context.drawImage(imagesource, ch.x, ch.y);
 
     x += 1;
     prevtime = time;
@@ -195,6 +201,12 @@ canvas.height = 600;
 canvas.width = 800;
 context = canvas.getContext("2d");
 
+renderlist = [];
+for (let i = 0; i < 25; i++) {
+    for (let j = 0; j < 19; j++) {
+        renderlist.push([imagesource,i*32,j*32])
+    }
+}
 
 
 window.requestAnimationFrame(draw);
