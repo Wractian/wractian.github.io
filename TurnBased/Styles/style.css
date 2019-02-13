@@ -21,8 +21,6 @@ body {
 #mainCanvas{
     border: 1px solid black;
     margin: -1px;
-    width:800px;
-    height:600px;
 }
 
 #fpsmeter{

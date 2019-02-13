@@ -111,10 +111,10 @@ keys = [];
 
 function keyboardHandler(e) {
     if (e.type == "keydown") {
-        keys[e.key] = true;
+        keys[e.key.toLowerCase()] = true;
     }
     if (e.type == "keyup") {
-        keys[e.key] = false;
+        keys[e.key.toLowerCase()] = false;
     }
 }
 window.addEventListener("keydown", keyboardHandler, false);
@@ -123,11 +123,13 @@ window.addEventListener("keyup", keyboardHandler, false);
 
 x = 0;
 var prevtime;
-var fpscap = 30;
+var fpscap = 31;
 var fpsarr = [];
 
 var imagesource = document.createElement("img");
 imagesource.src = "Content/Sprites/test.png";
+var playerimage = document.createElement("img");
+playerimage.src = "Content/Sprites/player.png";
 
 function draw(time) {
     window.requestAnimationFrame(draw);
@@ -140,45 +142,41 @@ function draw(time) {
         fpsarr.shift();
     }
     fpsarr.push(timediff);
-    var sum = 0;
-    for (let i = 0; i < fpsarr.length; i++) {
-        sum = sum + fpsarr[i];
-    }
-    sum = sum / fpsarr.length;
+    
+    var sum = Utils.sumArr(fpsarr) / fpsarr.length;
     sum = Math.trunc((1 / sum) * 1000);
     document.getElementById("fpsmeter").innerHTML = sum;
 
     //Actual draw event
     var playerspeed = 2;
 
-    if (keys["w"] || keys["ArrowUp"]) {
+    if (keys["w"] || keys["arrowup"]) {
         ch.y -= playerspeed;
     }
-    if (keys["s"] || keys["ArrowDown"]) {
+    if (keys["s"] || keys["arrowdown"]) {
         ch.y += playerspeed;
     }
-    if (keys["a"] || keys["ArrowLeft"]) {
+    if (keys["a"] || keys["arrowleft"]) {
         ch.x -= playerspeed;
     }
-    if (keys["d"] || keys["ArrowRight"]) {
+    if (keys["d"] || keys["arrowright"]) {
         ch.x += playerspeed;
     }
 
-    ch.x = Utils.clamp(ch.x, 0, 800 - 32)
-    ch.y = Utils.clamp(ch.y, 0, 600 - 32)
+    ch.x = Utils.clamp(ch.x, 0, canvas.width - 32)
+    ch.y = Utils.clamp(ch.y, 0, canvas.height - 32)
+    //DRAW STUFF
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
 
     for (let i = 0; i < renderlist.length; i++) {
         context.drawImage(renderlist[i][0], renderlist[i][1], renderlist[i][2])
 
     }
-    context.drawImage(imagesource, ch.x, ch.y);
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
     context.arc(x, Math.floor(Math.sin(x / 4) * 10 + 60), 40, 0, 2 * Math.PI);
     context.stroke();
-    context.drawImage(imagesource, ch.x, ch.y);
+    context.drawImage(playerimage, ch.x, ch.y);
 
     x += 1;
     prevtime = time;
@@ -209,8 +207,8 @@ ch.addItem(
 );
 
 canvas = document.getElementById("mainCanvas");
-canvas.height = 600;
-canvas.width = 800;
+canvas.height = 576;
+canvas.width = canvas.height * 4/3;
 context = canvas.getContext("2d");
 
 
