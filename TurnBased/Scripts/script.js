@@ -54,7 +54,7 @@ class Status {
     constructor(name, duration, tickfunc) {
         this.name = name ? name : "unnamed status";
         this.duration = duration ? duration : 1;
-        this.tickfunc = tickfunc ? tickfunc : function () {};
+        this.tickfunc = tickfunc ? tickfunc : function () { };
     }
 
     tick(char) {
@@ -78,7 +78,7 @@ class Move {
     constructor(name, damage, func) {
         this.name = name ? name : "unnamed move";
         this.damage = damage ? damage : 1;
-        this.usefunc = func ? func : function () {};
+        this.usefunc = func ? func : function () { };
     }
     useMove(target) {
         console.log(`Using move ${this.name}`);
@@ -92,7 +92,7 @@ class Item {
         this.id = id ? id : 0;
         this.sprite = sprite ? sprite : "default";
         this.desc = desc ? desc : "This item has no description";
-        this.tickfunc = func ? func : function () {};
+        this.tickfunc = func ? func : function () { };
     }
 
     tick(char) {
@@ -130,26 +130,26 @@ var fpsarr = [];
 
 var imagesource = document.createElement("img");
 imagesource.src = "Content/Sprites/test.png";
+
+var playerspritesheet = new OffscreenCanvas(64, 64);
+var spritesheetctx = playerspritesheet.getContext("2d");
 var playerimage = document.createElement("img");
 playerimage.src = "Content/Sprites/player.png";
+playerimage.onload = function () {
+    spritesheetctx.drawImage(playerimage, 0, 0, 32, 32, 0, 0, 32, 32);
+    playerimage.src = "Content/Sprites/player2.png";
+    playerimage.onload = function () {
+        spritesheetctx.drawImage(playerimage, 0, 0, 32, 32, 32, 0, 32, 32);
+    }
+}
 
 
 
 var renderlist = []
 var renderdepth = 10
+var drawspecial;
+var toggle = false;
 function gameLoop() {
-    renderlist = [];
-    for (let i = 0; i < renderdepth; i++) {
-        renderlist.push([]);      
-    }
-
-    renderlist[1].push([playerimage, ch.x, ch.y])
-    for (let i = 0; i < 25; i++) {
-        for (let j = 0; j < 19; j++) {
-            renderlist[0].push([imagesource, i * 32, j * 32])
-        }
-    }
-
     var playerspeed = 2;
 
     if (keys["w"] || keys["arrowup"]) {
@@ -167,6 +167,25 @@ function gameLoop() {
 
     ch.x = Utils.clamp(ch.x, 0, canvas.width - 32)
     ch.y = Utils.clamp(ch.y, 0, canvas.height - 32)
+
+
+    renderlist = [];
+    for (let i = 0; i < renderdepth; i++) {
+        renderlist.push([]);
+    }
+
+    if(keys["t"]){
+        toggle = !toggle;
+    }
+    drawspecial = [playerspritesheet, toggle? 0:32, 0, 32, 32, ch.x, ch.y, 32, 32]
+
+    for (let i = 0; i < 25; i++) {
+        for (let j = 0; j < 19; j++) {
+            renderlist[0].push([imagesource, i * 32, j * 32])
+        }
+    }
+
+
 }
 
 function animLoop(time) {
@@ -194,7 +213,7 @@ function animLoop(time) {
         }
     }
 
-
+    context.drawImage(drawspecial[0], drawspecial[1], drawspecial[2], drawspecial[3], drawspecial[4], drawspecial[5], drawspecial[6], drawspecial[7], drawspecial[8])
 
     x += 1;
     prevtime = time;
