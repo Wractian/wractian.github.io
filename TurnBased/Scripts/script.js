@@ -54,7 +54,7 @@ class Status {
     constructor(name, duration, tickfunc) {
         this.name = name ? name : "unnamed status";
         this.duration = duration ? duration : 1;
-        this.tickfunc = tickfunc ? tickfunc : function () { };
+        this.tickfunc = tickfunc ? tickfunc : function () {};
     }
 
     tick(char) {
@@ -78,7 +78,7 @@ class Move {
     constructor(name, damage, func) {
         this.name = name ? name : "unnamed move";
         this.damage = damage ? damage : 1;
-        this.usefunc = func ? func : function () { };
+        this.usefunc = func ? func : function () {};
     }
     useMove(target) {
         console.log(`Using move ${this.name}`);
@@ -92,7 +92,7 @@ class Item {
         this.id = id ? id : 0;
         this.sprite = sprite ? sprite : "default";
         this.desc = desc ? desc : "This item has no description";
-        this.tickfunc = func ? func : function () { };
+        this.tickfunc = func ? func : function () {};
     }
 
     tick(char) {
@@ -103,6 +103,46 @@ class Item {
         return [this.name, this.desc];
     }
 }
+
+class Tileset {
+    /**
+     * 
+     * @param {string} file file location
+     * @param {number} sw positive int
+     * @param {number} sh positive int
+     */
+    constructor(file,sw,sh) {
+        this.sw = sw || 32;
+        this.sh = sh || 32;
+        this.width
+        this.height
+        this.canvas;
+        var img = new Image(32,32);
+        img.onload = function(){
+            this.width = img.width;
+            this.height = img.height;
+            this.canvas = new OffscreenCanvas(img.width,img.height)
+            this.canvas.getContext("2d").drawImage(img,0,0);
+        }.bind(this);   
+        img.src = file;
+        
+    }
+    printtile(tile,x,y){
+
+        var targetw = canvas.width/this.sw
+        var targeth = parseInt(tile/(this.canvas.width/this.sw))
+        return [this.canvas, 
+            10,
+            targeth*this.sh,
+            this.sw,
+            this.sh,
+            x, 
+            y,
+            this.sw,
+            this.sh]
+    }
+}
+
 
 function onresize() {
     var desiredAspectRatio = 4 / 3;
@@ -128,8 +168,7 @@ var prevtime;
 var fpscap = 31;
 var fpsarr = [];
 
-var imagesource = document.createElement("img");
-imagesource.src = "Content/Sprites/test.png";
+var tilespritesheet = new Tileset("Content/Sprites/test.png",32,32);
 
 var playerspritesheet = new OffscreenCanvas(64, 64);
 var spritesheetctx = playerspritesheet.getContext("2d");
@@ -149,6 +188,7 @@ var renderlist = []
 var renderdepth = 10
 var drawspecial;
 var toggle = false;
+
 function gameLoop() {
     var playerspeed = 2;
 
@@ -174,14 +214,16 @@ function gameLoop() {
         renderlist.push([]);
     }
 
-    if(keys["t"]){
+    if (keys["t"]) {
         toggle = !toggle;
     }
-    drawspecial = [playerspritesheet, toggle? 0:32, 0, 32, 32, ch.x, ch.y, 32, 32]
 
-    for (let i = 0; i < 25; i++) {
-        for (let j = 0; j < 19; j++) {
-            renderlist[0].push([imagesource, i * 32, j * 32])
+    renderlist[1].push([playerspritesheet, toggle ? 0 : 32, 0, 32, 32, ch.x, ch.y, 32, 32])
+
+    for (let i = 0; i < 24; i++) {
+        for (let j = 0; j < 18; j++) {
+            var tiles
+            renderlist[0].push(tilespritesheet.printtile(0,i*32,j*32));
         }
     }
 
@@ -206,14 +248,21 @@ function animLoop(time) {
 
     //DRAW STUFF
     context.clearRect(0, 0, canvas.width, canvas.height);
-
+    //D corresponds to depth, whereas i correponds to number
     for (let d = 0; d < renderlist.length; d++) {
         for (let i = 0; i < renderlist[d].length; i++) {
-            context.drawImage(renderlist[d][i][0], renderlist[d][i][1], renderlist[d][i][2])
+            context.drawImage(renderlist[d][i][0],
+                renderlist[d][i][1],
+                renderlist[d][i][2],
+                renderlist[d][i][3],
+                renderlist[d][i][4],
+                renderlist[d][i][5],
+                renderlist[d][i][6],
+                renderlist[d][i][7],
+                renderlist[d][i][8])
         }
     }
 
-    context.drawImage(drawspecial[0], drawspecial[1], drawspecial[2], drawspecial[3], drawspecial[4], drawspecial[5], drawspecial[6], drawspecial[7], drawspecial[8])
 
     x += 1;
     prevtime = time;
