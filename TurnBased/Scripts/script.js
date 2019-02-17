@@ -111,35 +111,42 @@ class Tileset {
      * @param {number} sw positive int
      * @param {number} sh positive int
      */
-    constructor(file,sw,sh) {
+    constructor(file, sw, sh) {
         this.sw = sw || 32;
         this.sh = sh || 32;
+        this.tw;
+        this.th
         this.width
         this.height
         this.canvas;
-        var img = new Image(32,32);
-        img.onload = function(){
+        var img = document.createElement("img");
+        img.src = file;
+        img.onload = function () {
             this.width = img.width;
             this.height = img.height;
-            this.canvas = new OffscreenCanvas(img.width,img.height)
-            this.canvas.getContext("2d").drawImage(img,0,0);
-        }.bind(this);   
-        img.src = file;
-        
-    }
-    printtile(tile,x,y){
+            this.tw = this.width / this.sw;
+            this.th = this.height / this.sh;
+            this.canvas = new OffscreenCanvas(img.width, img.height)
+            this.canvas.getContext("2d").drawImage(img, 0, 0);
+        }.bind(this);
 
-        var targetw = canvas.width/this.sw
-        var targeth = parseInt(tile/(this.canvas.width/this.sw))
-        return [this.canvas, 
-            10,
-            targeth*this.sh,
+
+    }
+    printtile(tile, x, y) {
+
+
+        var targeth = Math.trunc(tile / (this.tw));
+        var targetw = tile - (targeth * this.tw);
+        return [this.canvas,
+            targetw * this.sw,
+            targeth * this.sh,
             this.sw,
             this.sh,
-            x, 
+            x,
             y,
             this.sw,
-            this.sh]
+            this.sh
+        ];
     }
 }
 
@@ -163,24 +170,14 @@ window.addEventListener("keydown", keyboardHandler, false);
 window.addEventListener("keypress", keyboardHandler, false);
 window.addEventListener("keyup", keyboardHandler, false);
 
-var x = 0;
+
 var prevtime;
-var fpscap = 31;
 var fpsarr = [];
 
-var tilespritesheet = new Tileset("Content/Sprites/test.png",32,32);
 
-var playerspritesheet = new OffscreenCanvas(64, 64);
-var spritesheetctx = playerspritesheet.getContext("2d");
-var playerimage = document.createElement("img");
-playerimage.src = "Content/Sprites/player.png";
-playerimage.onload = function () {
-    spritesheetctx.drawImage(playerimage, 0, 0, 32, 32, 0, 0, 32, 32);
-    playerimage.src = "Content/Sprites/player2.png";
-    playerimage.onload = function () {
-        spritesheetctx.drawImage(playerimage, 0, 0, 32, 32, 32, 0, 32, 32);
-    }
-}
+
+var tilespritesheet = new Tileset("Content/Sprites/test.png", 32, 32);
+var playerspritesheet = new Tileset("Content/Sprites/player.png", 32, 32);
 
 
 
@@ -190,7 +187,13 @@ var drawspecial;
 var toggle = false;
 
 function gameLoop() {
-    var playerspeed = 2;
+    var sum = Utils.sumArr(fpsarr) / fpsarr.length;
+    sum = Math.trunc((1 / sum) * 1000);
+    document.getElementById("fpsmeter").innerHTML = sum;
+
+
+
+    var playerspeed = 4;
 
     if (keys["w"] || keys["arrowup"]) {
         ch.y -= playerspeed;
@@ -205,10 +208,6 @@ function gameLoop() {
         ch.x += playerspeed;
     }
 
-    ch.x = Utils.clamp(ch.x, 0, canvas.width - 32)
-    ch.y = Utils.clamp(ch.y, 0, canvas.height - 32)
-
-
     renderlist = [];
     for (let i = 0; i < renderdepth; i++) {
         renderlist.push([]);
@@ -218,12 +217,27 @@ function gameLoop() {
         toggle = !toggle;
     }
 
-    renderlist[1].push([playerspritesheet, toggle ? 0 : 32, 0, 32, 32, ch.x, ch.y, 32, 32])
+    var playerpos = {
+        x: canvas.width / 2 - 16,
+        y: canvas.height / 2 - 16,
+    }
+
+    renderlist[1].push(playerspritesheet.printtile(toggle ? 1 : 0, playerpos.x, playerpos.y))
 
     for (let i = 0; i < 24; i++) {
         for (let j = 0; j < 18; j++) {
-            var tiles
-            renderlist[0].push(tilespritesheet.printtile(0,i*32,j*32));
+            var tile = 0;
+            if (i == 0 || j == 0 || i == 23 || j == 17||i==j) {
+                tile = 2;
+            }
+            var position = {
+                x: ch.x + i * 32,
+                y: ch.y + j * 32
+            }
+            if (Math.abs(position.x-playerpos.x)<200 && Math.abs(position.y-playerpos.y)<200) {
+                renderlist[0].push(tilespritesheet.printtile(tile, position.x, position.y));
+            }
+            
         }
     }
 
@@ -234,17 +248,12 @@ function animLoop(time) {
     window.requestAnimationFrame(animLoop);
     //Deals with fps stuff
     var timediff = time - prevtime;
-    //if (timediff < 1000 / fpscap) {
-    //    return;
-    //}
     if (fpsarr.length >= 30) {
         fpsarr.shift();
     }
     fpsarr.push(timediff);
 
-    var sum = Utils.sumArr(fpsarr) / fpsarr.length;
-    sum = Math.trunc((1 / sum) * 1000);
-    document.getElementById("fpsmeter").innerHTML = sum;
+
 
     //DRAW STUFF
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -262,9 +271,6 @@ function animLoop(time) {
                 renderlist[d][i][8])
         }
     }
-
-
-    x += 1;
     prevtime = time;
 }
 
@@ -303,5 +309,6 @@ var context = canvas.getContext("2d");
 
 
 
-window.requestAnimationFrame(animLoop);
+
 setInterval(gameLoop, 20);
+window.requestAnimationFrame(animLoop);
