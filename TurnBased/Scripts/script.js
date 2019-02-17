@@ -196,16 +196,16 @@ function gameLoop() {
     var playerspeed = 4;
 
     if (keys["w"] || keys["arrowup"]) {
-        ch.y -= playerspeed;
-    }
-    if (keys["s"] || keys["arrowdown"]) {
         ch.y += playerspeed;
     }
+    if (keys["s"] || keys["arrowdown"]) {
+        ch.y -= playerspeed;
+    }
     if (keys["a"] || keys["arrowleft"]) {
-        ch.x -= playerspeed;
+        ch.x += playerspeed;
     }
     if (keys["d"] || keys["arrowright"]) {
-        ch.x += playerspeed;
+        ch.x -= playerspeed;
     }
 
     renderlist = [];
