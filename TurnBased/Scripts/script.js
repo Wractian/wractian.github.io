@@ -158,12 +158,15 @@ window.addEventListener("resize", onresize);
 
 var keys = [];
 
+//add keydown to array, pop keyad
+
 function keyboardHandler(e) {
+    console.log(e)
     if (e.type == "keydown") {
-        keys[e.key.toLowerCase()] = true;
+        keys[e.code] = true;
     }
     if (e.type == "keyup") {
-        keys[e.key.toLowerCase()] = false;
+        keys[e.code] = false;
     }
 }
 window.addEventListener("keydown", keyboardHandler, false);
@@ -188,27 +191,28 @@ var moving = 0;
 var toggle = false;
 
 function gameLoop() {
+    //Handles fps counter
     var sum = Utils.sumArr(fpsarr) / fpsarr.length;
     sum = Math.trunc((1 / sum) * 1000);
     document.getElementById("fpsmeter").innerHTML = sum;
 
 
-
-    var playerspeed = 4;
+    
+    //Direction = right:0 down:1 left:2 up:3
     if (moving == 0) {
-        if (keys["w"] || keys["arrowup"]) {
+        if (keys["KeyW"] || keys["ArrowUp"]) {
             moving = 32;
             direction = 3;
         }
-        if (keys["s"] || keys["arrowdown"]) {
+        if (keys["KeyS"] || keys["ArrowDown"]) {
             moving = 32;
             direction = 1;
         }
-        if (keys["a"] || keys["arrowleft"]) {
+        if (keys["KeyA"] || keys["ArrowLeft"]) {
             moving = 32;
             direction = 2;
         }
-        if (keys["d"] || keys["arrowright"]) {
+        if (keys["KeyD"] || keys["ArrowRight"]) {
             moving = 32;
             direction = 0;
         }
@@ -221,7 +225,7 @@ function gameLoop() {
     if (keys["t"]) {
         toggle = !toggle;
     }
-
+    var playerspeed = 4;
     if (moving != 0) {
         switch (direction) {
             case 0:
@@ -276,7 +280,7 @@ function gameLoop() {
 
 function animLoop(time) {
     window.requestAnimationFrame(animLoop);
-    //Deals with fps stuff
+    //Deals with fps arrays
     var timediff = time - prevtime;
     if (fpsarr.length >= 30) {
         fpsarr.shift();
@@ -301,6 +305,9 @@ function animLoop(time) {
                 renderlist[d][i][8])
         }
     }
+    
+    //Draw menus/guis
+
     prevtime = time;
 }
 
