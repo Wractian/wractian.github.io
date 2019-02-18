@@ -54,7 +54,7 @@ class Status {
     constructor(name, duration, tickfunc) {
         this.name = name ? name : "unnamed status";
         this.duration = duration ? duration : 1;
-        this.tickfunc = tickfunc ? tickfunc : function () {};
+        this.tickfunc = tickfunc ? tickfunc : function () { };
     }
 
     tick(char) {
@@ -78,7 +78,7 @@ class Move {
     constructor(name, damage, func) {
         this.name = name ? name : "unnamed move";
         this.damage = damage ? damage : 1;
-        this.usefunc = func ? func : function () {};
+        this.usefunc = func ? func : function () { };
     }
     useMove(target) {
         console.log(`Using move ${this.name}`);
@@ -92,7 +92,7 @@ class Item {
         this.id = id ? id : 0;
         this.sprite = sprite ? sprite : "default";
         this.desc = desc ? desc : "This item has no description";
-        this.tickfunc = func ? func : function () {};
+        this.tickfunc = func ? func : function () { };
     }
 
     tick(char) {
@@ -138,14 +138,14 @@ class Tileset {
         var targeth = Math.trunc(tile / (this.tw));
         var targetw = tile - (targeth * this.tw);
         return [this.canvas,
-            targetw * this.sw,
-            targeth * this.sh,
-            this.sw,
-            this.sh,
+        targetw * this.sw,
+        targeth * this.sh,
+        this.sw,
+        this.sh,
             x,
             y,
-            this.sw,
-            this.sh
+        this.sw,
+        this.sh
         ];
     }
 }
@@ -183,7 +183,8 @@ var playerspritesheet = new Tileset("Content/Sprites/player.png", 32, 32);
 
 var renderlist = []
 var renderdepth = 10
-var drawspecial;
+var direction = 0;
+var moving = 0;
 var toggle = false;
 
 function gameLoop() {
@@ -194,20 +195,24 @@ function gameLoop() {
 
 
     var playerspeed = 4;
-
-    if (keys["w"] || keys["arrowup"]) {
-        ch.y += playerspeed;
+    if (moving == 0) {
+        if (keys["w"] || keys["arrowup"]) {
+            moving = 32;
+            direction = 3;
+        }
+        if (keys["s"] || keys["arrowdown"]) {
+            moving = 32;
+            direction = 1;
+        }
+        if (keys["a"] || keys["arrowleft"]) {
+            moving = 32;
+            direction = 2;
+        }
+        if (keys["d"] || keys["arrowright"]) {
+            moving = 32;
+            direction = 0;
+        }
     }
-    if (keys["s"] || keys["arrowdown"]) {
-        ch.y -= playerspeed;
-    }
-    if (keys["a"] || keys["arrowleft"]) {
-        ch.x += playerspeed;
-    }
-    if (keys["d"] || keys["arrowright"]) {
-        ch.x -= playerspeed;
-    }
-
     renderlist = [];
     for (let i = 0; i < renderdepth; i++) {
         renderlist.push([]);
@@ -217,27 +222,52 @@ function gameLoop() {
         toggle = !toggle;
     }
 
+    if (moving != 0) {
+        switch (direction) {
+            case 0:
+                ch.x -= playerspeed;
+                moving -= playerspeed;
+                break;
+            case 1:
+                ch.y -= playerspeed;
+                moving -= playerspeed;
+                break;
+            case 2:
+                ch.x += playerspeed;
+                moving -= playerspeed;
+                break;
+            case 3:
+                ch.y += playerspeed;
+                moving -= playerspeed;
+                break;
+        }
+    }
+
     var playerpos = {
-        x: canvas.width / 2 - 16,
-        y: canvas.height / 2 - 16,
+        x: canvas.width / 2,
+        y: canvas.height / 2,
     }
 
     renderlist[1].push(playerspritesheet.printtile(toggle ? 1 : 0, playerpos.x, playerpos.y))
 
-    for (let i = 0; i < 24; i++) {
-        for (let j = 0; j < 18; j++) {
+    var worldw = 50;
+    var worldh = 50;
+
+
+    for (let i = 0; i < worldw; i++) {
+        for (let j = 0; j < worldh; j++) {
             var tile = 0;
-            if (i == 0 || j == 0 || i == 23 || j == 17||i==j) {
+            if (i == 0 || j == 0 || i == worldw - 1 || j == worldh - 1 || i == j) {
                 tile = 2;
             }
             var position = {
                 x: ch.x + i * 32,
                 y: ch.y + j * 32
             }
-            if (Math.abs(position.x-playerpos.x)<200 && Math.abs(position.y-playerpos.y)<200) {
+            if (Math.abs(position.x - canvas.width / 2) < 500 && Math.abs(position.y - canvas.height / 2) < 320) {
                 renderlist[0].push(tilespritesheet.printtile(tile, position.x, position.y));
             }
-            
+
         }
     }
 
