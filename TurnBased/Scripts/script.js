@@ -54,7 +54,7 @@ class Status {
     constructor(name, duration, tickfunc) {
         this.name = name ? name : "unnamed status";
         this.duration = duration ? duration : 1;
-        this.tickfunc = tickfunc ? tickfunc : function () { };
+        this.tickfunc = tickfunc ? tickfunc : function () {};
     }
 
     tick(char) {
@@ -78,7 +78,7 @@ class Move {
     constructor(name, damage, func) {
         this.name = name ? name : "unnamed move";
         this.damage = damage ? damage : 1;
-        this.usefunc = func ? func : function () { };
+        this.usefunc = func ? func : function () {};
     }
     useMove(target) {
         console.log(`Using move ${this.name}`);
@@ -92,7 +92,7 @@ class Item {
         this.id = id ? id : 0;
         this.sprite = sprite ? sprite : "default";
         this.desc = desc ? desc : "This item has no description";
-        this.tickfunc = func ? func : function () { };
+        this.tickfunc = func ? func : function () {};
     }
 
     tick(char) {
@@ -133,19 +133,17 @@ class Tileset {
 
     }
     printtile(tile, x, y) {
-
-
         var targeth = Math.trunc(tile / (this.tw));
         var targetw = tile - (targeth * this.tw);
         return [this.canvas,
-        targetw * this.sw,
-        targeth * this.sh,
-        this.sw,
-        this.sh,
+            targetw * this.sw,
+            targeth * this.sh,
+            this.sw,
+            this.sh,
             x,
             y,
-        this.sw,
-        this.sh
+            this.sw,
+            this.sh
         ];
     }
 }
@@ -197,7 +195,7 @@ function gameLoop() {
     document.getElementById("fpsmeter").innerHTML = sum;
 
 
-    
+
     //Direction = right:0 down:1 left:2 up:3
     if (moving == 0) {
         if (keys["KeyW"] || keys["ArrowUp"]) {
@@ -305,7 +303,7 @@ function animLoop(time) {
                 renderlist[d][i][8])
         }
     }
-    
+
     //Draw menus/guis
 
     prevtime = time;
