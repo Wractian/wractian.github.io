@@ -2,6 +2,8 @@
 //imports
 import Utils from "./Utils.js";
 
+
+//classdefs
 class Character {
     constructor(name, health, sanity) {
         this.name = name;
@@ -148,7 +150,7 @@ class Tileset {
     }
 }
 
-
+//functions
 function onresize() {
     var desiredAspectRatio = 4 / 3;
 }
@@ -156,7 +158,7 @@ window.addEventListener("resize", onresize);
 
 var keys = [];
 
-//add keydown to array, pop keyad
+//add keydown to array, pop keyup
 
 function keyboardHandler(e) {
     console.log(e)
