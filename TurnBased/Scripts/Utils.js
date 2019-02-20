@@ -35,6 +35,18 @@ export default Utils = {
     avgArr(array){
         return sumArr(array)/array.length;
     },
+    boolxor(...args){
+        var tester = false;
+        for (let i = 0; i < args.length; i++) {
+            if(args[i]==true){
+                if(tester==true){
+                    return false;
+                }
+                tester=true;
+            }
+        }
+        return tester;
+    }
     
 }
 
