@@ -157,16 +157,20 @@ function onresize() {
 window.addEventListener("resize", onresize);
 
 var keys = [];
+var keytimes = [];
 
 //add keydown to array, pop keyup
 
 function keyboardHandler(e) {
-    console.log(e)
     if (e.type == "keydown") {
         keys[e.code] = true;
+        if(e.repeat==false){
+            keytimes.push(e.code);
+        }
     }
     if (e.type == "keyup") {
         keys[e.code] = false;
+        keytimes.splice(keytimes.findIndex(x => x==e.code),1);
     }
 }
 window.addEventListener("keydown", keyboardHandler, false);
@@ -178,7 +182,7 @@ var prevtime;
 var fpsarr = [];
 
 
-
+//Sprite stuff rework into an import function
 var tilespritesheet = new Tileset("Content/Sprites/test.png", 32, 32);
 var playerspritesheet = new Tileset("Content/Sprites/player.png", 32, 32);
 
@@ -200,19 +204,32 @@ function gameLoop() {
 
     //Direction = right:0 down:1 left:2 up:3
     if (moving == 0) {
-        if (keys["KeyW"] || keys["ArrowUp"]) {
+
+        var movekeys = [keys["KeyD"] || keys["ArrowRight"],
+        keys["KeyS"] || keys["ArrowDown"],
+        keys["KeyA"] || keys["ArrowLeft"],
+        keys["KeyW"] || keys["ArrowUp"],
+    ]
+
+        if(!Utils.boolxor(...movekeys)){
+            if(!movekeys.every(x => !x)){
+                
+            }
+        }
+
+        if (movekeys[3]) {
             moving = 32;
             direction = 3;
         }
-        if (keys["KeyS"] || keys["ArrowDown"]) {
+        if (movekeys[1]) {
             moving = 32;
             direction = 1;
         }
-        if (keys["KeyA"] || keys["ArrowLeft"]) {
+        if (movekeys[2]) {
             moving = 32;
             direction = 2;
         }
-        if (keys["KeyD"] || keys["ArrowRight"]) {
+        if (movekeys[0]) {
             moving = 32;
             direction = 0;
         }
