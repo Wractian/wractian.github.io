@@ -164,7 +164,7 @@ var keytimes = [];
 function keyboardHandler(e) {
     if (e.type == "keydown") {
         keys[e.code] = true;
-        if(e.repeat==false){
+        if(!keytimes.includes(e.code)){
             keytimes.push(e.code);
         }
     }
@@ -172,6 +172,7 @@ function keyboardHandler(e) {
         keys[e.code] = false;
         keytimes.splice(keytimes.findIndex(x => x==e.code),1);
     }
+    console.log(keytimes)
 }
 window.addEventListener("keydown", keyboardHandler, false);
 window.addEventListener("keypress", keyboardHandler, false);
