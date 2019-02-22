@@ -56,7 +56,7 @@ class Status {
     constructor(name, duration, tickfunc) {
         this.name = name ? name : "unnamed status";
         this.duration = duration ? duration : 1;
-        this.tickfunc = tickfunc ? tickfunc : function () { };
+        this.tickfunc = tickfunc ? tickfunc : function () {};
     }
 
     tick(char) {
@@ -80,7 +80,7 @@ class Move {
     constructor(name, damage, func) {
         this.name = name ? name : "unnamed move";
         this.damage = damage ? damage : 1;
-        this.usefunc = func ? func : function () { };
+        this.usefunc = func ? func : function () {};
     }
     useMove(target) {
         console.log(`Using move ${this.name}`);
@@ -94,7 +94,7 @@ class Item {
         this.id = id ? id : 0;
         this.sprite = sprite ? sprite : "default";
         this.desc = desc ? desc : "This item has no description";
-        this.tickfunc = func ? func : function () { };
+        this.tickfunc = func ? func : function () {};
     }
 
     tick(char) {
@@ -138,14 +138,14 @@ class Tileset {
         var targeth = Math.trunc(tile / (this.tw));
         var targetw = tile - (targeth * this.tw);
         return [this.canvas,
-        targetw * this.sw,
-        targeth * this.sh,
-        this.sw,
-        this.sh,
+            targetw * this.sw,
+            targeth * this.sh,
+            this.sw,
+            this.sh,
             x,
             y,
-        this.sw,
-        this.sh
+            this.sw,
+            this.sh
         ];
     }
 }
@@ -218,8 +218,7 @@ function checkKeys(keyarr, keycheck) {
 function checkmovement(keytime, keycheck) {
     var val = -1;
     for (let j = 0; j < keycheck.length; j++) {
-        var tempval = keytime.findIndex(x => x==keycheck[j])
-        console.log(tempval)
+        var tempval = keytime.findIndex(x => x == keycheck[j])
         if (tempval > val) {
             val = tempval;
         }
@@ -227,7 +226,44 @@ function checkmovement(keytime, keycheck) {
     return val;
 }
 
+/**
+ * 
+ * @param {string} file Basic string with fileformap
+ */
+function loadmap(file) {
+    return new Promise((resolve, reject) => {
+        let xhttpreq = new XMLHttpRequest();
+        xhttpreq.open('GET', file, true);
+        xhttpreq.onload = () => {
+            resolve(xhttpreq.response);
+        }
+        xhttpreq.send();
+    });
+}
+
+function parsemap(map){
+    map = map.split("\n")
+    for (let i = 0; i < map.length; i++) {
+        map[i] = map[i].slice(0,-1);
+        map[i] = map[i].split(",")
+        for (let j = 0; j < map[i].length; j++) {
+            map[i][j] = map[i][j].slice(1,-1);
+        }
+    }
+    return map;
+}
+
+var gamestarted = false;
+var currentmap = loadmap("Content/Maps/testMap.mp");
+currentmap.then(function (value) {
+    currentmap = parsemap(value);
+    gamestarted = true;
+});
+
 function gameLoop() {
+    if(!gamestarted){
+        return;
+    }
     //Handles fps counter
     var sum = Utils.sumArr(fpsarr) / fpsarr.length;
     sum = Math.trunc((1 / sum) * 1000);
@@ -237,7 +273,6 @@ function gameLoop() {
 
     //Direction = right:0 down:1 left:2 up:3
     if (moving == 0) {
-
         var movekeys = [
             checkKeys(keys, keydict.right),
             checkKeys(keys, keydict.down),
@@ -248,25 +283,24 @@ function gameLoop() {
         if (!Utils.boolxor(...movekeys)) {
             if (!movekeys.every(x => !x)) {
                 var tempcheckkeys = [
-                    movekeys[0]?checkmovement(keytimes, keydict.right):-1,
-                    movekeys[1]?checkmovement(keytimes, keydict.down):-1,
-                    movekeys[2]?checkmovement(keytimes, keydict.left):-1,
-                    movekeys[3]?checkmovement(keytimes, keydict.up):-1,
+                    movekeys[0] ? checkmovement(keytimes, keydict.right) : -1,
+                    movekeys[1] ? checkmovement(keytimes, keydict.down) : -1,
+                    movekeys[2] ? checkmovement(keytimes, keydict.left) : -1,
+                    movekeys[3] ? checkmovement(keytimes, keydict.up) : -1,
                 ]
-                var highest = [-1,0]
+                var highest = [-1, 0]
                 for (let i = 0; i < tempcheckkeys.length; i++) {
-                    if(tempcheckkeys[i]>highest[0]){
+                    if (tempcheckkeys[i] > highest[0]) {
                         highest[0] = tempcheckkeys[i]
                         highest[1] = i
                     }
                 }
                 for (let i = 0; i < movekeys.length; i++) {
-                    movekeys[i] = i==highest[1];
-                    
+                    movekeys[i] = i == highest[1];
+
                 }
-                console.log(tempcheckkeys)
             }
-            
+
         }
 
         if (movekeys[3]) {
@@ -323,24 +357,13 @@ function gameLoop() {
 
     renderlist[1].push(playerspritesheet.printtile(toggle ? 1 : 0, playerpos.x, playerpos.y))
 
-    var worldw = 50;
-    var worldh = 50;
+    
 
+    //Generate world tiles
 
-    for (let i = 0; i < worldw; i++) {
-        for (let j = 0; j < worldh; j++) {
-            var tile = 0;
-            if (i == 0 || j == 0 || i == worldw - 1 || j == worldh - 1 || i == j) {
-                tile = 2;
-            }
-            var position = {
-                x: ch.x + i * 32,
-                y: ch.y + j * 32
-            }
-            if (Math.abs(position.x - canvas.width / 2) < 500 && Math.abs(position.y - canvas.height / 2) < 320) {
-                renderlist[0].push(tilespritesheet.printtile(tile, position.x, position.y));
-            }
-
+    for (let i = 0; i < currentmap.length; i++) {
+        for (let j = 0; j < currentmap[i].length; j++) {
+            renderlist[0].push(tilespritesheet.printtile(currentmap[i][j],ch.x + i*32,ch.y + j*32));
         }
     }
 
