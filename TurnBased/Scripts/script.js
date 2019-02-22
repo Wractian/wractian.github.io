@@ -242,15 +242,7 @@ function loadmap(file) {
 }
 
 function parsemap(map){
-    map = map.split("\n")
-    for (let i = 0; i < map.length; i++) {
-        map[i] = map[i].slice(0,-1);
-        map[i] = map[i].split(",")
-        for (let j = 0; j < map[i].length; j++) {
-            map[i][j] = map[i][j].slice(1,-1);
-        }
-    }
-    return map;
+    return JSON.parse(map);
 }
 
 var gamestarted = false;
@@ -363,7 +355,7 @@ function gameLoop() {
 
     for (let i = 0; i < currentmap.length; i++) {
         for (let j = 0; j < currentmap[i].length; j++) {
-            renderlist[0].push(tilespritesheet.printtile(currentmap[i][j],ch.x + i*32,ch.y + j*32));
+            renderlist[0].push(tilespritesheet.printtile(currentmap[i][j][0],ch.x + j*32,ch.y + i*32));
         }
     }
 
