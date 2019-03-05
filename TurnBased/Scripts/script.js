@@ -156,6 +156,13 @@ function onresize() {
 }
 window.addEventListener("resize", onresize);
 
+function onfocusout(){
+    keys = [];
+    keytimes = [];
+}
+window.blur = addEventListener("blur",onfocusout)
+
+
 var keys = [];
 var keytimes = [];
 
@@ -219,7 +226,6 @@ function checkmovement(keytime, keycheck) {
     var val = -1;
     for (let j = 0; j < keycheck.length; j++) {
         var tempval = keytime.findIndex(x => x==keycheck[j])
-        console.log(tempval)
         if (tempval > val) {
             val = tempval;
         }
@@ -264,7 +270,6 @@ function gameLoop() {
                     movekeys[i] = i==highest[1];
                     
                 }
-                console.log(tempcheckkeys)
             }
             
         }
@@ -415,6 +420,6 @@ var context = canvas.getContext("2d");
 
 
 
-
+//GAMESTUFF
 setInterval(gameLoop, 20);
 window.requestAnimationFrame(animLoop);
