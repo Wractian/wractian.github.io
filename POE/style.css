@@ -1,0 +1,36 @@
+textarea {
+    resize:none;
+    overflow: hidden;
+}
+
+
+div.bold{
+    font-weight: bold;
+}
+
+table, th, td{
+    margin-top:0px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table{
+    margin-left: 10px;
+}
+
+.endtable{
+    width:100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+th,td {
+    padding:5px
+}
+
+
+#modbox{
+    display:table;
+    width:50%;
+    user-select: none;
+}
