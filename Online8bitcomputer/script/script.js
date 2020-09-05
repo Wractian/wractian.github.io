@@ -23,6 +23,8 @@ class SevenSegment {
     }
   }
 }
+
+
 class SegmentController {
   constructor(bits) {
     this.Segments = [];
