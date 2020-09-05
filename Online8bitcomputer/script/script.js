@@ -75,10 +75,18 @@ class SegmentController {
   }
 }
 class LED {
-  constructor(colorOn = "#00FF00", colorOff = "#008A42") {
+  constructor(parent = "", colorOn = "#00FF00", colorOff = "#008A42") {
     this.state = 0;
     this.colorOff = colorOff;
     this.colorOn = colorOn;
+    this.element = parent.innerHTML += `<svg class="LED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 560" xml:space="preserve">
+    <path class="st0" d="M220.9,333.7c0,156.7,0,223.8,0,223.8H199V333.7H220.9z" />
+    <path class="st0" d="M89.5,333.7c0,141,0,201.5,0,201.5H67.6V333.7H89.5z" />
+    <path class="st1"
+      d="M27.8,188.2v92.6H2v52.9h284.6v-52.9h-25.9l-0.2-92.4c0,0,0.2-185.3-116.1-185.3 C27.8,3,27.8,188.2,27.8,188.2z"
+      fill="#00FF00" stroke="#008A42" />
+    <path class="st2" d="M27.8,280.8c238.6,0,232.8,0,232.8,0" />
+  </svg>`
   }
   on() {
     this.state = 1;
@@ -91,6 +99,13 @@ class LED {
       this.off();
     } else {
       this.on();
+    }
+  }
+  update() {
+    if (this.state) { //1
+      this.element.children[2].style.fill = this.colorOn
+    } else { //0
+      this.element.children[2].style.fill = this.colorOff
     }
   }
 }
@@ -109,7 +124,8 @@ class LEDholder {
   }
   addLED() {
     for (var i = 0; i < arguments[0]; i++) {
-      this.LEDs.push(new LED(this.defaultColor[0], this.defaultColor[1]));
+      this.LEDs.push(new LED(document.getElementById(this.id),this.defaultColor[0], this.defaultColor[1]));
+      
     }
   }
   setOutput(input) {
@@ -429,54 +445,6 @@ class OverallController {
 
     }
   }
-  reset() {
-
-  }
-  /*Halt(input) {
-    this.state["HLT"] = input;
-  }
-  CounterEnable(input) {
-    this.state["CE"] = input;
-  }
-  CounterOutput(input) {
-    this.state["CO"] = input;
-  }
-  MemoryInput(input) {
-    this.state["MI"] = input;
-  }
-  RAMInput(input) {
-    this.state["RI"] = input;
-  }
-  RAMOutput(input) {
-    this.state["RO"] = input;
-  }
-  InstructionInput(input) {
-    this.state["II"] = input;
-  }
-  InstructionOutput(input) {
-    this.state["IO"] = input;
-  }
-  ARegisterInput(input) {
-    this.state["AI"] = input;
-  }
-  ARegisterOutput(input) {
-    this.state["AO"] = input;
-  }
-  SumOutput(input) {
-    this.state["SO"] = input;
-  }
-  Sub(input) {
-    this.state["SU"] = input;
-  }
-  BRegisterInput(input) {
-    this.state["AI"] = input;
-  }
-  DisplayOutput(input) {
-    this.state["OI"] = input;
-  }
-  Jump(input) {
-    this.state["J"] = input;
-  }*/
 }
 
 function init() {
